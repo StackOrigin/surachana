@@ -86,28 +86,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Core Values */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle
-            badge="Core Values"
-            title="The Pillars of Our Community"
-            subtitle="These six core values form the foundation of everything we teach, practice, and believe in."
-          />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {VALUES.map((value, i) => (
-              <Reveal key={i} variant={i % 2 === 0 ? 'slide-left' : 'slide-right'} delay={i * 80}>
-                <div className="tactile p-6 md:p-8 rounded-2xl bg-white border border-navy-100/50 shadow-sm hover:shadow-lg hover:border-gold-200 transition-all duration-300 group h-full">
-                  <div className="w-10 h-px bg-gold-600 mb-6 transition-all duration-300 group-hover:w-16" />
-                  <h3 className="font-heading text-xl font-bold text-navy-900 mb-3">{value.title}</h3>
-                  <p className="text-sm text-navy-500 leading-relaxed">{value.description}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Principal Message */}
       <section className="py-20 md:py-28 bg-cream-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -134,6 +112,28 @@ export default function About() {
                 </p>
               </div>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle
+            badge="Core Values"
+            title="The Pillars of Our Community"
+            subtitle="These six core values form the foundation of everything we teach, practice, and believe in."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {VALUES.map((value, i) => (
+              <Reveal key={i} variant={i % 2 === 0 ? 'slide-left' : 'slide-right'} delay={i * 80}>
+                <div className="tactile p-6 md:p-8 rounded-2xl bg-white border border-navy-100/50 shadow-sm hover:shadow-lg hover:border-gold-200 transition-all duration-300 group h-full">
+                  <div className="w-10 h-px bg-gold-600 mb-6 transition-all duration-300 group-hover:w-16" />
+                  <h3 className="font-heading text-xl font-bold text-navy-900 mb-3">{value.title}</h3>
+                  <p className="text-sm text-navy-500 leading-relaxed">{value.description}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>

@@ -6,7 +6,7 @@ import Magnetic from '../ui/Magnetic';
 import { cn } from '../../utils/cn';
 
 const scenes = [
-  { image: IMAGES.hero1, label: 'The classroom', note: 'Questions become conversations.' },
+  { image: IMAGES.hero2, label: 'School life', note: 'Questions become conversations.' },
   { image: IMAGES.cultural1, label: 'The stage', note: 'Confidence finds its own voice.' },
   { image: IMAGES.sports1, label: 'The field', note: 'Belonging is built together.' },
 ];
@@ -123,14 +123,14 @@ export default function HomeHero() {
             <p className="editorial-kicker text-gold-300 mb-2">{scenes[activeScene].label}</p>
             <p className="font-heading text-2xl sm:text-3xl text-white">{scenes[activeScene].note}</p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 rounded-[1.75rem] border border-white/15 bg-white/8 p-3 sm:p-4 backdrop-blur-md shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
             <Magnetic>
-              <Link to="/admission" className="group inline-flex items-center justify-between gap-8 bg-gold-400 text-navy-950 px-6 py-4 text-sm font-bold">
+              <Link to="/admission" className="group inline-flex items-center justify-between gap-8 rounded-full bg-gold-400 px-6 py-4 text-sm font-bold text-navy-950 shadow-[0_12px_30px_rgba(240,161,74,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-300">
                 Begin admission
                 <ArrowDownRight className="w-5 h-5 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" />
               </Link>
             </Magnetic>
-            <Link to="/about" className="ink-link inline-flex items-center gap-3 px-2 py-4 text-sm font-bold text-white">
+            <Link to="/about" className="inline-flex items-center justify-center gap-3 rounded-full border border-white/25 bg-white/5 px-6 py-4 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/45 hover:bg-white/10">
               Our point of view <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

@@ -7,6 +7,7 @@ import { cn } from '../../utils/cn';
 const primaryLinks = NAV_LINKS.filter((link) =>
   ['/', '/about', '/academics', '/admission', '/gallery', '/contact'].includes(link.path),
 );
+const schoolLogoSrc = SCHOOL.shortName === 'Surachana' ? '/schools/surachana/school_logo.jpg' : undefined;
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,14 +35,26 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-3 group" aria-label={`${SCHOOL.name} home`}>
             <span
               className={cn(
-                'w-11 h-11 grid place-items-center border font-heading text-2xl italic transition-colors',
-                isScrolled ? 'border-navy-900 bg-navy-900 text-gold-300' : 'border-white/35 text-gold-300 group-hover:bg-white group-hover:text-navy-950',
+                'w-11 h-11 overflow-hidden grid place-items-center border transition-colors',
+                isScrolled ? 'border-navy-900 bg-white' : 'border-white/35 bg-white/90 group-hover:bg-white',
               )}
             >
-              {SCHOOL.shortName.charAt(0)}
+              {schoolLogoSrc ? (
+                <img
+                  src={schoolLogoSrc}
+                  alt=""
+                  className="w-full h-full object-contain p-1"
+                  loading="eager"
+                  aria-hidden="true"
+                />
+              ) : (
+                <span className={cn('font-heading text-2xl italic', isScrolled ? 'text-gold-700' : 'text-gold-300 group-hover:text-navy-950')}>
+                  {SCHOOL.shortName.charAt(0)}
+                </span>
+              )}
             </span>
             <span>
-              <strong className="block font-heading text-lg leading-none tracking-tight">{SCHOOL.name}</strong>
+              <strong className="block font-heading text-lg leading-none tracking-[0.06em] whitespace-nowrap">{SCHOOL.name}</strong>
               <small className={cn('editorial-kicker text-[8px] mt-1.5 block', isScrolled ? 'text-navy-500' : 'text-white/50')}>
                 {SCHOOL.tagline}
               </small>
