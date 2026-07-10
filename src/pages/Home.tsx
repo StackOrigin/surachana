@@ -12,7 +12,7 @@ import CampusStory from '../components/home/CampusStory';
 import HomeHero from '../components/home/HomeHero';
 import { cn } from '../utils/cn';
 
-const programImages = [IMAGES.drawing, IMAGES.campus, IMAGES.students3, IMAGES.building];
+const programImages = [IMAGES.campus, IMAGES.students1, IMAGES.campus];
 
 export default function Home() {
   useScrollToTop();
@@ -121,7 +121,7 @@ export default function Home() {
             <Reveal>
               <p className="editorial-kicker text-gold-300 mb-4">03 · Learning journey</p>
               <h2 className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-none">
-                Four stages.
+                Three stages.
                 <span className="block italic font-normal text-white/45">One shared purpose.</span>
               </h2>
             </Reveal>
@@ -134,7 +134,7 @@ export default function Home() {
           </div>
 
           <div className="border-t border-white/15">
-            {PROGRAMS.map((program, index) => (
+            {PROGRAMS.slice(0, 3).map((program, index) => (
               <Reveal key={program.title} delay={index * 70}>
                 <article className="group grid md:grid-cols-[0.15fr_0.85fr_1.15fr_0.75fr] gap-4 md:gap-8 items-center py-7 border-b border-white/15">
                   <span className="font-heading text-2xl text-gold-300">
@@ -180,7 +180,7 @@ export default function Home() {
           <div className="grid grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-5 items-end">
             <Reveal variant="clip" className="col-span-2 lg:col-span-5">
               <Link to="/gallery" className="group block relative h-[360px] sm:h-[560px] overflow-hidden">
-                <img src={GALLERY_ITEMS[6].src} alt={GALLERY_ITEMS[6].alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" loading="lazy" />
+                <img src={GALLERY_ITEMS[7].src} alt={GALLERY_ITEMS[7].alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" loading="lazy" />
                 <span className="absolute bottom-0 left-0 bg-cream-50 px-4 py-3 editorial-kicker text-navy-800">Culture · together</span>
               </Link>
             </Reveal>
@@ -200,37 +200,80 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-navy-900 text-white">
+      {/* ── Principal Quote ── */}
+      <section className="bg-white">
         <div className="max-w-[1380px] mx-auto grid lg:grid-cols-2">
           <div className="relative min-h-[540px]">
             <img src={IMAGES.principal} alt={`${SCHOOL.name} leadership`} className="absolute inset-0 w-full h-full object-cover object-top" loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 to-transparent" />
             <div className="absolute bottom-7 left-7">
-              <p className="font-heading text-2xl">{SCHOOL.leadershipName}</p>
+              <p className="font-heading text-2xl text-white">{SCHOOL.leadershipName}</p>
               <p className="editorial-kicker text-gold-300 mt-1">{SCHOOL.leadershipTitle}</p>
             </div>
           </div>
 
           <Reveal className="p-8 sm:p-12 lg:p-16 xl:p-24 flex flex-col justify-center">
-            <Quote className="w-10 h-10 text-gold-300 mb-8" />
-            <blockquote className="font-heading text-3xl sm:text-4xl xl:text-5xl leading-[1.14]">
+            <Quote className="w-10 h-10 text-gold-500 mb-8" />
+            <blockquote className="font-heading text-3xl sm:text-4xl xl:text-5xl leading-[1.14] text-navy-950">
               “A good school does not ask every child to be the same. It gives each one the
               courage and discipline to become their best.”
             </blockquote>
-            <div className="mt-10 pt-8 border-t border-white/15 flex flex-col sm:flex-row gap-4">
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── CTA Section ── */}
+      <section className="relative overflow-hidden bg-navy-950 py-8 lg:py-12">
+        {/* Decorative grid overlay */}
+        <div className="absolute inset-0 editorial-grid opacity-10" />
+
+        {/* Decorative gold accent circles */}
+        <div className="absolute top-[-120px] right-[-120px] w-[260px] h-[260px] rounded-full bg-gold-400/10 blur-3xl" />
+        <div className="absolute bottom-[-80px] left-[-80px] w-[200px] h-[200px] rounded-full bg-gold-400/8 blur-3xl" />
+
+        <div className="relative z-10 max-w-[900px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
+          <Reveal>
+            <p className="editorial-kicker text-gold-400 mb-5">Ready to begin?</p>
+            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl leading-[1.08] tracking-tight text-white">
+              Give your child the gift of
+              <span className="block italic text-gold-400 mt-1">a thoughtful education.</span>
+            </h2>
+            <p className="mt-6 text-base sm:text-lg text-white/55 max-w-2xl mx-auto leading-relaxed">
+              Admissions are open for the upcoming academic session. Limited seats available
+              across all grades — early applications receive priority consideration.
+            </p>
+          </Reveal>
+
+          <Reveal delay={150}>
+            <div className="mt-10 lg:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/admission"
-                className="inline-flex items-center justify-center gap-3 bg-gold-400 text-navy-950 px-6 py-4 text-sm font-bold hover:bg-gold-300 transition-colors"
+                className="group relative inline-flex items-center gap-3 bg-gold-400 text-navy-950 px-8 py-5 text-sm font-bold tracking-wider uppercase overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(240,161,74,0.30)]"
               >
-                Apply for admission <GraduationCap className="w-4 h-4" />
+                <span className="absolute inset-0 bg-gold-300 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <GraduationCap className="relative z-10 w-5 h-5" />
+                <span className="relative z-10">Apply for admission</span>
+                <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href={`tel:${SCHOOL.phone}`}
-                className="inline-flex items-center justify-center gap-3 border border-white/20 px-6 py-4 text-sm font-bold hover:bg-white hover:text-navy-950 transition-colors"
+                className="group inline-flex items-center gap-3 border border-white/20 text-white px-8 py-5 text-sm font-bold tracking-wider uppercase transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white/5"
               >
-                Talk to our team
+                <span>Talk to our team</span>
+                <Check className="w-4 h-4 text-gold-400 group-hover:rotate-[-8deg] transition-transform" />
               </a>
             </div>
+          </Reveal>
+
+          <Reveal delay={300}>
+            <p className="mt-10 text-xs text-white/30 tracking-wider uppercase">
+              <span className="inline-flex items-center gap-2">
+                <span className="w-1 h-1 rounded-full bg-gold-400" />
+                No entrance test · Age-appropriate assessment only
+                <span className="w-1 h-1 rounded-full bg-gold-400" />
+                Need-based scholarships available
+              </span>
+            </p>
           </Reveal>
         </div>
       </section>
