@@ -7,7 +7,10 @@ import { cn } from '../../utils/cn';
 const primaryLinks = NAV_LINKS.filter((link) =>
   ['/', '/about', '/academics', '/admission', '/gallery', '/contact'].includes(link.path),
 );
-const schoolLogoSrc = SCHOOL.shortName === 'Surachana' ? '/schools/surachana/school_logo.jpg' : undefined;
+const schoolLogoSrc =
+  SCHOOL.shortName === 'Surachana'
+    ? import.meta.env.DEV ? '/schools/surachana/logo.jpg' : './schools/surachana/logo.jpg'
+    : undefined;
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
