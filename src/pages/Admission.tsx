@@ -1,5 +1,6 @@
+import { useState, type FormEvent } from 'react';
 import { AlertCircle, ArrowDownRight, Check, Clock, FileText, Mail, MapPin, Phone } from 'lucide-react';
-import { ADMISSION_STEPS, REQUIRED_DOCUMENTS, SCHOOL } from '../data/schoolData';
+import { ADMISSION_STEPS, REQUIRED_DOCUMENTS, SCHOOL, submitInquiry } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
 import PageHero from '../components/ui/PageHero';
 import Reveal from '../components/ui/Reveal';
@@ -14,6 +15,58 @@ const eligibility = [
 
 export default function Admission() {
   useScrollToTop();
+  const [admissionForm, setAdmissionForm] = useState({
+    guardianName: '',
+    studentName: '',
+    grade: '',
+    phone: '',
+    email: '',
+    message: '',
+  });
+  const [formState, setFormState] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [formError, setFormError] = useState('');
+
+  function updateAdmissionForm(field: keyof typeof admissionForm, value: string) {
+    setAdmissionForm((current) => ({ ...current, [field]: value }));
+  }
+
+  async function handleAdmissionSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormError('');
+    setFormState('sending');
+
+    const guardianName = admissionForm.guardianName.trim();
+    const studentName = admissionForm.studentName.trim();
+    const grade = admissionForm.grade.trim();
+
+    try {
+      await submitInquiry({
+        type: 'admission',
+        fullName: guardianName,
+        guardianName,
+        studentName,
+        grade,
+        phone: admissionForm.phone.trim(),
+        email: admissionForm.email.trim(),
+        preferredContact: 'phone',
+        message:
+          admissionForm.message.trim() ||
+          `Admission inquiry for ${studentName || 'a student'}${grade ? ` in ${grade}` : ''}.`,
+      });
+      setAdmissionForm({
+        guardianName: '',
+        studentName: '',
+        grade: '',
+        phone: '',
+        email: '',
+        message: '',
+      });
+      setFormState('sent');
+    } catch (error) {
+      setFormState('idle');
+      setFormError(error instanceof Error ? error.message : 'Could not send admission inquiry.');
+    }
+  }
 
   return (
     <main>
@@ -111,6 +164,111 @@ export default function Admission() {
                   Originals are required only for verification during admission.
                 </div>
               </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-20 items-start">
+            <Reveal variant="slide-left">
+              <p className="editorial-kicker text-gold-700 mb-5">04 · Admission inquiry</p>
+              <h2 className="font-heading text-5xl sm:text-6xl leading-none">
+                Share your details with the admission team.
+              </h2>
+              <p className="mt-6 text-navy-600 leading-relaxed max-w-lg">
+                The school office will receive this request directly and can follow up with
+                available classes, visit timing, and next steps.
+              </p>
+            </Reveal>
+
+            <Reveal variant="slide-right" delay={120}>
+              <form onSubmit={handleAdmissionSubmit} className="border border-navy-950/15 bg-cream-50 p-5 sm:p-8 lg:p-10">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <label className="block">
+                    <span className="editorial-kicker text-navy-600">Parent / guardian</span>
+                    <input
+                      required
+                      value={admissionForm.guardianName}
+                      onChange={(event) => updateAdmissionForm('guardianName', event.target.value)}
+                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      placeholder="Your full name"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="editorial-kicker text-navy-600">Student name</span>
+                    <input
+                      required
+                      value={admissionForm.studentName}
+                      onChange={(event) => updateAdmissionForm('studentName', event.target.value)}
+                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      placeholder="Child's full name"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="editorial-kicker text-navy-600">Class / grade</span>
+                    <input
+                      required
+                      value={admissionForm.grade}
+                      onChange={(event) => updateAdmissionForm('grade', event.target.value)}
+                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      placeholder="Nursery, Class 1, Class 8..."
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="editorial-kicker text-navy-600">Phone</span>
+                    <input
+                      required
+                      value={admissionForm.phone}
+                      onChange={(event) => updateAdmissionForm('phone', event.target.value)}
+                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      placeholder="98XXXXXXXX"
+                    />
+                  </label>
+                  <label className="block sm:col-span-2">
+                    <span className="editorial-kicker text-navy-600">Email</span>
+                    <input
+                      type="email"
+                      value={admissionForm.email}
+                      onChange={(event) => updateAdmissionForm('email', event.target.value)}
+                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      placeholder="you@example.com"
+                    />
+                  </label>
+                  <label className="block sm:col-span-2">
+                    <span className="editorial-kicker text-navy-600">Message</span>
+                    <textarea
+                      rows={5}
+                      value={admissionForm.message}
+                      onChange={(event) => updateAdmissionForm('message', event.target.value)}
+                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      placeholder="Tell us what you would like to know."
+                    />
+                  </label>
+                </div>
+
+                {formError && (
+                  <div className="mt-5 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {formError}
+                  </div>
+                )}
+
+                {formState === 'sent' && (
+                  <div className="mt-5 border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                    Admission inquiry sent. The school office can now see it in the admin dashboard.
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={formState === 'sending'}
+                  className="tactile mt-7 inline-flex items-center justify-between gap-8 bg-navy-950 text-white px-6 py-4 text-sm font-bold disabled:opacity-60"
+                >
+                  {formState === 'sending' ? 'Sending inquiry' : 'Send admission inquiry'}
+                  <ArrowDownRight className="w-4 h-4" />
+                </button>
+              </form>
             </Reveal>
           </div>
         </div>

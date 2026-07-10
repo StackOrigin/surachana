@@ -28,6 +28,22 @@ type Profile = {
   achievements: Array<{ number: string; label: string; icon: string }>;
 };
 
+type ImageMap = Record<string, string>;
+type SiteData = {
+  school?: Profile['school'];
+  images?: ImageMap;
+  achievements?: Profile['achievements'];
+  programs?: typeof PROGRAMS;
+  values?: typeof VALUES;
+  whyChoose?: typeof WHY_CHOOSE;
+  galleryCategories?: string[];
+  galleryItems?: typeof GALLERY_ITEMS;
+  faculty?: typeof FACULTY;
+  admissionSteps?: typeof ADMISSION_STEPS;
+  requiredDocuments?: string[];
+  timeline?: typeof TIMELINE;
+};
+
 const profile = (
   id: SchoolId,
   school: Profile['school'],
@@ -276,7 +292,9 @@ const schoolFromPath: SchoolId | undefined =
             : pathname.includes('everest-secondary-boarding-school') ? 'everest'
               : undefined;
 const requestedId = (import.meta.env.VITE_SCHOOL_ID || schoolFromPath || 'surachana') as SchoolId;
-const active = profiles[requestedId] || profiles.surachana;
+const active = profiles[requestedId] || profiles.everest;
+export const ACTIVE_SCHOOL_ID = (profiles[requestedId] ? requestedId : 'everest') as SchoolId;
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:4000';
 export const SCHOOL = active.school;
 
 const f = active.files;
@@ -351,3 +369,86 @@ export const TIMELINE = [
   { year: 'Growth', title: 'A community grows', description: 'New learners, educators, activities, and shared traditions shape the character of the school.' },
   { year: 'Today', title: 'Learning continues', description: `${SCHOOL.name} continues to help young people learn, participate, and move forward with confidence.` },
 ];
+
+export async function loadBackendSchoolData() {
+  if (import.meta.env.VITE_DISABLE_BACKEND === 'true') return;
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/schools/${ACTIVE_SCHOOL_ID}/site-data`);
+    if (!response.ok) throw new Error(`Backend returned ${response.status}`);
+
+    const payload = await response.json() as { ok: boolean; data?: SiteData };
+    if (!payload.ok || !payload.data) throw new Error('Backend response was not usable.');
+
+    applySiteData(payload.data);
+  } catch (error) {
+    console.warn('Using bundled school data because backend data could not be loaded.', error);
+  }
+}
+
+export async function submitInquiry(input: {
+  type: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  studentName?: string;
+  guardianName?: string;
+  grade?: string;
+  preferredContact?: string;
+  message: string;
+}) {
+  const response = await fetch(`${API_BASE_URL}/api/schools/${ACTIVE_SCHOOL_ID}/inquiries`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ...input,
+      source: 'surachana-website',
+    }),
+  });
+
+  const payload = await response.json() as {
+    ok: boolean;
+    error?: { message?: string };
+  };
+
+  if (!response.ok || !payload.ok) {
+    throw new Error(payload.error?.message || 'Could not send message right now.');
+  }
+}
+
+function applySiteData(data: SiteData) {
+  if (data.school) Object.assign(SCHOOL, data.school);
+  if (data.images) Object.assign(IMAGES, normalizeImages(data.images));
+  replaceArray(ACHIEVEMENTS, data.achievements);
+  replaceArray(PROGRAMS, data.programs);
+  replaceArray(VALUES, data.values);
+  replaceArray(WHY_CHOOSE, data.whyChoose);
+  replaceArray(GALLERY_CATEGORIES, data.galleryCategories);
+  replaceArray(GALLERY_ITEMS, data.galleryItems?.map((item) => ({
+    ...item,
+    src: normalizeAssetPath(item.src),
+  })));
+  replaceArray(FACULTY, data.faculty?.map((member) => ({
+    ...member,
+    image: normalizeAssetPath(member.image),
+  })));
+  replaceArray(ADMISSION_STEPS, data.admissionSteps);
+  replaceArray(REQUIRED_DOCUMENTS, data.requiredDocuments);
+  replaceArray(TIMELINE, data.timeline);
+}
+
+function normalizeImages(images: ImageMap) {
+  return Object.fromEntries(
+    Object.entries(images).map(([key, value]) => [key, normalizeAssetPath(value)]),
+  );
+}
+
+function normalizeAssetPath(src: string) {
+  if (!src || import.meta.env.DEV || !src.startsWith('/schools/')) return src;
+  return `.${src}`;
+}
+
+function replaceArray<T>(target: T[], source: T[] | undefined) {
+  if (!source) return;
+  target.splice(0, target.length, ...source);
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, CheckCircle, Send } from 'lucide-react';
-import { SCHOOL } from '../data/schoolData';
+import { SCHOOL, submitInquiry } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
 import PageHero from '../components/ui/PageHero';
 import SectionTitle from '../components/ui/SectionTitle';
@@ -10,10 +10,30 @@ import Reveal from '../components/ui/Reveal';
 export default function Contact() {
   useScrollToTop();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError('');
+
+    const form = new FormData(e.currentTarget);
+
+    try {
+      await submitInquiry({
+        type: mapSubjectToType(String(form.get('subject') || 'general')),
+        fullName: String(form.get('fullName') || ''),
+        phone: String(form.get('phone') || ''),
+        email: String(form.get('email') || ''),
+        message: String(form.get('message') || ''),
+      });
+      setSubmitted(true);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : 'Could not send message right now.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -65,39 +85,44 @@ export default function Contact() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
+                    {error && (
+                      <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                        {error}
+                      </div>
+                    )}
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-sm font-medium text-navy-700 mb-1.5">Full Name *</label>
-                        <input type="text" required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="Your name" />
+                        <input name="fullName" type="text" required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="Your name" />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-navy-700 mb-1.5">Phone Number</label>
-                        <input type="tel" className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="+977-" />
+                        <input name="phone" type="tel" className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="+977-" />
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-navy-700 mb-1.5">Email Address *</label>
-                      <input type="email" required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="your@email.com" />
+                      <input name="email" type="email" required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="your@email.com" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-navy-700 mb-1.5">Subject *</label>
-                      <select required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm bg-white">
+                      <select name="subject" required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm bg-white">
                         <option value="">Select a subject</option>
-                        <option>Admission Inquiry</option>
-                        <option>General Inquiry</option>
-                        <option>Campus Visit</option>
-                        <option>Fee Structure</option>
-                        <option>Career / Job Inquiry</option>
-                        <option>Complaint / Feedback</option>
-                        <option>Other</option>
+                        <option value="admission">Admission Inquiry</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="campus_visit">Campus Visit</option>
+                        <option value="fee">Fee Structure</option>
+                        <option value="career">Career / Job Inquiry</option>
+                        <option value="feedback">Complaint / Feedback</option>
+                        <option value="other">Other</option>
                       </select>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-navy-700 mb-1.5">Message *</label>
-                      <textarea rows={5} required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm resize-none" placeholder="How can we help you?" />
+                      <textarea name="message" rows={5} required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm resize-none" placeholder="How can we help you?" />
                     </div>
-                    <Button variant="primary" size="lg" type="submit" className="w-full sm:w-auto">
-                      <Send className="w-4 h-4" /> Send Message
+                    <Button variant="primary" size="lg" type="submit" disabled={submitting} className="w-full sm:w-auto disabled:opacity-60">
+                      <Send className="w-4 h-4" /> {submitting ? 'Sending...' : 'Send Message'}
                     </Button>
                   </form>
                 )}
@@ -148,4 +173,8 @@ export default function Contact() {
       </section>
     </main>
   );
+}
+
+function mapSubjectToType(value: string) {
+  return value || 'general';
 }
