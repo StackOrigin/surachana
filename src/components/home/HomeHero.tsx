@@ -6,7 +6,7 @@ import Magnetic from '../ui/Magnetic';
 import { cn } from '../../utils/cn';
 
 const scenes = [
-  { image: IMAGES.hero2, label: 'School life', note: 'Questions become conversations.' },
+  { image: IMAGES.hero1, label: 'School life', note: 'Questions become conversations.' },
   { image: IMAGES.cultural1, label: 'The stage', note: 'Confidence finds its own voice.' },
   { image: IMAGES.sports1, label: 'The field', note: 'Belonging is built together.' },
 ];
