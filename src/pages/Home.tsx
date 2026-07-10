@@ -12,7 +12,7 @@ import CampusStory from '../components/home/CampusStory';
 import HomeHero from '../components/home/HomeHero';
 import { cn } from '../utils/cn';
 
-const programImages = [IMAGES.drawing, IMAGES.hero2, IMAGES.students2, IMAGES.students1];
+const programImages = [IMAGES.drawing, IMAGES.campus, IMAGES.students3, IMAGES.building];
 
 export default function Home() {
   useScrollToTop();
@@ -42,41 +42,75 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-24 lg:py-36 bg-cream-50">
+      {/* ── Section 02: Our point of view ── */}
+      <section className="relative overflow-hidden bg-white py-14 lg:py-20">
         <div className="max-w-[1380px] mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="grid lg:grid-cols-[0.8fr_1.45fr] gap-12 lg:gap-24">
-            <Reveal>
-              <div className="lg:sticky lg:top-32">
-                <p className="editorial-kicker text-gold-700 mb-5">02 · Our point of view</p>
-                <h2 className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-navy-950">
-                  Education is more than a result.
-                </h2>
-              </div>
-            </Reveal>
-
-            <div>
-              <Reveal>
-                <p className="font-heading text-3xl sm:text-4xl lg:text-5xl leading-[1.12] text-navy-800">
-                  We help students become capable learners, generous classmates, and confident
-                  young people—ready for examinations, and for life beyond them.
-                </p>
-              </Reveal>
-
-              <Reveal delay={100} className="mt-12 grid sm:grid-cols-2 gap-x-10 gap-y-7">
-                {[
-                  ['Small moments matter', 'Teachers notice how each child learns, not only what they score.'],
-                  ['Questions come first', 'Curiosity, practical work, and discussion turn lessons into understanding.'],
-                  ['Character is practised', 'Respect, responsibility, and empathy are part of everyday school life.'],
-                  ['Parents stay connected', 'Clear communication keeps families close to every stage of progress.'],
-                ].map(([title, description]) => (
-                  <div key={title} className="border-t border-navy-900/20 pt-5">
-                    <Check className="w-4 h-4 text-gold-700 mb-4" />
-                    <h3 className="font-heading text-2xl text-navy-950 mb-2">{title}</h3>
-                    <p className="text-sm text-navy-600 leading-relaxed">{description}</p>
-                  </div>
-                ))}
-              </Reveal>
+          {/* Kicker + heading row */}
+          <Reveal>
+            <div className="max-w-3xl">
+              <p className="editorial-kicker text-gold-600 mb-5">02 · Our point of view</p>
+              <h2 className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-navy-950">
+                Education is more than a result.
+              </h2>
+              <p className="mt-6 sm:mt-8 font-heading text-base sm:text-lg lg:text-xl leading-[1.15] text-navy-500 max-w-2xl">
+                We help students become capable learners, generous classmates, and confident
+                young people—ready for examinations, and for life beyond them.
+              </p>
             </div>
+          </Reveal>
+
+          {/* Values grid – large horizontal cards */}
+          <div className="mt-16 lg:mt-24 grid gap-5">
+            {[
+              {
+                num: '01',
+                title: 'Small moments matter',
+                desc: 'Teachers notice how each child learns, not only what they score.',
+                accent: 'Teachers see every detail',
+              },
+              {
+                num: '02',
+                title: 'Questions come first',
+                desc: 'Curiosity, practical work, and discussion turn lessons into understanding.',
+                accent: 'Curiosity leads the way',
+              },
+              {
+                num: '03',
+                title: 'Character is practised',
+                desc: 'Respect, responsibility, and empathy are part of everyday school life.',
+                accent: 'Values in action daily',
+              },
+              {
+                num: '04',
+                title: 'Parents stay connected',
+                desc: 'Clear communication keeps families close to every stage of progress.',
+                accent: 'Family as partners',
+              },
+            ].map((item, index) => (
+              <Reveal key={item.title} delay={index * 90}>
+                <div className="group relative grid md:grid-cols-[3.5rem_1fr_auto] items-center gap-6 md:gap-8 rounded-sm border border-navy-200/60 bg-navy-50/30 px-6 py-6 sm:px-8 sm:py-7 transition-all duration-500 hover:bg-navy-50/80 hover:border-navy-300">
+                  {/* Left number */}
+                  <span className="font-heading text-2xl text-gold-400/60 group-hover:text-gold-500 transition-colors duration-500">
+                    {item.num}
+                  </span>
+
+                  {/* Content */}
+                  <div>
+                    <h3 className="font-heading text-2xl sm:text-3xl text-navy-900 group-hover:text-navy-950 transition-colors duration-500">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm sm:text-base text-navy-400 leading-relaxed group-hover:text-navy-600 transition-colors duration-500">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  {/* Right accent tag – hidden on smallest screens */}
+                  <span className="hidden sm:block editorial-kicker text-gold-500/40 group-hover:text-gold-600/70 transition-colors duration-500 text-right">
+                    {item.accent}
+                  </span>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
