@@ -4,9 +4,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
 import { cn } from '../../utils/cn';
 
-const primaryLinks = NAV_LINKS.filter((link) =>
-  ['/', '/about', '/academics', '/admission', '/gallery', '/contact'].includes(link.path),
-);
+const primaryLinkPaths = ['/', '/about', '/academics', '/faculty', '/gallery', '/contact'];
+const primaryLinks = primaryLinkPaths
+  .map((path) => NAV_LINKS.find((link) => link.path === path))
+  .filter((link): link is (typeof NAV_LINKS)[number] => Boolean(link));
 const schoolLogoSrc =
   SCHOOL.shortName === 'Surachana'
     ? import.meta.env.DEV ? '/schools/surachana/logo.jpg' : './schools/surachana/logo.jpg'
@@ -110,7 +111,7 @@ export default function Navbar() {
         )}
       >
         <div className="px-5 sm:px-8 py-6">
-          {NAV_LINKS.map((link, index) => (
+          {primaryLinks.map((link, index) => (
             <Link
               key={link.path}
               to={link.path}
@@ -120,6 +121,13 @@ export default function Navbar() {
               <span className="editorial-kicker text-navy-400">{String(index + 1).padStart(2, '0')}</span>
             </Link>
           ))}
+          <Link
+            to="/admission"
+            className="mt-5 flex items-center justify-between bg-navy-950 px-4 py-4 text-white"
+          >
+            <span className="font-heading text-2xl">Enquire</span>
+            <ArrowUpRight className="w-5 h-5 text-gold-300" />
+          </Link>
         </div>
       </div>
     </header>
