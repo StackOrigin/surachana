@@ -1,8 +1,7 @@
-@layer utilities.u0166 {
-.transform {
+.magnetic__variant-001.magnetic__variant-001.magnetic__variant-001,
+.magnetic__variant-002.magnetic__variant-002.magnetic__variant-002 {
     transform: var(--site-rotate-x,) var(--site-rotate-y,) var(--site-rotate-z,) var(--site-skew-x,) var(--site-skew-y,);
   }
-}
 
 .magnetic {
   display: inline-flex;

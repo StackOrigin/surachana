@@ -77,28 +77,28 @@ export default function Admission() {
         breadcrumb="Admission"
       />
 
-      <section className="py-16 lg:py-24 bg-cream-50">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
+      <section className="admission__section-001">
+        <div className="admission__div-002">
           <Reveal variant="clip">
-            <div className="relative bg-navy-950 text-white overflow-hidden p-7 sm:p-10 lg:p-16">
-              <div className="absolute inset-0 editorial-grid opacity-25" />
-              <div className="relative grid lg:grid-cols-[1.2fr_0.8fr] gap-10 items-end">
+            <div className="admission__div-003">
+              <div className="editorial-grid admission__div-004" />
+              <div className="admission__div-005">
                 <div>
-                  <span className="editorial-kicker text-gold-300">Now welcoming families · 2083 BS</span>
-                  <h2 className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[0.95] mt-5 max-w-3xl">
+                  <span className="editorial-kicker admission__span-006">Now welcoming families · 2083 BS</span>
+                  <h2 className="admission__h2-007">
                     Your child’s next chapter can begin here.
                   </h2>
-                  <p className="text-white/58 leading-relaxed mt-6 max-w-xl">
+                  <p className="admission__p-008">
                     Applications are open from Nursery to Class 10. We invite families to visit,
                     meet our educators, and understand the learning environment before making a decision.
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 lg:justify-end">
-                  <a href={`tel:${SCHOOL.phone}`} className="tactile inline-flex items-center justify-between gap-8 bg-gold-400 text-navy-950 px-6 py-4 text-sm font-bold">
-                    Call admissions <Phone className="w-4 h-4" />
+                <div className="admission__div-009">
+                  <a href={`tel:${SCHOOL.phone}`} className="tactile admission__a-010">
+                    Call admissions <Phone className="admission__phone-011" />
                   </a>
-                  <a href={SCHOOL.email ? `mailto:${SCHOOL.email}?subject=Campus Visit Request` : SCHOOL.social.facebook} target={SCHOOL.email ? undefined : '_blank'} rel={SCHOOL.email ? undefined : 'noreferrer'} className="tactile inline-flex items-center justify-between gap-8 border border-white/25 px-6 py-4 text-sm font-bold hover:bg-white hover:text-navy-950 transition-colors">
-                    Plan a visit <ArrowDownRight className="w-4 h-4" />
+                  <a href={SCHOOL.email ? `mailto:${SCHOOL.email}?subject=Campus Visit Request` : SCHOOL.social.facebook} target={SCHOOL.email ? undefined : '_blank'} rel={SCHOOL.email ? undefined : 'noreferrer'} className="tactile admission__a-012">
+                    Plan a visit <ArrowDownRight className="admission__arrow-down-right-013" />
                   </a>
                 </div>
               </div>
@@ -107,23 +107,23 @@ export default function Admission() {
         </div>
       </section>
 
-      <section className="py-24 lg:py-32">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
-          <Reveal variant="slide-left" className="mb-14 lg:mb-20">
-            <p className="editorial-kicker text-gold-700 mb-5">01 · The process</p>
-            <h2 className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-none max-w-3xl">
+      <section className="admission__section-014">
+        <div className="admission__div-015">
+          <Reveal variant="slide-left" className="admission__reveal-016">
+            <p className="editorial-kicker admission__p-017">01 · The process</p>
+            <h2 className="admission__h2-018">
               Five simple steps,
-              <span className="block italic text-navy-500">with people to guide you.</span>
+              <span className="admission__span-019">with people to guide you.</span>
             </h2>
           </Reveal>
 
-          <div className="border-t border-navy-900/20">
+          <div className="admission__div-020">
             {ADMISSION_STEPS.map((item, index) => (
               <Reveal key={item.step} variant={index % 2 === 0 ? 'slide-left' : 'slide-right'} delay={index * 70}>
-                <article className="grid sm:grid-cols-[0.2fr_0.75fr_1.2fr] gap-4 sm:gap-8 py-7 border-b border-navy-900/20 items-start">
-                  <span className="font-heading text-3xl text-gold-700">{String(item.step).padStart(2, '0')}</span>
-                  <h3 className="font-heading text-2xl sm:text-3xl">{item.title}</h3>
-                  <p className="text-sm sm:text-base text-navy-600 leading-relaxed max-w-2xl">{item.description}</p>
+                <article className="admission__article-021">
+                  <span className="admission__span-022">{String(item.step).padStart(2, '0')}</span>
+                  <h3 className="admission__h3-023">{item.title}</h3>
+                  <p className="admission__p-024">{item.description}</p>
                 </article>
               </Reveal>
             ))}
@@ -131,37 +131,37 @@ export default function Admission() {
         </div>
       </section>
 
-      <section className="py-24 lg:py-32 bg-cream-100">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+      <section className="admission__section-025">
+        <div className="admission__div-026">
+          <div className="admission__div-027">
             <Reveal variant="slide-left">
-              <p className="editorial-kicker text-gold-700 mb-5">02 · Eligibility</p>
-              <h2 className="font-heading text-5xl sm:text-6xl leading-none mb-10">Finding the right starting point.</h2>
-              <div className="border-t border-navy-900/20">
+              <p className="editorial-kicker admission__p-028">02 · Eligibility</p>
+              <h2 className="admission__h2-029">Finding the right starting point.</h2>
+              <div className="admission__div-030">
                 {eligibility.map((item) => (
-                  <div key={item.level} className="grid grid-cols-[0.45fr_1fr] gap-5 py-5 border-b border-navy-900/20">
-                    <strong className="text-xs uppercase tracking-[0.14em] text-gold-700">{item.level}</strong>
-                    <p className="text-sm text-navy-600 leading-relaxed">{item.criteria}</p>
+                  <div key={item.level} className="admission__div-031">
+                    <strong className="admission__strong-032">{item.level}</strong>
+                    <p className="admission__p-033">{item.criteria}</p>
                   </div>
                 ))}
               </div>
             </Reveal>
 
             <Reveal variant="slide-right" delay={150}>
-              <div className="bg-navy-950 text-white p-7 sm:p-10 lg:p-12">
-                <FileText className="w-8 h-8 text-gold-300 mb-8" />
-                <p className="editorial-kicker text-gold-300 mb-5">03 · What to bring</p>
-                <h2 className="font-heading text-4xl sm:text-5xl leading-none mb-9">Required documents.</h2>
-                <ul className="space-y-4">
+              <div className="admission__div-034">
+                <FileText className="admission__file-text-035" />
+                <p className="editorial-kicker admission__p-036">03 · What to bring</p>
+                <h2 className="admission__h2-037">Required documents.</h2>
+                <ul className="admission__ul-038">
                   {REQUIRED_DOCUMENTS.map((document) => (
-                    <li key={document} className="flex items-start gap-3 text-sm text-white/65">
-                      <Check className="w-4 h-4 text-gold-300 shrink-0 mt-0.5" />
+                    <li key={document} className="admission__li-039">
+                      <Check className="admission__check-040" />
                       {document}
                     </li>
                   ))}
                 </ul>
-                <div className="mt-9 pt-6 border-t border-white/15 flex gap-3 text-sm text-gold-200">
-                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <div className="admission__div-041">
+                  <AlertCircle className="admission__alert-circle-042" />
                   Originals are required only for verification during admission.
                 </div>
               </div>
@@ -170,93 +170,93 @@ export default function Admission() {
         </div>
       </section>
 
-      <section className="py-24 lg:py-32 bg-white">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-20 items-start">
+      <section className="admission__section-043">
+        <div className="admission__div-044">
+          <div className="admission__div-045">
             <Reveal variant="slide-left">
-              <p className="editorial-kicker text-gold-700 mb-5">04 · Admission inquiry</p>
-              <h2 className="font-heading text-5xl sm:text-6xl leading-none">
+              <p className="editorial-kicker admission__p-046">04 · Admission inquiry</p>
+              <h2 className="admission__h2-047">
                 Share your details with the admission team.
               </h2>
-              <p className="mt-6 text-navy-600 leading-relaxed max-w-lg">
+              <p className="admission__p-048">
                 The school office will receive this request directly and can follow up with
                 available classes, visit timing, and next steps.
               </p>
             </Reveal>
 
             <Reveal variant="slide-right" delay={120}>
-              <form onSubmit={handleAdmissionSubmit} className="border border-navy-950/15 bg-cream-50 p-5 sm:p-8 lg:p-10">
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <label className="block">
-                    <span className="editorial-kicker text-navy-600">Parent / guardian</span>
+              <form onSubmit={handleAdmissionSubmit} className="admission__form-049">
+                <div className="admission__div-050">
+                  <label className="admission__label-051">
+                    <span className="editorial-kicker admission__span-052">Parent / guardian</span>
                     <input
                       required
                       value={admissionForm.guardianName}
                       onChange={(event) => updateAdmissionForm('guardianName', event.target.value)}
-                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      className="admission__input-053"
                       placeholder="Your full name"
                     />
                   </label>
-                  <label className="block">
-                    <span className="editorial-kicker text-navy-600">Student name</span>
+                  <label className="admission__label-054">
+                    <span className="editorial-kicker admission__span-055">Student name</span>
                     <input
                       required
                       value={admissionForm.studentName}
                       onChange={(event) => updateAdmissionForm('studentName', event.target.value)}
-                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      className="admission__input-056"
                       placeholder="Child's full name"
                     />
                   </label>
-                  <label className="block">
-                    <span className="editorial-kicker text-navy-600">Class / grade</span>
+                  <label className="admission__label-057">
+                    <span className="editorial-kicker admission__span-058">Class / grade</span>
                     <input
                       required
                       value={admissionForm.grade}
                       onChange={(event) => updateAdmissionForm('grade', event.target.value)}
-                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      className="admission__input-059"
                       placeholder="Nursery, Class 1, Class 8..."
                     />
                   </label>
-                  <label className="block">
-                    <span className="editorial-kicker text-navy-600">Phone</span>
+                  <label className="admission__label-060">
+                    <span className="editorial-kicker admission__span-061">Phone</span>
                     <input
                       required
                       value={admissionForm.phone}
                       onChange={(event) => updateAdmissionForm('phone', event.target.value)}
-                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      className="admission__input-062"
                       placeholder="98XXXXXXXX"
                     />
                   </label>
-                  <label className="block sm:col-span-2">
-                    <span className="editorial-kicker text-navy-600">Email</span>
+                  <label className="admission__label-063">
+                    <span className="editorial-kicker admission__span-064">Email</span>
                     <input
                       type="email"
                       value={admissionForm.email}
                       onChange={(event) => updateAdmissionForm('email', event.target.value)}
-                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      className="admission__input-065"
                       placeholder="you@example.com"
                     />
                   </label>
-                  <label className="block sm:col-span-2">
-                    <span className="editorial-kicker text-navy-600">Message</span>
+                  <label className="admission__label-066">
+                    <span className="editorial-kicker admission__span-067">Message</span>
                     <textarea
                       rows={5}
                       value={admissionForm.message}
                       onChange={(event) => updateAdmissionForm('message', event.target.value)}
-                      className="mt-2 w-full border border-navy-950/20 bg-white px-4 py-3 text-sm outline-none focus:border-gold-700"
+                      className="admission__textarea-068"
                       placeholder="Tell us what you would like to know."
                     />
                   </label>
                 </div>
 
                 {formError && (
-                  <div className="mt-5 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  <div className="admission__div-069">
                     {formError}
                   </div>
                 )}
 
                 {formState === 'sent' && (
-                  <div className="mt-5 border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                  <div className="admission__div-070">
                     Admission inquiry sent. The school office can now see it in the admin dashboard.
                   </div>
                 )}
@@ -264,10 +264,10 @@ export default function Admission() {
                 <button
                   type="submit"
                   disabled={formState === 'sending'}
-                  className="tactile mt-7 inline-flex items-center justify-between gap-8 bg-navy-950 text-white px-6 py-4 text-sm font-bold disabled:opacity-60"
+                  className="tactile admission__button-071"
                 >
                   {formState === 'sending' ? 'Sending inquiry' : 'Send admission inquiry'}
-                  <ArrowDownRight className="w-4 h-4" />
+                  <ArrowDownRight className="admission__arrow-down-right-072" />
                 </button>
               </form>
             </Reveal>
@@ -275,17 +275,17 @@ export default function Admission() {
         </div>
       </section>
 
-      <section className="py-24 lg:py-32 bg-white text-navy-950">
-        <div className="max-w-[1180px] mx-auto px-5 sm:px-8 lg:px-12">
+      <section className="admission__section-073">
+        <div className="admission__div-074">
           <Reveal variant="scale">
-            <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20">
+            <div className="admission__div-075">
               <div>
-                <p className="editorial-kicker mb-5">Come and see for yourself</p>
-                <h2 className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-none">
+                <p className="editorial-kicker admission__p-076">Come and see for yourself</p>
+                <h2 className="admission__h2-077">
                   A school visit tells you more than a brochure can.
                 </h2>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-5 content-end">
+              <div className="admission__div-078">
                 {[
                   [Phone, 'Call', SCHOOL.phone, `tel:${SCHOOL.phone}`],
                   [Mail, 'Write', SCHOOL.email, `mailto:${SCHOOL.email}`],
@@ -294,11 +294,11 @@ export default function Admission() {
                 ].map(([Icon, label, value, href]) => {
                   const ItemIcon = Icon as typeof Phone;
                   return (
-                    <a key={String(label)} href={String(href)} className="group flex gap-4 border-t border-navy-950/25 pt-4">
-                      <ItemIcon className="w-5 h-5 shrink-0 group-hover:rotate-6 transition-transform" />
+                    <a key={String(label)} href={String(href)} className="admission__a-079">
+                      <ItemIcon className="admission__item-icon-080" />
                       <span>
-                        <strong className="editorial-kicker block mb-1">{String(label)}</strong>
-                        <span className="text-sm">{String(value)}</span>
+                        <strong className="editorial-kicker admission__strong-081">{String(label)}</strong>
+                        <span className="admission__span-082">{String(value)}</span>
                       </span>
                     </a>
                   );

@@ -30,9 +30,9 @@ function AppShell() {
   const isAdmin = location.pathname.startsWith('/admin');
 
   return (
-    <div className="flex flex-col min-h-screen bg-cream-50" onClickCapture={resetScrollBeforeNavigation}>
+    <div className="app__div-001" onClickCapture={resetScrollBeforeNavigation}>
       {!isAdmin && <Navbar />}
-      <div className={isAdmin ? 'flex-1 bg-[#f5f7f4]' : 'flex-1'}>
+      <div className={isAdmin ? "app__div-002" : "app__div-003"}>
         <RouteTransition>
           <Routes>
             <Route path="/" element={<Home />} />

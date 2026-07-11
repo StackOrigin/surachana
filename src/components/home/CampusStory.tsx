@@ -27,18 +27,18 @@ export default function CampusStory() {
   }, []);
 
   return (
-    <section className="py-24 lg:py-36 bg-cream-100">
-      <div className="max-w-[1380px] mx-auto px-5 sm:px-8 lg:px-12">
-        <Reveal variant="slide-left" className="mb-14">
-          <p className="editorial-kicker text-gold-700 mb-5">04 · A day at {SCHOOL.shortName}</p>
-          <h2 className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-none max-w-4xl">
+    <section className="campus-story__section-001">
+      <div className="campus-story__div-002">
+        <Reveal variant="slide-left" className="campus-story__reveal-003">
+          <p className="editorial-kicker campus-story__p-004">04 · A day at {SCHOOL.shortName}</p>
+          <h2 className="campus-story__h2-005">
             Follow the rhythm
-            <span className="block italic text-navy-500">of an ordinary school day.</span>
+            <span className="campus-story__span-006">of an ordinary school day.</span>
           </h2>
         </Reveal>
 
-        <div className="grid lg:grid-cols-[0.75fr_1.25fr] gap-10 lg:gap-20 items-start">
-          <div className="border-t border-navy-900/20">
+        <div className="campus-story__div-007">
+          <div className="campus-story__div-008">
             {moments.map((moment, index) => (
               <button
                 key={moment.title}
@@ -48,40 +48,40 @@ export default function CampusStory() {
                 onClick={() => setActive(index)}
                 onPointerEnter={() => setActive(index)}
                 className={cn(
-                  'w-full text-left grid grid-cols-[0.25fr_1fr_auto] gap-4 py-7 border-b border-navy-900/20 transition-all',
-                  active === index ? 'text-navy-950 pl-3' : 'text-navy-500 hover:text-navy-950',
+                  "campus-story__button-009",
+                  active === index ? "campus-story__button-010" : "campus-story__button-011",
                 )}
                 aria-pressed={active === index}
               >
-                <span className="editorial-kicker text-gold-700">{moment.label}</span>
+                <span className="editorial-kicker campus-story__span-012">{moment.label}</span>
                 <span>
-                  <strong className="font-heading text-2xl sm:text-3xl block">{moment.title}</strong>
-                  <span className={cn('text-sm leading-relaxed mt-2 block transition-opacity', active === index ? 'opacity-100' : 'opacity-55')}>
+                  <strong className="campus-story__strong-013">{moment.title}</strong>
+                  <span className={cn("campus-story__span-014", active === index ? "campus-story__span-015" : "campus-story__span-016")}>
                     {moment.copy}
                   </span>
                 </span>
-                <ArrowUpRight className={cn('w-5 h-5 transition-transform', active === index && 'rotate-45')} />
+                <ArrowUpRight className={cn("campus-story__arrow-up-right-017", active === index && "campus-story__arrow-up-right-018")} />
               </button>
             ))}
           </div>
 
-          <div className="lg:sticky lg:top-28">
+          <div className="campus-story__div-019">
             <PointerDepth>
-              <div className="relative h-[430px] sm:h-[620px] overflow-hidden bg-navy-950">
+              <div className="campus-story__div-020">
                 {moments.map((moment, index) => (
                   <img
                     key={moment.image}
                     src={moment.image}
                     alt={moment.title}
                     className={cn(
-                      'absolute inset-0 w-full h-full object-cover transition-all duration-1000',
-                      active === index ? 'opacity-100 scale-100' : 'opacity-0 scale-110',
+                      "campus-story__img-021",
+                      active === index ? "campus-story__img-022" : "campus-story__img-023",
                     )}
                     loading="lazy"
                   />
                 ))}
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-950/65 via-transparent to-transparent" />
-                <span className="absolute bottom-6 left-6 font-heading text-7xl text-white/20">
+                <div className="campus-story__div-024" />
+                <span className="campus-story__span-025">
                   {String(active + 1).padStart(2, '0')}
                 </span>
               </div>

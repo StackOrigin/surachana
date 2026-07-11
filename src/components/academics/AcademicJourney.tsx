@@ -13,20 +13,20 @@ export default function AcademicJourney() {
   const program = PROGRAMS[active];
 
   return (
-    <section className="py-24 lg:py-32 bg-cream-50">
-      <div className="max-w-[1380px] mx-auto px-5 sm:px-8 lg:px-12">
-        <Reveal variant="slide-left" className="mb-14">
-          <p className="editorial-kicker text-gold-700 mb-5">The learning journey</p>
-          <h2 className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-none max-w-4xl">
+    <section className="academic-journey__section-001">
+      <div className="academic-journey__div-002">
+        <Reveal variant="slide-left" className="academic-journey__reveal-003">
+          <p className="editorial-kicker academic-journey__p-004">The learning journey</p>
+          <h2 className="academic-journey__h2-005">
             Growing independence,
-            <span className="block italic text-navy-500">one stage at a time.</span>
+            <span className="academic-journey__span-006">one stage at a time.</span>
           </h2>
         </Reveal>
 
-        <div className="grid lg:grid-cols-[0.48fr_1.52fr] gap-8 lg:gap-14">
-          <div className="relative border-l border-navy-900/20">
+        <div className="academic-journey__div-007">
+          <div className="academic-journey__div-008">
             <span
-              className="absolute left-[-2px] top-0 w-[3px] bg-gold-500 transition-all duration-700"
+              className="academic-journey__span-009"
               style={{ height: '25%', transform: `translateY(${active * 100}%)` }}
             />
             {PROGRAMS.map((item, index) => (
@@ -36,39 +36,39 @@ export default function AcademicJourney() {
                 onClick={() => setActive(index)}
                 onPointerEnter={() => setActive(index)}
                 className={cn(
-                  'w-full text-left px-6 py-6 transition-colors',
-                  active === index ? 'bg-navy-950 text-white' : 'text-navy-500 hover:text-navy-950',
+                  "academic-journey__button-010",
+                  active === index ? "academic-journey__button-011" : "academic-journey__button-012",
                 )}
                 aria-pressed={active === index}
               >
-                <span className="editorial-kicker text-gold-500">{String(index + 1).padStart(2, '0')} · {item.ages}</span>
-                <strong className="font-heading text-xl sm:text-2xl block mt-2">{item.title}</strong>
+                <span className="editorial-kicker academic-journey__span-013">{String(index + 1).padStart(2, '0')} · {item.ages}</span>
+                <strong className="academic-journey__strong-014">{item.title}</strong>
               </button>
             ))}
           </div>
 
-          <div key={active} className="journey-panel grid md:grid-cols-2 bg-cream-100 min-h-[560px]">
-            <PointerDepth className="min-h-[340px] md:min-h-full">
-              <div className="h-full overflow-hidden">
-                <img src={images[active]} alt={program.title} className="w-full h-full object-cover cinematic-image" />
+          <div key={active} className="journey-panel academic-journey__div-015">
+            <PointerDepth className="academic-journey__pointer-depth-016">
+              <div className="academic-journey__div-017">
+                <img src={images[active]} alt={program.title} className="cinematic-image academic-journey__img-018" />
               </div>
             </PointerDepth>
-            <div className="p-7 sm:p-10 lg:p-14 flex flex-col justify-between">
+            <div className="academic-journey__div-019">
               <div>
-                <span className="editorial-kicker text-gold-700">{program.ages}</span>
-                <h3 className="font-heading text-4xl sm:text-5xl leading-none mt-4">{program.title}</h3>
-                <p className="text-navy-600 leading-relaxed mt-6">{program.description}</p>
-                <div className="mt-8 space-y-3">
+                <span className="editorial-kicker academic-journey__span-020">{program.ages}</span>
+                <h3 className="academic-journey__h3-021">{program.title}</h3>
+                <p className="academic-journey__p-022">{program.description}</p>
+                <div className="academic-journey__div-023">
                   {program.focus.map((focus) => (
-                    <div key={focus} className="flex items-center gap-3 text-sm text-navy-700">
-                      <Check className="w-4 h-4 text-gold-700" />
+                    <div key={focus} className="academic-journey__div-024">
+                      <Check className="academic-journey__check-025" />
                       {focus}
                     </div>
                   ))}
                 </div>
               </div>
-              <a href="#/admission" className="ink-link mt-10 inline-flex items-center gap-3 text-sm font-bold self-start">
-                Ask about this stage <ArrowRight className="w-4 h-4" />
+              <a href="#/admission" className="ink-link academic-journey__a-026">
+                Ask about this stage <ArrowRight className="academic-journey__arrow-right-027" />
               </a>
             </div>
           </div>

@@ -17,30 +17,30 @@ export default function SectionTitle({ badge, title, subtitle, align = 'center',
     <div
       ref={ref}
       className={cn(
-        "fade-up mb-12 md:mb-16",
-        isVisible && "visible",
-        align === 'center' ? 'text-center mx-auto max-w-3xl' : 'text-left max-w-2xl'
+        "fade-up section-title__div-001",
+        isVisible && "section-title__div-002",
+        align === 'center' ? "section-title__div-003" : "section-title__div-004"
       )}
     >
       {badge && (
         <span className={cn(
-          "editorial-kicker inline-flex items-center gap-3 mb-5",
-          light ? "text-gold-300" : "text-gold-700"
+          "editorial-kicker section-title__span-005",
+          light ? "section-title__span-006" : "section-title__span-007"
         )}>
-          <span className={cn("w-8 h-px", light ? "bg-gold-300" : "bg-gold-700")} />
+          <span className={cn("section-title__span-008", light ? "section-title__span-009" : "section-title__span-010")} />
           {badge}
         </span>
       )}
       <h2 className={cn(
-        "font-heading text-4xl md:text-5xl lg:text-6xl tracking-[-0.025em] leading-[0.98]",
-        light ? "text-white" : "text-navy-950"
+        "section-title__h2-011",
+        light ? "section-title__h2-012" : "section-title__h2-013"
       )}>
         {title}
       </h2>
       {subtitle && (
         <p className={cn(
-          "mt-5 text-base md:text-lg leading-relaxed",
-          light ? "text-white/60" : "text-navy-600"
+          "section-title__p-014",
+          light ? "section-title__p-015" : "section-title__p-016"
         )}>
           {subtitle}
         </p>

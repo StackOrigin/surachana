@@ -22,14 +22,14 @@ export default function Academics() {
       <AcademicJourney />
 
       {/* Facilities */}
-      <section className="py-20 md:py-28 bg-navy-50/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="academics__section-001">
+        <div className="academics__div-002">
           <SectionTitle
             badge="Facilities"
             title="State-of-the-Art Learning Spaces"
             subtitle="Our campus is equipped with modern facilities designed to enhance learning and personal growth."
           />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="academics__div-003">
             {[
               { title: "Smart Classrooms", desc: "Projectors, digital boards, and interactive learning tools in every classroom." },
               { title: "Science Labs", desc: "Fully equipped physics, chemistry, and biology laboratories." },
@@ -37,11 +37,11 @@ export default function Academics() {
               { title: "Sports Grounds", desc: "Football field, basketball court, and indoor game facilities." },
             ].map((item, i) => (
               <Reveal key={i} variant="scale" delay={i * 80}>
-                <div className="tactile bg-white rounded-2xl p-6 shadow-sm border border-navy-100/50 hover:shadow-lg transition-all duration-300 text-left h-full group">
-                  <span className="editorial-kicker text-gold-700 block mb-7">0{i + 1}</span>
-                  <div className="w-10 h-px bg-gold-600 mb-6 transition-all duration-300 group-hover:w-16" />
-                  <h3 className="font-heading text-xl font-bold text-navy-900 mb-3">{item.title}</h3>
-                  <p className="text-sm text-navy-500 leading-relaxed">{item.desc}</p>
+                <div className="tactile academics__div-004">
+                  <span className="editorial-kicker academics__span-005">0{i + 1}</span>
+                  <div className="academics__div-006" />
+                  <h3 className="academics__h3-007">{item.title}</h3>
+                  <p className="academics__p-008">{item.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -50,25 +50,25 @@ export default function Academics() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-28 bg-navy-900 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/3 w-96 h-96 bg-gold-500/10 rounded-full blur-[100px]" />
+      <section className="academics__section-009">
+        <div className="academics__div-010">
+          <div className="academics__div-011" />
         </div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="academics__div-012">
           <Reveal variant="scale">
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-white leading-tight mb-6">
-              Find the Right Program <span className="text-gold-400">for Your Child</span>
+            <h2 className="academics__h2-013">
+              Find the Right Program <span className="academics__span-014">for Your Child</span>
             </h2>
-            <p className="text-lg text-navy-200 max-w-2xl mx-auto mb-10">
+            <p className="academics__p-015">
               Not sure which program suits your child best? Schedule a visit and let our counselors guide you.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="academics__div-016">
               <Link to="/admission">
-                <Button variant="secondary" size="lg">Apply Now <ArrowRight className="w-4 h-4" /></Button>
+                <Button variant="secondary" size="lg">Apply Now <ArrowRight className="academics__arrow-right-017" /></Button>
               </Link>
               <Link to="/contact">
-                <Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10 hover:text-white">
-                  Schedule a Visit <ArrowRight className="w-4 h-4" />
+                <Button variant="outline" size="lg" className="academics__button-018">
+                  Schedule a Visit <ArrowRight className="academics__arrow-right-019" />
                 </Button>
               </Link>
             </div>

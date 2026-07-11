@@ -8,22 +8,22 @@ import Reveal from '../components/ui/Reveal';
 import { cn } from '../utils/cn';
 
 const compositions = [
-  'lg:col-span-5 lg:row-span-2',
-  'lg:col-span-3',
-  'lg:col-span-4',
-  'lg:col-span-3',
-  'lg:col-span-4 lg:row-span-2',
-  'lg:col-span-5',
-  'lg:col-span-3',
-  'lg:col-span-5',
-  'lg:col-span-4',
-  'lg:col-span-5 lg:row-span-2',
-  'lg:col-span-3',
-  'lg:col-span-4',
-  'lg:col-span-3',
-  'lg:col-span-4',
-  'lg:col-span-5',
-  'lg:col-span-4',
+  "gallery__variant-001",
+  "gallery__variant-002",
+  "gallery__variant-003",
+  "gallery__variant-004",
+  "gallery__variant-005",
+  "gallery__variant-006",
+  "gallery__variant-007",
+  "gallery__variant-008",
+  "gallery__variant-009",
+  "gallery__variant-010",
+  "gallery__variant-011",
+  "gallery__variant-012",
+  "gallery__variant-013",
+  "gallery__variant-014",
+  "gallery__variant-015",
+  "gallery__variant-016",
 ];
 
 const captions = [
@@ -71,7 +71,7 @@ export default function Gallery() {
       if (event.key === 'ArrowRight') moveSelection(1);
     };
 
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "gallery__variant-017";
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = '';
@@ -89,32 +89,32 @@ export default function Gallery() {
         breadcrumb="Gallery"
       />
 
-      <section className="py-20 lg:py-32 bg-cream-50">
-        <div className="max-w-[1380px] mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="grid lg:grid-cols-[0.55fr_1.45fr] gap-10 lg:gap-20 mb-14">
+      <section className="gallery__section-018">
+        <div className="gallery__div-019">
+          <div className="gallery__div-020">
             <Reveal variant="slide-left">
-              <p className="editorial-kicker text-gold-700 mb-5">A living archive</p>
-              <h2 className="font-heading text-5xl sm:text-6xl leading-none">
+              <p className="editorial-kicker gallery__p-021">A living archive</p>
+              <h2 className="gallery__h2-022">
                 Little windows into
-                <span className="block italic text-navy-500">life at {SCHOOL.shortName}.</span>
+                <span className="gallery__span-023">life at {SCHOOL.shortName}.</span>
               </h2>
             </Reveal>
-            <Reveal variant="slide-right" delay={120} className="lg:self-end">
-              <p className="text-navy-600 leading-relaxed max-w-xl mb-8">
+            <Reveal variant="slide-right" delay={120} className="gallery__reveal-024">
+              <p className="gallery__p-025">
                 Classrooms are only one part of a school. These are the rehearsals, matches,
                 experiments, friendships, and quiet in-between moments that children carry with them.
               </p>
-              <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-navy-900/20 pt-5" role="group" aria-label="Filter gallery">
+              <div className="gallery__div-026" role="group" aria-label="Filter gallery">
                 {GALLERY_CATEGORIES.map((category) => (
                   <button
                     key={category}
                     type="button"
                     onClick={() => setActiveCategory(category)}
                     className={cn(
-                      'relative py-1 text-xs font-bold uppercase tracking-[0.12em] transition-colors after:absolute after:left-0 after:-bottom-1 after:h-px after:transition-all',
+                      "gallery__button-027",
                       activeCategory === category
-                        ? 'text-gold-700 after:w-full after:bg-gold-700'
-                        : 'text-navy-500 after:w-0 after:bg-navy-950 hover:text-navy-950 hover:after:w-full',
+                        ? "gallery__button-028"
+                        : "gallery__button-029",
                     )}
                     aria-pressed={activeCategory === category}
                   >
@@ -125,40 +125,40 @@ export default function Gallery() {
             </Reveal>
           </div>
 
-          <div key={activeCategory} className="gallery-enter grid grid-cols-2 lg:grid-cols-12 lg:auto-rows-[220px] gap-3 sm:gap-5">
+          <div key={activeCategory} className="gallery-enter gallery__div-030">
             {filtered.map((item, index) => (
               <button
                 key={`${item.src}-${item.originalIndex}`}
                 type="button"
                 onClick={() => setSelectedIndex(item.originalIndex)}
                 className={cn(
-                  'group relative overflow-hidden min-h-52 text-left bg-navy-900',
-                  activeCategory === 'All' ? compositions[index] : 'lg:col-span-4',
+                  "gallery__button-031",
+                  activeCategory === 'All' ? compositions[index] : "gallery__button-032",
                 )}
                 aria-label={`Open photo: ${item.alt}`}
               >
                 <img
                   src={item.src}
                   alt={item.alt}
-                  className="w-full h-full object-cover group-hover:scale-[1.07] group-hover:rotate-[0.3deg] transition-transform duration-1000"
+                  className="gallery__img-033"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/5 to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 translate-y-3 group-hover:translate-y-0 transition-transform duration-500">
-                  <span className="editorial-kicker text-gold-300">{item.category}</span>
-                  <p className="font-heading text-xl sm:text-2xl text-white mt-2 max-w-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="gallery__div-034" />
+                <div className="gallery__div-035">
+                  <span className="editorial-kicker gallery__span-036">{item.category}</span>
+                  <p className="gallery__p-037">
                     {captions[item.originalIndex]}
                   </p>
                 </div>
-                <span className="absolute top-4 right-4 w-9 h-9 grid place-items-center bg-cream-50 text-navy-950 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowUpRight className="w-4 h-4" />
+                <span className="gallery__span-038">
+                  <ArrowUpRight className="gallery__arrow-up-right-039" />
                 </span>
               </button>
             ))}
           </div>
 
           {filtered.length === 0 && (
-            <p className="py-20 text-center font-heading text-3xl text-navy-500">
+            <p className="gallery__p-040">
               No photographs in this chapter yet.
             </p>
           )}
@@ -167,7 +167,7 @@ export default function Gallery() {
 
       {selected && (
         <div
-          className="lightbox-enter fixed inset-0 z-[70] bg-navy-950/95 backdrop-blur-md p-4 sm:p-8 lg:p-12 grid place-items-center"
+          className="lightbox-enter gallery__div-041"
           role="dialog"
           aria-modal="true"
           aria-label={`Photo preview: ${selected.alt}`}
@@ -176,38 +176,38 @@ export default function Gallery() {
           <button
             type="button"
             onClick={() => setSelectedIndex(null)}
-            className="absolute top-5 right-5 sm:top-8 sm:right-8 w-12 h-12 grid place-items-center border border-white/25 text-white hover:bg-white hover:text-navy-950 transition-colors"
+            className="gallery__button-042"
             aria-label="Close photo preview"
             autoFocus
           >
-            <X className="w-5 h-5" />
+            <X className="gallery__x-043" />
           </button>
 
           <button
             type="button"
             onClick={(event) => { event.stopPropagation(); moveSelection(-1); }}
-            className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center border border-white/25 text-white hover:bg-white hover:text-navy-950 transition-colors"
+            className="gallery__button-044"
             aria-label="Previous photo"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="gallery__chevron-left-045" />
           </button>
           <button
             type="button"
             onClick={(event) => { event.stopPropagation(); moveSelection(1); }}
-            className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center border border-white/25 text-white hover:bg-white hover:text-navy-950 transition-colors"
+            className="gallery__button-046"
             aria-label="Next photo"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="gallery__chevron-right-047" />
           </button>
 
-          <figure key={selectedIndex} className="lightbox-image-enter max-w-6xl w-full px-12 sm:px-16" onClick={(event) => event.stopPropagation()}>
-            <img src={selected.src} alt={selected.alt} className="max-h-[72vh] w-full object-contain" />
-            <figcaption className="mt-5 flex flex-col sm:flex-row sm:items-end justify-between gap-2 text-white">
+          <figure key={selectedIndex} className="lightbox-image-enter gallery__figure-048" onClick={(event) => event.stopPropagation()}>
+            <img src={selected.src} alt={selected.alt} className="gallery__img-049" />
+            <figcaption className="gallery__figcaption-050">
               <div>
-                <span className="editorial-kicker text-gold-300">{selected.category}</span>
-                <p className="font-heading text-2xl sm:text-3xl mt-2">{captions[selectedIndex!]}</p>
+                <span className="editorial-kicker gallery__span-051">{selected.category}</span>
+                <p className="gallery__p-052">{captions[selectedIndex!]}</p>
               </div>
-              <span className="editorial-kicker text-white/35">
+              <span className="editorial-kicker gallery__span-053">
                 {String(selectedIndex! + 1).padStart(2, '0')} / {String(GALLERY_ITEMS.length).padStart(2, '0')}
               </span>
             </figcaption>

@@ -41,11 +41,11 @@ export default function HomeHero() {
 
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener("home-hero__variant-001", onScroll);
     return () => {
       if (frame) cancelAnimationFrame(frame);
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      window.removeEventListener("home-hero__variant-002", onScroll);
     };
   }, []);
 
@@ -79,7 +79,7 @@ export default function HomeHero() {
       } as CSSProperties}
     >
       <div className="book-hero-sticky">
-        <div className="absolute inset-0 editorial-grid opacity-25" />
+        <div className="editorial-grid home-hero__div-003" />
 
         <div
           ref={visualRef}
@@ -97,49 +97,49 @@ export default function HomeHero() {
               loading={index === 0 ? 'eager' : 'lazy'}
             />
           ))}
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-navy-950/5 to-navy-950/35" />
+          <div className="home-hero__div-004" />
         </div>
 
-        <div className="absolute inset-x-0 top-0 z-20 max-w-[1480px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-28 lg:pt-32 flex justify-between">
-          <span className="editorial-kicker text-gold-300">{SCHOOL.shortName} · School life</span>
-          <span className="hidden sm:block editorial-kicker text-white/45">{SCHOOL.locationLine}</span>
+        <div className="home-hero__div-005">
+          <span className="editorial-kicker home-hero__span-006">{SCHOOL.shortName} · School life</span>
+          <span className="editorial-kicker home-hero__span-007">{SCHOOL.locationLine}</span>
         </div>
 
-        <div className="book-headline absolute inset-0 z-10 grid place-items-center pointer-events-none px-5">
-          <h1 className="font-heading tracking-[-0.05em] leading-[0.82] text-white text-center">
-            <span className="book-page book-page-left block text-[2.7rem] sm:text-[4.1rem] lg:text-[5.7rem] xl:text-[6.8rem]">
+        <div className="book-headline home-hero__div-008">
+          <h1 className="home-hero__h1-009">
+            <span className="book-page book-page-left home-hero__span-010">
               {SCHOOL.heroLines[0]}
             </span>
-            <span className="block italic text-gold-300 text-[2.5rem] sm:text-[3.8rem] lg:text-[5.25rem] xl:text-[6.25rem]">
+            <span className="home-hero__span-011">
               {SCHOOL.heroLines[1]}
             </span>
-            <span className="book-page book-page-right block text-[2.5rem] sm:text-[3.95rem] lg:text-[5.35rem] xl:text-[6.4rem]">
+            <span className="book-page book-page-right home-hero__span-012">
               {SCHOOL.heroLines[2]}
             </span>
           </h1>
         </div>
 
-        <div className="book-details absolute inset-x-0 bottom-0 z-20 max-w-[1480px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pb-8 lg:pb-12 grid md:grid-cols-[1fr_auto] gap-7 items-end">
+        <div className="book-details home-hero__div-013">
           <div>
-            <p className="editorial-kicker text-gold-300 mb-2">{scenes[activeScene].label}</p>
-            <p className="font-heading text-2xl sm:text-3xl text-white">{scenes[activeScene].note}</p>
+            <p className="editorial-kicker home-hero__p-014">{scenes[activeScene].label}</p>
+            <p className="home-hero__p-015">{scenes[activeScene].note}</p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 rounded-[1.75rem] border border-white/15 bg-white/8 p-3 sm:p-4 backdrop-blur-md shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
+          <div className="home-hero__div-016">
             <Magnetic>
-              <Link to="/admission" className="group inline-flex items-center justify-between gap-8 rounded-full bg-gold-400 px-6 py-4 text-sm font-bold text-navy-950 shadow-[0_12px_30px_rgba(240,161,74,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-300">
+              <Link to="/admission" className="home-hero__link-017">
                 Begin admission
-                <ArrowDownRight className="w-5 h-5 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" />
+                <ArrowDownRight className="home-hero__arrow-down-right-018" />
               </Link>
             </Magnetic>
-            <Link to="/about" className="inline-flex items-center justify-center gap-3 rounded-full border border-white/25 bg-white/5 px-6 py-4 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/45 hover:bg-white/10">
-              Our point of view <ArrowRight className="w-4 h-4" />
+            <Link to="/about" className="home-hero__link-019">
+              Our point of view <ArrowRight className="home-hero__arrow-right-020" />
             </Link>
           </div>
         </div>
 
-        <div className="book-scroll-note absolute right-6 lg:right-12 top-1/2 -translate-y-1/2 z-20 hidden md:flex items-center gap-3 [writing-mode:vertical-rl] text-white/45">
+        <div className="book-scroll-note home-hero__div-021">
           <span className="editorial-kicker">Scroll to open</span>
-          <span className="h-12 w-px bg-white/25" />
+          <span className="home-hero__span-022" />
         </div>
       </div>
     </section>

@@ -20,12 +20,12 @@ export default function ScrollToTopButton() {
     <button
       onClick={scrollToTop}
       className={cn(
-        "fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-navy-900 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-gold-500 hover:text-navy-900 cursor-pointer",
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+        "scroll-to-top-button__button-001",
+        visible ? "scroll-to-top-button__button-002" : "scroll-to-top-button__button-003"
       )}
       aria-label="Scroll to top"
     >
-      <ArrowUp className="w-5 h-5" />
+      <ArrowUp className="scroll-to-top-button__arrow-up-004" />
     </button>
   );
 }

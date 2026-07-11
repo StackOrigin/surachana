@@ -45,31 +45,31 @@ export default function Contact() {
         breadcrumb="Contact"
       />
 
-      <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="contact__section-001">
+        <div className="contact__div-002">
           {/* Contact Info Cards */}
           <Reveal variant="fade">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="contact__div-003">
               {[
-                { icon: <MapPin className="w-6 h-6" />, title: "Visit Us", detail: SCHOOL.address, sub: SCHOOL.locationLine },
-                { icon: <Phone className="w-6 h-6" />, title: "Call Us", detail: SCHOOL.phone, sub: SCHOOL.phoneAlt || "Speak with the school" },
-                { icon: <Mail className="w-6 h-6" />, title: SCHOOL.email ? "Email Us" : "Message Us", detail: SCHOOL.email || "Facebook page", sub: "Send a direct enquiry" },
-                { icon: <Clock className="w-6 h-6" />, title: "Office Hours", detail: "Sun – Fri", sub: "Confirm hours before visiting" },
+                { icon: <MapPin className="contact__map-pin-004" />, title: "Visit Us", detail: SCHOOL.address, sub: SCHOOL.locationLine },
+                { icon: <Phone className="contact__phone-005" />, title: "Call Us", detail: SCHOOL.phone, sub: SCHOOL.phoneAlt || "Speak with the school" },
+                { icon: <Mail className="contact__mail-006" />, title: SCHOOL.email ? "Email Us" : "Message Us", detail: SCHOOL.email || "Facebook page", sub: "Send a direct enquiry" },
+                { icon: <Clock className="contact__clock-007" />, title: "Office Hours", detail: "Sun – Fri", sub: "Confirm hours before visiting" },
               ].map((item, i) => (
-                <div key={i} className="tactile bg-white rounded-2xl p-6 shadow-sm border border-navy-100/50 hover:shadow-lg hover:border-gold-200 transition-all duration-300 text-center group">
-                  <div className="w-12 h-12 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mx-auto mb-4 group-hover:bg-gold-500 group-hover:text-navy-900 transition-colors duration-300">
+                <div key={i} className="tactile contact__div-008">
+                  <div className="contact__div-009">
                     {item.icon}
                   </div>
-                  <h3 className="font-heading text-base font-bold text-navy-900 mb-1">{item.title}</h3>
-                  <p className="text-sm text-navy-700 font-medium">{item.detail}</p>
-                  <p className="text-xs text-navy-400 mt-0.5">{item.sub}</p>
+                  <h3 className="contact__h3-010">{item.title}</h3>
+                  <p className="contact__p-011">{item.detail}</p>
+                  <p className="contact__p-012">{item.sub}</p>
                 </div>
               ))}
             </div>
           </Reveal>
 
           {/* Form + Map */}
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="contact__div-013">
             <div>
               <SectionTitle
                 badge="Get in Touch"
@@ -79,35 +79,35 @@ export default function Contact() {
               />
               <Reveal variant="slide-left">
                 {submitted ? (
-                  <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
-                    <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-                    <h3 className="font-heading text-xl font-bold text-green-800 mb-2">Message Sent!</h3>
-                    <p className="text-green-700">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                  <div className="contact__div-014">
+                    <CheckCircle className="contact__check-circle-015" />
+                    <h3 className="contact__h3-016">Message Sent!</h3>
+                    <p className="contact__p-017">Thank you for reaching out. We'll get back to you within 24 hours.</p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
+                  <form onSubmit={handleSubmit} className="contact__form-018">
                     {error && (
-                      <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                      <div className="contact__div-019">
                         {error}
                       </div>
                     )}
-                    <div className="grid sm:grid-cols-2 gap-5">
+                    <div className="contact__div-020">
                       <div>
-                        <label className="block text-sm font-medium text-navy-700 mb-1.5">Full Name *</label>
-                        <input name="fullName" type="text" required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="Your name" />
+                        <label className="contact__label-021">Full Name *</label>
+                        <input name="fullName" type="text" required className="contact__input-022" placeholder="Your name" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-navy-700 mb-1.5">Phone Number</label>
-                        <input name="phone" type="tel" className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="+977-" />
+                        <label className="contact__label-023">Phone Number</label>
+                        <input name="phone" type="tel" className="contact__input-024" placeholder="+977-" />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-navy-700 mb-1.5">Email Address *</label>
-                      <input name="email" type="email" required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm" placeholder="your@email.com" />
+                      <label className="contact__label-025">Email Address *</label>
+                      <input name="email" type="email" required className="contact__input-026" placeholder="your@email.com" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-navy-700 mb-1.5">Subject *</label>
-                      <select name="subject" required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm bg-white">
+                      <label className="contact__label-027">Subject *</label>
+                      <select name="subject" required className="contact__select-028">
                         <option value="">Select a subject</option>
                         <option value="admission">Admission Inquiry</option>
                         <option value="general">General Inquiry</option>
@@ -119,11 +119,11 @@ export default function Contact() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-navy-700 mb-1.5">Message *</label>
-                      <textarea name="message" rows={5} required className="w-full px-4 py-3 rounded-xl border border-navy-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-sm resize-none" placeholder="How can we help you?" />
+                      <label className="contact__label-029">Message *</label>
+                      <textarea name="message" rows={5} required className="contact__textarea-030" placeholder="How can we help you?" />
                     </div>
-                    <Button variant="primary" size="lg" type="submit" disabled={submitting} className="w-full sm:w-auto disabled:opacity-60">
-                      <Send className="w-4 h-4" /> {submitting ? 'Sending...' : 'Send Message'}
+                    <Button variant="primary" size="lg" type="submit" disabled={submitting} className="contact__button-031">
+                      <Send className="contact__send-032" /> {submitting ? 'Sending...' : 'Send Message'}
                     </Button>
                   </form>
                 )}
@@ -131,8 +131,8 @@ export default function Contact() {
             </div>
 
             <Reveal variant="slide-right" delay={200}>
-              <div className="space-y-6">
-                <div className="rounded-2xl overflow-hidden shadow-lg border border-navy-100 h-80 lg:h-96">
+              <div className="contact__div-033">
+                <div className="contact__div-034">
                   <iframe
                     src={SCHOOL.mapUrl}
                     width="100%"
@@ -146,9 +146,9 @@ export default function Contact() {
                 </div>
                 
                 {/* Social Links */}
-                <div className="bg-navy-900 rounded-2xl p-6">
-                  <h3 className="font-heading text-lg font-bold text-white mb-4">Follow Us</h3>
-                  <div className="grid grid-cols-2 gap-3">
+                <div className="contact__div-035">
+                  <h3 className="contact__h3-036">Follow Us</h3>
+                  <div className="contact__div-037">
                     {[
                       { name: "Facebook", href: SCHOOL.social.facebook },
                       { name: "Instagram", href: SCHOOL.social.instagram },
@@ -160,7 +160,7 @@ export default function Contact() {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-navy-800 text-navy-200 hover:bg-gold-500 hover:text-navy-900 transition-all duration-300 text-sm font-medium"
+                        className="contact__a-038"
                       >
                         {social.name}
                       </a>
