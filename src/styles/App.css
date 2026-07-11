@@ -1,20 +1,30 @@
-@layer utilities {
-  .flex {
+@layer utilities.u0075 {
+.flex {
     display: flex;
   }
-  .min-h-screen {
+}
+@layer utilities.u0117 {
+.min-h-screen {
     min-height: 100vh;
   }
-  .flex-1 {
+}
+@layer utilities.u0154 {
+.flex-1 {
     flex: 1;
   }
-  .flex-col {
+}
+@layer utilities.u0173 {
+.flex-col {
     flex-direction: column;
   }
-  .bg-\[\#f5f7f4\] {
+}
+@layer utilities.u0257 {
+.bg-\[\#f5f7f4\] {
     background-color: #f5f7f4;
   }
-  .bg-cream-50 {
+}
+@layer utilities.u0261 {
+.bg-cream-50 {
     background-color: var(--color-cream-50);
   }
 }
