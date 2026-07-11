@@ -1,3 +1,4 @@
+import "../styles/pages/Contact.css";
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, CheckCircle, Send } from 'lucide-react';
 import { SCHOOL, submitInquiry } from '../data/schoolData';

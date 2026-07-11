@@ -1,3 +1,4 @@
+import "../../styles/components/home/CampusStory.css";
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { IMAGES, SCHOOL } from '../../data/schoolData';

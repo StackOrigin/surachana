@@ -1,3 +1,4 @@
+import "../../styles/components/ui/Reveal.css";
 import type { CSSProperties, ReactNode } from 'react';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { cn } from '../../utils/cn';

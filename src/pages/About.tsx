@@ -1,3 +1,4 @@
+import "../styles/pages/About.css";
 import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Eye, Target } from 'lucide-react';
 import { SCHOOL, IMAGES, VALUES, TIMELINE } from '../data/schoolData';

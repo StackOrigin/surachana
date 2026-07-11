@@ -1,3 +1,4 @@
+import "../styles/pages/Academics.css";
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useScrollToTop } from '../hooks/useScrollAnimation';

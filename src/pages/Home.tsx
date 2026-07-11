@@ -1,3 +1,4 @@
+import "../styles/pages/Home.css";
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,

@@ -1,3 +1,4 @@
+import "../../styles/components/ui/Button.css";
 import { cn } from '../../utils/cn';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

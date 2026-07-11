@@ -1,3 +1,4 @@
+import "../../styles/components/home/HomeHero.css";
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowDownRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';

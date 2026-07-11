@@ -1,3 +1,4 @@
+import "../styles/pages/Admin.css";
 import type { FormEvent, ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import {

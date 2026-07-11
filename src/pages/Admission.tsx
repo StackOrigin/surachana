@@ -1,3 +1,4 @@
+import "../styles/pages/Admission.css";
 import { useState, type FormEvent } from 'react';
 import { AlertCircle, ArrowDownRight, Check, Clock, FileText, Mail, MapPin, Phone } from 'lucide-react';
 import { ADMISSION_STEPS, REQUIRED_DOCUMENTS, SCHOOL, submitInquiry } from '../data/schoolData';

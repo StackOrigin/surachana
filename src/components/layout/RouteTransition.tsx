@@ -1,3 +1,4 @@
+import "../../styles/components/layout/RouteTransition.css";
 import { useLayoutEffect, type ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { resetScrollImmediately } from '../../utils/scroll';

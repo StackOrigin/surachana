@@ -1,3 +1,4 @@
+import "../../styles/components/ui/SectionTitle.css";
 import { cn } from '../../utils/cn';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 

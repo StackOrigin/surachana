@@ -1,3 +1,4 @@
+import "../styles/pages/Faculty.css";
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { FACULTY, SCHOOL } from '../data/schoolData';

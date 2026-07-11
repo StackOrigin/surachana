@@ -1,3 +1,4 @@
+import "./styles/App.css";
 import type { MouseEvent } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';

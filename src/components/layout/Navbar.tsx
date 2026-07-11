@@ -1,3 +1,4 @@
+import "../../styles/components/layout/Navbar.css";
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';

@@ -1,0 +1,20 @@
+@layer utilities {
+  .flex {
+    display: flex;
+  }
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  .flex-1 {
+    flex: 1;
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .bg-\[\#f5f7f4\] {
+    background-color: #f5f7f4;
+  }
+  .bg-cream-50 {
+    background-color: var(--color-cream-50);
+  }
+}

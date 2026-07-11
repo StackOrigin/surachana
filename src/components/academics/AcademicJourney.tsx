@@ -1,3 +1,4 @@
+import "../../styles/components/academics/AcademicJourney.css";
 import { useState } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { IMAGES, PROGRAMS } from '../../data/schoolData';
