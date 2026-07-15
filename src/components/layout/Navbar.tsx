@@ -9,10 +9,9 @@ const primaryLinkPaths = ['/', '/about', '/academics', '/faculty', '/gallery', '
 const primaryLinks = primaryLinkPaths
   .map((path) => NAV_LINKS.find((link) => link.path === path))
   .filter((link): link is (typeof NAV_LINKS)[number] => Boolean(link));
-const schoolLogoSrc =
-  SCHOOL.shortName === 'Surachana'
-    ? import.meta.env.DEV ? '/schools/surachana/logo.jpg' : './schools/surachana/logo.jpg'
-    : undefined;
+const schoolLogoSrc = import.meta.env.DEV
+  ? '/schools/surachana/logo.jpg'
+  : './schools/surachana/logo.jpg';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +27,20 @@ export default function Navbar() {
 
   useEffect(() => setIsOpen(false), [location]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [isOpen]);
+
   return (
     <header
       className={cn(
@@ -36,7 +49,7 @@ export default function Navbar() {
       )}
     >
       <div className="navbar__div-004">
-        <nav className={cn("navbar__nav-005", isScrolled ? "navbar__nav-006" : "navbar__nav-007")}>
+        <nav aria-label="Primary navigation" className={cn("navbar__nav-005", isScrolled ? "navbar__nav-006" : "navbar__nav-007")}>
           <Link to="/" className="navbar__link-008" aria-label={`${SCHOOL.name} home`}>
             <span
               className={cn(
@@ -44,19 +57,13 @@ export default function Navbar() {
                 isScrolled ? "navbar__span-010" : "navbar__span-011",
               )}
             >
-              {schoolLogoSrc ? (
-                <img
-                  src={schoolLogoSrc}
-                  alt=""
-                  className="navbar__img-012"
-                  loading="eager"
-                  aria-hidden="true"
-                />
-              ) : (
-                <span className={cn("navbar__span-013", isScrolled ? "navbar__span-014" : "navbar__span-015")}>
-                  {SCHOOL.shortName.charAt(0)}
-                </span>
-              )}
+              <img
+                src={schoolLogoSrc}
+                alt=""
+                className="navbar__img-012"
+                loading="eager"
+                aria-hidden="true"
+              />
             </span>
             <span>
               <strong className="navbar__strong-016">{SCHOOL.name}</strong>
@@ -76,6 +83,7 @@ export default function Navbar() {
                   isScrolled ? "navbar__link-022" : "navbar__link-023",
                   location.pathname === link.path && (isScrolled ? "navbar__link-024" : "navbar__link-025"),
                 )}
+                aria-current={location.pathname === link.path ? 'page' : undefined}
               >
                 {link.label}
               </Link>
@@ -98,6 +106,7 @@ export default function Navbar() {
               className={cn("navbar__button-031", isScrolled ? "navbar__button-032" : "navbar__button-033")}
               aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
               aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
             >
               {isOpen ? <X className="navbar__x-034" /> : <Menu className="navbar__menu-035" />}
             </button>
@@ -106,6 +115,8 @@ export default function Navbar() {
       </div>
 
       <div
+        id="mobile-navigation"
+        aria-hidden={!isOpen}
         className={cn(
           "navbar__div-036",
           isOpen ? "navbar__div-037" : "navbar__div-038",
@@ -117,6 +128,7 @@ export default function Navbar() {
               key={link.path}
               to={link.path}
               className="navbar__link-040"
+              tabIndex={isOpen ? 0 : -1}
             >
               <span className="navbar__span-041">{link.label}</span>
               <span className="editorial-kicker navbar__span-042">{String(index + 1).padStart(2, '0')}</span>
@@ -125,6 +137,7 @@ export default function Navbar() {
           <Link
             to="/admission"
             className="navbar__link-043"
+            tabIndex={isOpen ? 0 : -1}
           >
             <span className="navbar__span-044">Enquire</span>
             <ArrowUpRight className="navbar__arrow-up-right-045" />

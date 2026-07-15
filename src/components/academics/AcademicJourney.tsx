@@ -50,7 +50,7 @@ export default function AcademicJourney() {
           <div key={active} className="journey-panel academic-journey__div-015">
             <PointerDepth className="academic-journey__pointer-depth-016">
               <div className="academic-journey__div-017">
-                <img src={images[active]} alt={program.title} className="cinematic-image academic-journey__img-018" />
+                <img src={images[active]} alt={`${program.title} at ${program.ages.toLowerCase()}`} className="cinematic-image academic-journey__img-018" loading="lazy" />
               </div>
             </PointerDepth>
             <div className="academic-journey__div-019">

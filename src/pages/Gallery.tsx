@@ -1,5 +1,6 @@
 import "../styles/pages/Gallery.css";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { ArrowUpRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { GALLERY_CATEGORIES, GALLERY_ITEMS, SCHOOL } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
@@ -49,6 +50,8 @@ export default function Gallery() {
   useScrollToTop();
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement>(null);
 
   const filtered = GALLERY_ITEMS
     .map((item, originalIndex) => ({ ...item, originalIndex }))
@@ -69,15 +72,33 @@ export default function Gallery() {
       if (event.key === 'Escape') setSelectedIndex(null);
       if (event.key === 'ArrowLeft') moveSelection(-1);
       if (event.key === 'ArrowRight') moveSelection(1);
+      if (event.key === 'Tab') {
+        const controls = dialogRef.current?.querySelectorAll<HTMLElement>('button, [href], [tabindex]:not([tabindex="-1"])');
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
 
-    document.body.style.overflow = "gallery__variant-017";
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [selectedIndex, activeCategory]);
+
+  useEffect(() => {
+    if (selectedIndex === null) lastTriggerRef.current?.focus();
+  }, [selectedIndex]);
 
   const selected = selectedIndex === null ? null : GALLERY_ITEMS[selectedIndex];
 
@@ -130,10 +151,13 @@ export default function Gallery() {
               <button
                 key={`${item.src}-${item.originalIndex}`}
                 type="button"
-                onClick={() => setSelectedIndex(item.originalIndex)}
+                onClick={(event) => {
+                  lastTriggerRef.current = event.currentTarget;
+                  setSelectedIndex(item.originalIndex);
+                }}
                 className={cn(
                   "gallery__button-031",
-                  activeCategory === 'All' ? compositions[index] : "gallery__button-032",
+                  activeCategory === 'All' ? compositions[index % compositions.length] : "gallery__button-032",
                 )}
                 aria-label={`Open photo: ${item.alt}`}
               >
@@ -147,7 +171,7 @@ export default function Gallery() {
                 <div className="gallery__div-035">
                   <span className="editorial-kicker gallery__span-036">{item.category}</span>
                   <p className="gallery__p-037">
-                    {captions[item.originalIndex]}
+                    {captions[item.originalIndex % captions.length] || item.alt}
                   </p>
                 </div>
                 <span className="gallery__span-038">
@@ -165,8 +189,9 @@ export default function Gallery() {
         </div>
       </section>
 
-      {selected && (
+      {selected && createPortal(
         <div
+          ref={dialogRef}
           className="lightbox-enter gallery__div-041"
           role="dialog"
           aria-modal="true"
@@ -205,14 +230,15 @@ export default function Gallery() {
             <figcaption className="gallery__figcaption-050">
               <div>
                 <span className="editorial-kicker gallery__span-051">{selected.category}</span>
-                <p className="gallery__p-052">{captions[selectedIndex!]}</p>
+                <p className="gallery__p-052">{captions[selectedIndex! % captions.length] || selected.alt}</p>
               </div>
               <span className="editorial-kicker gallery__span-053">
                 {String(selectedIndex! + 1).padStart(2, '0')} / {String(GALLERY_ITEMS.length).padStart(2, '0')}
               </span>
             </figcaption>
           </figure>
-        </div>
+        </div>,
+        document.body,
       )}
     </main>
   );

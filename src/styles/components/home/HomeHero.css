@@ -92,10 +92,6 @@
     --site-translate-y: calc(calc(1/2 * 100%) * -1);
     translate: var(--site-translate-x) var(--site-translate-y);
   }
-.home-hero__variant-001.home-hero__variant-001.home-hero__variant-001,
-.home-hero__variant-002.home-hero__variant-002.home-hero__variant-002 {
-    resize: both;
-  }
 .home-hero__div-016 {
     flex-direction: column;
   }

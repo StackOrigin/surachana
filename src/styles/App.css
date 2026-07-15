@@ -17,3 +17,34 @@
 .app__div-001 {
     background-color: var(--color-cream-50);
   }
+.app__skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--color-navy-950);
+    color: white;
+    transform: translateY(-160%);
+    transition: transform 180ms ease;
+  }
+.app__skip-link:focus {
+    transform: translateY(0);
+  }
+.app__not-found {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 5rem 1.5rem 7rem;
+    text-align: center;
+  }
+.app__not-found p {
+    color: #52605b;
+    margin-bottom: 2rem;
+  }
+.app__not-found-link {
+    display: inline-flex;
+    padding: 0.9rem 1.4rem;
+    background: var(--color-navy-950);
+    color: white;
+    font-weight: 700;
+  }

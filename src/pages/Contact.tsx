@@ -79,7 +79,7 @@ export default function Contact() {
               />
               <Reveal variant="slide-left">
                 {submitted ? (
-                  <div className="contact__div-014">
+                  <div className="contact__div-014" role="status" aria-live="polite">
                     <CheckCircle className="contact__check-circle-015" />
                     <h3 className="contact__h3-016">Message Sent!</h3>
                     <p className="contact__p-017">Thank you for reaching out. We'll get back to you within 24 hours.</p>
@@ -87,27 +87,27 @@ export default function Contact() {
                 ) : (
                   <form onSubmit={handleSubmit} className="contact__form-018">
                     {error && (
-                      <div className="contact__div-019">
+                      <div className="contact__div-019" role="alert">
                         {error}
                       </div>
                     )}
                     <div className="contact__div-020">
                       <div>
-                        <label className="contact__label-021">Full Name *</label>
-                        <input name="fullName" type="text" required className="contact__input-022" placeholder="Your name" />
+                        <label htmlFor="contact-full-name" className="contact__label-021">Full Name *</label>
+                        <input id="contact-full-name" name="fullName" type="text" autoComplete="name" required className="contact__input-022" placeholder="Your name" />
                       </div>
                       <div>
-                        <label className="contact__label-023">Phone Number</label>
-                        <input name="phone" type="tel" className="contact__input-024" placeholder="+977-" />
+                        <label htmlFor="contact-phone" className="contact__label-023">Phone Number</label>
+                        <input id="contact-phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" className="contact__input-024" placeholder="+977-" />
                       </div>
                     </div>
                     <div>
-                      <label className="contact__label-025">Email Address *</label>
-                      <input name="email" type="email" required className="contact__input-026" placeholder="your@email.com" />
+                      <label htmlFor="contact-email" className="contact__label-025">Email Address *</label>
+                      <input id="contact-email" name="email" type="email" autoComplete="email" required className="contact__input-026" placeholder="your@email.com" />
                     </div>
                     <div>
-                      <label className="contact__label-027">Subject *</label>
-                      <select name="subject" required className="contact__select-028">
+                      <label htmlFor="contact-subject" className="contact__label-027">Subject *</label>
+                      <select id="contact-subject" name="subject" required className="contact__select-028">
                         <option value="">Select a subject</option>
                         <option value="admission">Admission Inquiry</option>
                         <option value="general">General Inquiry</option>
@@ -119,8 +119,8 @@ export default function Contact() {
                       </select>
                     </div>
                     <div>
-                      <label className="contact__label-029">Message *</label>
-                      <textarea name="message" rows={5} required className="contact__textarea-030" placeholder="How can we help you?" />
+                      <label htmlFor="contact-message" className="contact__label-029">Message *</label>
+                      <textarea id="contact-message" name="message" rows={5} required className="contact__textarea-030" placeholder="How can we help you?" />
                     </div>
                     <Button variant="primary" size="lg" type="submit" disabled={submitting} className="contact__button-031">
                       <Send className="contact__send-032" /> {submitting ? 'Sending...' : 'Send Message'}

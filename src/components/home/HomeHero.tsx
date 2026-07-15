@@ -41,11 +41,11 @@ export default function HomeHero() {
 
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener("home-hero__variant-001", onScroll);
+    window.addEventListener('resize', onScroll, { passive: true });
     return () => {
       if (frame) cancelAnimationFrame(frame);
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener("home-hero__variant-002", onScroll);
+      window.removeEventListener('resize', onScroll);
     };
   }, []);
 

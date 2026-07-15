@@ -1,5 +1,7 @@
 .section-title__div-002.section-title__div-002 {
     visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
   }
 .section-title__div-003.section-title__div-003.section-title__div-003 {
     margin-inline: auto;

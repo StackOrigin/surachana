@@ -701,7 +701,7 @@ a:active {
   .page-hero-title,
   .page-hero-copy,
   .gallery-enter,
-  .clip-reveal-auto,
+  .clip-reveal,
   .lightbox-enter,
   .lightbox-image-enter {
     opacity: 1 !important;

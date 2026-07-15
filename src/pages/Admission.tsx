@@ -190,7 +190,9 @@ export default function Admission() {
                   <label className="admission__label-051">
                     <span className="editorial-kicker admission__span-052">Parent / guardian</span>
                     <input
+                      name="guardianName"
                       required
+                      autoComplete="name"
                       value={admissionForm.guardianName}
                       onChange={(event) => updateAdmissionForm('guardianName', event.target.value)}
                       className="admission__input-053"
@@ -200,7 +202,9 @@ export default function Admission() {
                   <label className="admission__label-054">
                     <span className="editorial-kicker admission__span-055">Student name</span>
                     <input
+                      name="studentName"
                       required
+                      autoComplete="off"
                       value={admissionForm.studentName}
                       onChange={(event) => updateAdmissionForm('studentName', event.target.value)}
                       className="admission__input-056"
@@ -210,7 +214,9 @@ export default function Admission() {
                   <label className="admission__label-057">
                     <span className="editorial-kicker admission__span-058">Class / grade</span>
                     <input
+                      name="grade"
                       required
+                      autoComplete="off"
                       value={admissionForm.grade}
                       onChange={(event) => updateAdmissionForm('grade', event.target.value)}
                       className="admission__input-059"
@@ -220,7 +226,11 @@ export default function Admission() {
                   <label className="admission__label-060">
                     <span className="editorial-kicker admission__span-061">Phone</span>
                     <input
+                      name="phone"
+                      type="tel"
+                      inputMode="tel"
                       required
+                      autoComplete="tel"
                       value={admissionForm.phone}
                       onChange={(event) => updateAdmissionForm('phone', event.target.value)}
                       className="admission__input-062"
@@ -230,7 +240,9 @@ export default function Admission() {
                   <label className="admission__label-063">
                     <span className="editorial-kicker admission__span-064">Email</span>
                     <input
+                      name="email"
                       type="email"
+                      autoComplete="email"
                       value={admissionForm.email}
                       onChange={(event) => updateAdmissionForm('email', event.target.value)}
                       className="admission__input-065"
@@ -240,6 +252,7 @@ export default function Admission() {
                   <label className="admission__label-066">
                     <span className="editorial-kicker admission__span-067">Message</span>
                     <textarea
+                      name="message"
                       rows={5}
                       value={admissionForm.message}
                       onChange={(event) => updateAdmissionForm('message', event.target.value)}
@@ -250,13 +263,13 @@ export default function Admission() {
                 </div>
 
                 {formError && (
-                  <div className="admission__div-069">
+                  <div className="admission__div-069" role="alert">
                     {formError}
                   </div>
                 )}
 
                 {formState === 'sent' && (
-                  <div className="admission__div-070">
+                  <div className="admission__div-070" role="status" aria-live="polite">
                     Admission inquiry sent. The school office can now see it in the admin dashboard.
                   </div>
                 )}

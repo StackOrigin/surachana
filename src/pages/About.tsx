@@ -30,7 +30,7 @@ export default function About() {
                   <img src={IMAGES.building} alt="School building" className="about__img-006" loading="lazy" />
                 </div>
                 <div className="about__div-007">
-                  <img src={IMAGES.building2} alt="Campus" className="about__img-008" />
+                  <img src={IMAGES.building2} alt={`${SCHOOL.name} campus`} className="about__img-008" loading="lazy" />
                 </div>
               </div>
             </Reveal>
@@ -94,7 +94,7 @@ export default function About() {
             <Reveal variant="clip" className="about__reveal-027">
               <div className="about__div-028">
                 <div className="about__div-029">
-                  <img src={IMAGES.principal} alt="Principal" className="about__img-030" loading="lazy" />
+                  <img src={IMAGES.principal} alt={SCHOOL.leadershipName} className="about__img-030" loading="lazy" />
                 </div>
                 <div className="about__div-031">
                   <p className="about__p-032">{SCHOOL.leadershipName}</p>
