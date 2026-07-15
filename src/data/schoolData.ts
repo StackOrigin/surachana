@@ -27,7 +27,9 @@ type Achievement = { number: string; label: string; icon: string };
 type Program = { title: string; ages: string; description: string; focus: string[]; icon: string };
 type ValueItem = { title: string; description: string; icon: string };
 type GalleryItem = { src: string; alt: string; category: string };
-type FacultyMember = { name: string; position: string; department: string; image: string; bio: string };
+type FacultyLevel = 'principal' | 'junior' | 'senior' | 'other';
+type FacultyMember = { name: string; position: string; department: string; image: string; bio: string; level: FacultyLevel };
+
 type AdmissionStep = { step: number; title: string; description: string };
 type TimelineItem = { year: string; title: string; description: string };
 
@@ -168,13 +170,63 @@ export const GALLERY_ITEMS: GalleryItem[] = [...files, ...files.slice(0, 6)].map
 }));
 
 export const FACULTY: FacultyMember[] = [
-  { name: 'School Leadership', position: 'Leadership Team', department: 'Surachana', image: files[1], bio: 'Guiding the school community with shared purpose and care.' },
-  { name: 'Early Years Team', position: 'Foundation Educators', department: 'Early Years', image: files[2], bio: 'Helping young learners feel secure, curious, and ready to take part.' },
-  { name: 'Primary Team', position: 'Class Teachers', department: 'Primary Level', image: files[3], bio: 'Building strong foundations through explanation, practice, and encouragement.' },
-  { name: 'Secondary Team', position: 'Subject Educators', department: 'Secondary Level', image: files[4], bio: 'Supporting deeper subject learning and the journey toward SEE.' },
-  { name: 'Activities Team', position: 'Co-curricular Mentors', department: 'Student Life', image: files[5], bio: 'Creating opportunities for expression, teamwork, movement, and confidence.' },
-  { name: 'Student Support', position: 'School Community', department: 'Pastoral Care', image: files[6], bio: 'Helping students feel heard, connected, and ready to learn.' },
+  // Principal
+  {
+    name: 'School Leadership',
+    position: 'Principal',
+    department: 'Surachana English School',
+    image: files[1],
+    bio: 'Guiding the school community with shared purpose and care.',
+    level: 'principal',
+  },
+
+  // Junior Level Teachers
+  {
+    name: 'Early Years Team',
+    position: 'Junior Level Teachers',
+    department: 'Early Years',
+    image: files[2],
+    bio: 'Helping young learners feel secure, curious, and ready to take part.',
+    level: 'junior',
+  },
+
+  // Senior Level Teachers
+  {
+    name: 'Secondary Team',
+    position: 'Senior Level Teachers',
+    department: 'Secondary Level',
+    image: files[4],
+    bio: 'Supporting deeper subject learning and the journey toward SEE.',
+    level: 'senior',
+  },
+
+  // Existing “Our Team” groups (kept for completeness)
+  {
+    name: 'Primary Team',
+    position: 'Class Teachers',
+    department: 'Primary Level',
+    image: files[3],
+    bio: 'Building strong foundations through explanation, practice, and encouragement.',
+    level: 'other',
+  },
+  {
+    name: 'Activities Team',
+    position: 'Co-curricular Mentors',
+    department: 'Student Life',
+    image: files[5],
+    bio: 'Creating opportunities for expression, teamwork, movement, and confidence.',
+    level: 'other',
+  },
+  {
+    name: 'Student Support',
+    position: 'School Community',
+    department: 'Pastoral Care',
+    image: files[6],
+    bio: 'Helping students feel heard, connected, and ready to learn.',
+    level: 'other',
+  },
 ];
+
 
 export const ADMISSION_STEPS: AdmissionStep[] = [
   { step: 1, title: 'Start a Conversation', description: 'Call, message the school, or visit in person to ask about current availability.' },

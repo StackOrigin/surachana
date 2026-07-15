@@ -21,37 +21,90 @@ export default function Faculty() {
 
       <section className="faculty__section-001">
         <div className="faculty__div-002">
-          <SectionTitle
-            badge="Our Team"
-            title="Experienced & Passionate Educators"
-            subtitle="Meet the teaching teams who shape learning, participation, and student wellbeing across the school."
-          />
+          
 
-          <div className="faculty__div-003">
-            {FACULTY.map((member, i) => (
-              <Reveal key={i} variant={i % 2 === 0 ? 'slide-left' : 'slide-right'} delay={i * 70} className={i % 3 === 0 ? "faculty__reveal-004" : "faculty__reveal-005"}>
-                <div className="tactile faculty__div-006">
-                  <div className="faculty__div-007">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="faculty__img-008"
-                      loading="lazy"
-                    />
-                    <div className="faculty__div-009" />
-                  </div>
-                  <div className="faculty__div-010">
-                    <div className="faculty__div-011">
-                      <h3 className="faculty__h3-012">{member.name}</h3>
-                      <p className="faculty__p-013">{member.position}</p>
-                      <p className="faculty__p-014">{member.department}</p>
-                      <p className="faculty__p-015">{member.bio}</p>
+          {(() => {
+            const byLevel = {
+              principal: FACULTY.filter((m) => m.level === 'principal'),
+              junior: FACULTY.filter((m) => m.level === 'junior'),
+              senior: FACULTY.filter((m) => m.level === 'senior'),
+              other: FACULTY.filter((m) => m.level === 'other'),
+            };
+
+            const renderGrid = (members: typeof FACULTY) => (
+              <div className="faculty__div-003">
+                {members.map((member, i) => (
+                  <Reveal
+                    key={`${member.name}-${i}`}
+                    variant={i % 2 === 0 ? 'slide-left' : 'slide-right'}
+                    delay={i * 70}
+                    className={i % 3 === 0 ? 'faculty__reveal-004' : 'faculty__reveal-005'}
+                  >
+                    <div className="tactile faculty__div-006">
+                      <div className="faculty__div-007">
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          className="faculty__img-008"
+                          loading="lazy"
+                        />
+                        <div className="faculty__div-009" />
+                      </div>
+                      <div className="faculty__div-010">
+                        <div className="faculty__div-011">
+                          <h3 className="faculty__h3-012">{member.name}</h3>
+                          <p className="faculty__p-013">{member.position}</p>
+                          <p className="faculty__p-014">{member.department}</p>
+                          <p className="faculty__p-015">{member.bio}</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+                  </Reveal>
+                ))}
+              </div>
+            );
+
+            return (
+              <>
+                <section>
+                  <SectionTitle
+                    badge="Principal"
+                    title="School Leader"
+                    subtitle="Guidance, direction, and care at the heart of Surachana."
+                  />
+                  {byLevel.principal.length ? renderGrid(byLevel.principal) : null}
+                </section>
+
+                <section>
+                  <SectionTitle
+                    badge="Junior Level"
+                    title="Junior Level Teachers"
+                    subtitle="Building strong foundations and confidence for younger learners."
+                  />
+                  {byLevel.junior.length ? renderGrid(byLevel.junior) : null}
+                </section>
+
+                <section>
+                  <SectionTitle
+                    badge="Senior Level"
+                    title="Senior Level Teachers"
+                    subtitle="Deeper subject learning and preparation for the next step."
+                  />
+                  {byLevel.senior.length ? renderGrid(byLevel.senior) : null}
+                </section>
+
+                <section>
+                  <SectionTitle
+                    badge="Our Team"
+                    title="Experienced & Passionate Educators"
+                    subtitle="Meet the teaching teams who shape learning, participation, and student wellbeing across the school."
+                  />
+                  {byLevel.other.length ? renderGrid(byLevel.other) : null}
+                </section>
+              </>
+            );
+          })()}
+
         </div>
       </section>
 

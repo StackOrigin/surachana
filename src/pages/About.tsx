@@ -67,7 +67,7 @@ export default function About() {
                 </div>
                 <h3 className="about__h3-017">Our Mission</h3>
                 <p className="about__p-018">
-                  To provide a nurturing and stimulating learning environment that empowers every student to achieve academic excellence, develop strong character, and become a responsible global citizen equipped with the skills and values needed for the 21st century.
+                  To provide a nurturing and stimulating learning environment that empowers every student to achieve academic excellence, develop strong character, and become a responsible global citizen.
                 </p>
               </div>
             </Reveal>
@@ -79,7 +79,7 @@ export default function About() {
                 </div>
                 <h3 className="about__h3-022">Our Vision</h3>
                 <p className="about__p-023">
-                  To be recognized as a leading institution of academic and personal excellence in Nepal — a school where innovation meets tradition, where every student is inspired to dream big, and where the foundation for lifelong learning and leadership is firmly established.
+                  To be recognized as a leading institution of academic and personal excellence in Nepal — a school where innovation meets tradition.
                 </p>
               </div>
             </Reveal>

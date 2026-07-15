@@ -2,10 +2,9 @@ import "../styles/pages/Home.css";
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
-  Check,
-  GraduationCap,
   Quote,
 } from 'lucide-react';
+
 import { ACHIEVEMENTS, GALLERY_ITEMS, IMAGES, PROGRAMS, SCHOOL } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
 import Reveal from '../components/ui/Reveal';
@@ -55,7 +54,7 @@ export default function Home() {
               </h2>
               <p className="home__p-014">
                 We help students become capable learners, generous classmates, and confident
-                young people—ready for examinations, and for life beyond them.
+                young people.
               </p>
             </div>
           </Reveal>
@@ -252,7 +251,7 @@ export default function Home() {
                 className="home__link-079"
               >
                 <span className="home__span-080" />
-                <GraduationCap className="home__graduation-cap-081" />
+              
                 <span className="home__span-082">Apply for admission</span>
                 <ArrowRight className="home__arrow-right-083" />
               </Link>
@@ -261,7 +260,7 @@ export default function Home() {
                 className="home__a-084"
               >
                 <span>Talk to our team</span>
-                <Check className="home__check-085" />
+               
               </a>
             </div>
           </Reveal>

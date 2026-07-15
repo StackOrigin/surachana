@@ -607,7 +607,8 @@
     }
   }
 .admin__img-035 {
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 50%;
   }
 .admin__img-154 {
     object-fit: cover;

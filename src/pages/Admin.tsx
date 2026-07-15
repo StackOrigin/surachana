@@ -135,7 +135,7 @@ const statusStyles: Record<string, string> = {
   Planning: "admin__variant-021",
 };
 
-const schoolLogoSrc = import.meta.env.DEV ? '/schools/surachana/logo.jpg' : './schools/surachana/logo.jpg';
+const schoolLogoSrc = import.meta.env.DEV ? '/schools/surachana/school_logo.jpg' : './schools/surachana/school_logo.jpg';
 
 function Badge({ value }: { value: string }) {
   return (

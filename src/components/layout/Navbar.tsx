@@ -10,8 +10,8 @@ const primaryLinks = primaryLinkPaths
   .map((path) => NAV_LINKS.find((link) => link.path === path))
   .filter((link): link is (typeof NAV_LINKS)[number] => Boolean(link));
 const schoolLogoSrc = import.meta.env.DEV
-  ? '/schools/surachana/logo.jpg'
-  : './schools/surachana/logo.jpg';
+  ? '/schools/surachana/school_logo.jpg'
+  : './schools/surachana/school_logo.jpg';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
