@@ -16,6 +16,9 @@
 .footer__div-022 {
     margin-top: calc(var(--spacing) * 16);
   }
+.footer__link-023 {
+    margin-top: calc(var(--spacing) * 5);
+  }
 .footer__p-011,
 .footer__p-014 {
     margin-bottom: calc(var(--spacing) * 6);
@@ -37,6 +40,9 @@
   }
 .footer__link-004,
 .footer__link-009 {
+    display: inline-flex;
+  }
+.footer__link-023 {
     display: inline-flex;
   }
 .footer__arrow-up-right-010,
@@ -74,11 +80,17 @@
 .footer__div-022 {
     flex-direction: column;
   }
+.footer__link-023 {
+    flex-direction: column;
+  }
 .footer__span-005 {
     place-items: center;
   }
 .footer__link-004,
 .footer__link-009 {
+    align-items: center;
+  }
+.footer__link-023 {
     align-items: center;
   }
 .footer__div-022 {
@@ -89,6 +101,9 @@
 .footer__li-018,
 .footer__li-020,
 .footer__div-022 {
+    gap: calc(var(--spacing) * 3);
+  }
+.footer__link-023 {
     gap: calc(var(--spacing) * 3);
   }
 .footer__link-004 {
@@ -151,14 +166,19 @@
     font-size: var(--text-2xl);
     line-height: var(--site-leading, var(--text-2xl--line-height));
   }
-.footer__span-005,
-.footer__p-008 {
+.footer__span-005 {
+    width: calc(var(--spacing) * 14);
+    height: calc(var(--spacing) * 14);
+    display: grid;
+    place-items: center;
+    background-color: var(--color-navy-950);
+    color: var(--color-gold-300);
     font-size: var(--text-3xl);
     line-height: var(--site-leading, var(--text-3xl--line-height));
+    font-style: italic;
   }
 .footer__link-009,
-.footer__link-013,
-.footer__ul-015 {
+.footer__link-013 {
     font-size: var(--text-sm);
     line-height: var(--site-leading, var(--text-sm--line-height));
   }
@@ -207,9 +227,38 @@
   }
 .footer__link-013 {
   }
+.footer__link-023 {
+    color: var(--color-navy-700);
+    display: inline-flex;
+    align-items: center;
+    flex-direction: row;
+    gap: calc(var(--spacing) * 3);
+    white-space: nowrap;
+    text-decoration: none;
+  }
+.footer__img-025 {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+.footer__span-024 {
+    font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  line-height: var(--site-leading, var(--text-sm--line-height));
+    font-weight: var(--font-weight-medium);
+  }
+.footer__link-023:hover {
+    color: var(--color-navy-950);
+  }
 .footer__div-022 {
     @media (width >= 40rem) {
       flex-direction: row;
+    }
+  }
+.footer__link-023 {
+    @media (width >= 40rem) {
+      align-self: flex-end;
     }
   }
 .footer__div-002 {

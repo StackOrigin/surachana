@@ -11,7 +11,6 @@ const eligibility = [
   { level: 'LKG / UKG', criteria: 'Age 4–5 years with basic school readiness.' },
   { level: 'Class 1–5', criteria: 'Age-appropriate placement with previous school records.' },
   { level: 'Class 6–8', criteria: 'Successful completion of an entrance assessment.' },
-  { level: 'Class 9–10', criteria: 'Entrance examination followed by a student conversation.' },
 ];
 
 export default function Admission() {

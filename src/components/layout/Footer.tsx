@@ -3,6 +3,10 @@ import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
 
+const nivakshaLogoSrc = import.meta.env.DEV
+  ? '/schools/surachana/nivakshaLogo.jpeg'
+  : './schools/surachana/nivakshaLogo.jpeg';
+
 export default function Footer() {
   return (
     <footer className="footer__footer-001">
@@ -63,6 +67,17 @@ export default function Footer() {
           <span>© {new Date().getFullYear()} {SCHOOL.name}</span>
           <span>{SCHOOL.locationLine} · Nepal</span>
         </div>
+
+        <a
+          href="https://nivaksha.me"
+          target="_blank"
+          rel="noreferrer"
+          className="footer__link-023"
+          aria-label="Visit Nivaksha"
+        >
+          <span className="footer__span-024">Designed by Nivaksha</span>
+          <img src={nivakshaLogoSrc} alt="Nivaksha logo" className="footer__img-025" loading="lazy" />
+        </a>
       </div>
     </footer>
   );

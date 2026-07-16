@@ -31,8 +31,8 @@ export default function Faculty() {
               other: FACULTY.filter((m) => m.level === 'other'),
             };
 
-            const renderGrid = (members: typeof FACULTY) => (
-              <div className="faculty__div-003">
+            const renderGrid = (members: typeof FACULTY, centered = false) => (
+              <div className={centered ? 'faculty__div-003 faculty__div-003--center' : 'faculty__div-003'}>
                 {members.map((member, i) => (
                   <Reveal
                     key={`${member.name}-${i}`}
@@ -72,7 +72,7 @@ export default function Faculty() {
                     title="School Leader"
                     subtitle="Guidance, direction, and care at the heart of Surachana."
                   />
-                  {byLevel.principal.length ? renderGrid(byLevel.principal) : null}
+                  {byLevel.principal.length ? renderGrid(byLevel.principal, true) : null}
                 </section>
 
                 <section>
