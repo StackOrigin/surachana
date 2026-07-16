@@ -7,10 +7,10 @@ import PointerDepth from '../ui/PointerDepth';
 import { cn } from '../../utils/cn';
 
 const moments = [
-  { label: '07:20', title: 'Arrive & belong', copy: 'Morning greetings turn a large campus into a familiar place.', image: IMAGES.campus },
-  { label: '09:10', title: 'Question & discover', copy: 'Lessons move between explanation, experiments, and ideas shared aloud.', image: IMAGES.hero2 },
-  { label: '12:40', title: 'Move & connect', copy: 'Playgrounds and team activities make cooperation something children practise.', image: IMAGES.sports1 },
-  { label: '14:15', title: 'Make & express', copy: 'Art, music, reading, and performance give every kind of confidence room.', image: IMAGES.drawing },
+  { label: '07:20', title: 'Arrive & belong', copy: 'Morning greetings turn a large campus into a familiar place.', image: IMAGES.arriveAndBelong },
+  { label: '09:10', title: 'Question & discover', copy: 'Lessons move between explanation, experiments, and ideas shared aloud.', image: IMAGES.questionAndDiscover },
+  { label: '12:40', title: 'Move & connect', copy: 'Playgrounds and team activities make cooperation something children practise.', image: IMAGES.moveAndConnect },
+  { label: '14:15', title: 'Make & express', copy: 'Art, music, reading, and performance give every kind of confidence room.', image: IMAGES.makeAndExpress },
 ];
 
 export default function CampusStory() {

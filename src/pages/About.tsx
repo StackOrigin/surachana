@@ -27,10 +27,10 @@ export default function About() {
             <Reveal variant="clip">
               <div className="about__div-004">
                 <div className="about__div-005">
-                  <img src={IMAGES.building} alt="School building" className="about__img-006" loading="lazy" />
+                  <img src={IMAGES.about1} alt="School building" className="about__img-006" loading="lazy" />
                 </div>
                 <div className="about__div-007">
-                  <img src={IMAGES.building2} alt={`${SCHOOL.name} campus`} className="about__img-008" loading="lazy" />
+                  <img src={IMAGES.about2} alt={`${SCHOOL.name} campus`} className="about__img-008" loading="lazy" />
                 </div>
               </div>
             </Reveal>
@@ -192,8 +192,8 @@ export default function About() {
           <Reveal variant="scale">
             <div className="about__div-063">
               {[
-                "A learning journey from early years to secondary level",
-                "Steady preparation for the SEE pathway",
+                "A learning journey from early years through lower secondary",
+                "Steady preparation for the next academic step",
                 "Teachers who value progress and participation",
                 "Direct communication with families",
                 "A school community rooted in its local area",

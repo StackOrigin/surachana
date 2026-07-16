@@ -12,7 +12,7 @@ import CampusStory from '../components/home/CampusStory';
 import HomeHero from '../components/home/HomeHero';
 import { cn } from '../utils/cn';
 
-const programImages = [IMAGES.campus, IMAGES.students1, IMAGES.campus];
+const programImages = [IMAGES.earlyYears, IMAGES.primaryYears, IMAGES.lowerSecondaryAcademics];
 
 export default function Home() {
   useScrollToTop();
@@ -204,7 +204,7 @@ export default function Home() {
       <section className="home__section-058">
         <div className="home__div-059">
           <div className="home__div-060">
-            <img src={IMAGES.principal} alt={`${SCHOOL.name} leadership`} className="home__img-061" loading="lazy" />
+            <img src={IMAGES.leadership} alt={`${SCHOOL.name} leadership`} className="home__img-061" loading="lazy" />
             <div className="home__div-062" />
             <div className="home__div-063">
               <p className="home__p-064">{SCHOOL.leadershipName}</p>

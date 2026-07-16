@@ -7,14 +7,14 @@ import Magnetic from '../ui/Magnetic';
 import { cn } from '../../utils/cn';
 
 const scenes = [
-  { image: IMAGES.hero1, label: 'School life', note: 'Questions become conversations.' },
-  { image: IMAGES.cultural1, label: 'The stage', note: 'Confidence finds its own voice.' },
-  { image: IMAGES.sports1, label: 'The field', note: 'Belonging is built together.' },
+  { image: IMAGES.heroPhoto1, label: 'School life', note: 'Questions become conversations.' },
+  { image: IMAGES.heroPhoto2, label: 'The stage', note: 'Confidence finds its own voice.' },
+  { image: IMAGES.heroPhoto3, label: 'The field', note: 'Belonging is built together.' },
+  { image: IMAGES.heroPhoto4, label: 'The classroom', note: 'Learning comes to life.' },
 ];
 
 export default function HomeHero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const visualRef = useRef<HTMLDivElement>(null);
   const [activeScene, setActiveScene] = useState(0);
 
   useEffect(() => {
@@ -53,16 +53,8 @@ export default function HomeHero() {
     if (event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const normalizedX = Math.min(0.999, Math.max(0, (event.clientX - rect.left) / rect.width));
-    const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
     const nextScene = Math.floor(normalizedX * scenes.length);
     if (nextScene !== activeScene) setActiveScene(nextScene);
-    visualRef.current?.style.setProperty('--scene-x', `${(normalizedX - 0.5) * 18}px`);
-    visualRef.current?.style.setProperty('--scene-y', `${normalizedY * 12}px`);
-  };
-
-  const resetPointer = () => {
-    visualRef.current?.style.setProperty('--scene-x', '0px');
-    visualRef.current?.style.setProperty('--scene-y', '0px');
   };
 
   return (
@@ -82,10 +74,8 @@ export default function HomeHero() {
         <div className="editorial-grid home-hero__div-003" />
 
         <div
-          ref={visualRef}
           className="book-visual"
           onPointerMove={handlePointerMove}
-          onPointerLeave={resetPointer}
         >
           {scenes.map((scene, index) => (
             <img

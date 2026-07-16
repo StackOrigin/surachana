@@ -62,6 +62,18 @@ const files = [
   '0ea0c11eea99340e.jpg',
   '0a477c6cca0beb50.jpg',
   'c6c49ee544844205.jpg',
+  'heroPhoto1.jpeg',
+  'heroPhoto2.jpeg',
+  'heroPhoto3.jpeg',
+  'heroPhoto4.jpeg',
+  'lowerSecondary.jpeg',
+  'arriveAndBelong.jpeg',
+  'questionAndDiscover.jpeg',
+  'moveAndConnect.jpeg',
+  'makeAndExpress.jpeg',
+  'about1.jpeg',
+  'about2.jpeg',
+  'leadership.jpeg',
 ].map(asset);
 
 export const SCHOOL: SchoolDetails = {
@@ -117,6 +129,15 @@ export const IMAGES = {
   teacher1: files[1], teacher2: files[2], teacher3: files[3], teacher4: files[4], teacher5: files[5],
   teacher6: files[6], sports1: files[3], sports2: files[4], sports3: files[5], library: files[7],
   reading: files[8], principal: files[1], cultural1: files[6], cultural2: files[7], celebration: files[8],
+  heroPhoto1: files[10], heroPhoto2: files[11], heroPhoto3: files[12], heroPhoto4: files[13],
+  earlyYears: asset('earlyYears.jpeg'),
+  primaryYears: asset('primaryYears.jpeg'),
+  lowerSecondary: files[14],
+  lowerSecondaryAcademics: asset('lowerSecondaryAcademics.jpeg'),
+  arriveAndBelong: files[15], questionAndDiscover: files[16], moveAndConnect: files[17],
+  makeAndExpress: files[18],
+  about1: files[19], about2: files[20],
+  leadership: files[21],
 };
 
 export const NAV_LINKS = [
@@ -140,7 +161,6 @@ export const PROGRAMS: Program[] = [
   { title: 'Early Years', ages: 'Young learners', description: 'A caring start built around language, play, routines, creativity, and the confidence to participate.', focus: ['Play', 'Language', 'Movement', 'Belonging'], icon: 'baby' },
   { title: 'Primary Level', ages: 'Foundation years', description: 'Strong foundations in core subjects, with space for questions, teamwork, expression, and practical learning.', focus: ['Core learning', 'Projects', 'Arts', 'Physical activity'], icon: 'bookOpen' },
   { title: 'Lower Secondary', ages: 'Growing independence', description: 'A broader curriculum that deepens understanding and helps learners become organised, curious, and self-aware.', focus: ['Mathematics', 'Science', 'Languages', 'Digital skills'], icon: 'microscope' },
-  { title: 'Secondary Level', ages: 'SEE pathway', description: 'Focused academic preparation supported by guidance, responsibility, and learning beyond examinations.', focus: ['SEE preparation', 'Guidance', 'Leadership', 'Application'], icon: 'graduationCap' },
 ];
 
 export const VALUES: ValueItem[] = [
@@ -154,10 +174,10 @@ export const VALUES: ValueItem[] = [
 
 export const WHY_CHOOSE: ValueItem[] = [
   { title: 'Caring Educators', description: 'Teachers support both progress and confidence.', icon: 'users' },
-  { title: 'Clear Foundations', description: 'A structured learning journey from early years to secondary level.', icon: 'building' },
+  { title: 'Clear Foundations', description: 'A structured learning journey from early years through lower secondary.', icon: 'building' },
   { title: 'Active School Life', description: 'Activities and shared experiences bring learning to life.', icon: 'layout' },
   { title: 'A Sense of Belonging', description: 'A community where children can be known and encouraged.', icon: 'shieldCheck' },
-  { title: 'SEE Pathway', description: 'Steady preparation for the important secondary years.', icon: 'trendingUp' },
+  { title: 'SEE Pathway', description: 'Steady preparation for the next academic step.', icon: 'trendingUp' },
   { title: 'Family Connection', description: 'Direct communication between families and school.', icon: 'messageCircle' },
 ];
 
@@ -194,7 +214,7 @@ export const FACULTY: FacultyMember[] = [
   {
     name: 'Secondary Team',
     position: 'Senior Level Teachers',
-    department: 'Secondary Level',
+    department: 'Lower Secondary',
     image: files[4],
     bio: 'Supporting deeper subject learning and the journey toward SEE.',
     level: 'senior',

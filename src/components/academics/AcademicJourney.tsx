@@ -6,7 +6,7 @@ import Reveal from '../ui/Reveal';
 import PointerDepth from '../ui/PointerDepth';
 import { cn } from '../../utils/cn';
 
-const images = [IMAGES.drawing, IMAGES.hero2, IMAGES.students2, IMAGES.students1];
+const images = [IMAGES.earlyYears, IMAGES.primaryYears, IMAGES.lowerSecondaryAcademics];
 
 export default function AcademicJourney() {
   const [active, setActive] = useState(0);
@@ -27,7 +27,7 @@ export default function AcademicJourney() {
           <div className="academic-journey__div-008">
             <span
               className="academic-journey__span-009"
-              style={{ height: '25%', transform: `translateY(${active * 100}%)` }}
+              style={{ height: '33.3333%', transform: `translateY(${active * 100}%)` }}
             />
             {PROGRAMS.map((item, index) => (
               <button
