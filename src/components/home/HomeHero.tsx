@@ -49,13 +49,13 @@ export default function HomeHero() {
     };
   }, []);
 
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const normalizedX = Math.min(0.999, Math.max(0, (event.clientX - rect.left) / rect.width));
-    const nextScene = Math.floor(normalizedX * scenes.length);
-    if (nextScene !== activeScene) setActiveScene(nextScene);
-  };
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveScene((current) => (current + 1) % scenes.length);
+    }, 2500);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
     <section
@@ -73,10 +73,7 @@ export default function HomeHero() {
       <div className="book-hero-sticky">
         <div className="editorial-grid home-hero__div-003" />
 
-        <div
-          className="book-visual"
-          onPointerMove={handlePointerMove}
-        >
+        <div className="book-visual">
           {scenes.map((scene, index) => (
             <img
               key={scene.image}

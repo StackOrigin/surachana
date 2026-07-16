@@ -107,6 +107,7 @@
   }
 .faculty__img-008 {
     object-fit: cover;
+    object-position: center 30%;
   }
 .faculty__div-011 {
     padding: calc(var(--spacing) * 4);
