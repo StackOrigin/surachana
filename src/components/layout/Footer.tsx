@@ -66,18 +66,17 @@ export default function Footer() {
         <div className="editorial-kicker footer__div-022">
           <span>© {new Date().getFullYear()} {SCHOOL.name}</span>
           <span>{SCHOOL.locationLine} · Nepal</span>
+          <a
+            href="https://nivaksha.me"
+            target="_blank"
+            rel="noreferrer"
+            className="footer__link-023"
+            aria-label="Visit Nivaksha"
+          >
+            <span className="footer__span-024">Designed by Nivaksha</span>
+            <img src={nivakshaLogoSrc} alt="Nivaksha logo" className="footer__img-025" loading="lazy" />
+          </a>
         </div>
-
-        <a
-          href="https://nivaksha.me"
-          target="_blank"
-          rel="noreferrer"
-          className="footer__link-023"
-          aria-label="Visit Nivaksha"
-        >
-          <span className="footer__span-024">Designed by Nivaksha</span>
-          <img src={nivakshaLogoSrc} alt="Nivaksha logo" className="footer__img-025" loading="lazy" />
-        </a>
       </div>
     </footer>
   );
