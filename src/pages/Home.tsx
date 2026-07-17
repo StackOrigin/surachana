@@ -200,7 +200,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Principal Quote ── */}
+      {/* ── School Quote ── */}
       <section className="home__section-058">
         <div className="home__div-059">
           <div className="home__div-060">

@@ -117,7 +117,7 @@ export const SCHOOL: SchoolDetails = {
     'Together with families, we aim to make each school day purposeful, caring, and full of reasons to participate.',
   ],
   seoDescription: 'Surachana English School in Thaiba, Lalitpur — education is the light of our life.',
-  heroLines: ['A brighter', 'way to learn', 'begins here.'],
+  heroLines: ['A brighter way to learn', 'begins here.', ''],
 };
 
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.trim()

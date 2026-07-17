@@ -637,3 +637,12 @@
       padding-inline: calc(var(--spacing) * 8);
     }
   }
+
+/* ─── MOBILE: Reduce gap between sections ─── */
+@media (max-width: 40rem) {
+  .about__section-001,
+  .about__section-011,
+  .about__section-024 {
+    padding-block: calc(var(--spacing) * 8);
+  }
+}

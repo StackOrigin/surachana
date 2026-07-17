@@ -108,6 +108,7 @@ export default function HomeHero() {
 
         <div className="book-details home-hero__div-013">
           <div>
+            <span className="editorial-kicker home-hero__span-023">{SCHOOL.shortName} · School life</span>
             <p className="editorial-kicker home-hero__p-014">{scenes[activeScene].label}</p>
             <p className="home-hero__p-015">{scenes[activeScene].note}</p>
           </div>

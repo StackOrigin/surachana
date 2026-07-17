@@ -293,3 +293,10 @@
       padding-block: calc(var(--spacing) * 14);
     }
   }
+
+/* ─── MOBILE: Reduce footer spacing ─── */
+@media (max-width: 40rem) {
+  .footer__div-002 {
+    padding-block: calc(var(--spacing) * 5);
+  }
+}
