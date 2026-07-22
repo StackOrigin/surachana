@@ -422,20 +422,26 @@
     }
   }
 
-/* ─── MOBILE: Unbold & smaller header text ─── */
+/* ─── MOBILE: Unbold all items ─── */
 @media (max-width: 40rem) {
+  .navbar__link-008,
+  .navbar__link-021,
+  .navbar__link-027,
+  .navbar__link-040,
+  .navbar__link-043,
+  .navbar__strong-016,
+  .navbar__span-013,
+  .navbar__span-041,
+  .navbar__span-044 {
+    font-weight: var(--font-weight-normal);
+  }
+
   .navbar__strong-016 {
     font-size: var(--text-base);
-    font-weight: var(--font-weight-normal);
   }
 
-  .navbar__span-041 {
-    font-size: var(--text-lg);
-    font-weight: var(--font-weight-normal);
-  }
-
+  .navbar__span-041,
   .navbar__span-044 {
     font-size: var(--text-lg);
-    font-weight: var(--font-weight-normal);
   }
 }
