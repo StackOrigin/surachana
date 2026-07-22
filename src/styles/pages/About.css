@@ -638,11 +638,72 @@
     }
   }
 
-/* ─── MOBILE: Reduce gap between sections ─── */
+/* ─── MOBILE: Spacing adjustments ─── */
 @media (max-width: 40rem) {
+  /* Reduce section padding for ALL sections */
   .about__section-001,
   .about__section-011,
-  .about__section-024 {
+  .about__section-024,
+  .about__section-037,
+  .about__section-044,
+  .about__section-059 {
     padding-block: calc(var(--spacing) * 8);
+  }
+
+  /* Reduce card inner padding */
+  .about__div-014,
+  .about__div-019 {
+    padding: calc(var(--spacing) * 5);
+  }
+  .about__div-040 {
+    padding: calc(var(--spacing) * 4);
+  }
+
+  /* Reduce grid gaps */
+  .about__div-039 {
+    gap: calc(var(--spacing) * 4);
+  }
+  .about__div-013 {
+    gap: calc(var(--spacing) * 5);
+  }
+  .about__div-063 {
+    gap: calc(var(--spacing) * 4);
+  }
+  .about__div-064 {
+    gap: calc(var(--spacing) * 2);
+  }
+
+  /* Reduce Mission & Vision icon container size */
+  .about__div-015,
+  .about__div-020 {
+    width: calc(var(--spacing) * 10);
+    height: calc(var(--spacing) * 10);
+  }
+  .about__target-016,
+  .about__eye-021 {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+
+  /* Reduce section heading margins */
+  .about__h3-017,
+  .about__h3-022 {
+    margin-bottom: calc(var(--spacing) * 3);
+  }
+  .about__h3-042 {
+    margin-bottom: calc(var(--spacing) * 2);
+  }
+  .about__p-010.about__p-010 {
+    margin-bottom: calc(var(--spacing) * 3);
+  }
+
+  /* Reduce timeline spacing */
+  .about__div-053 {
+    margin-left: calc(var(--spacing) * 6);
+  }
+
+  /* Reduce CTA button top margin */
+  .about__div-067 {
+    margin-top: calc(var(--spacing) * 6);
   }
 }
