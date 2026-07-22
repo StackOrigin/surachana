@@ -397,7 +397,7 @@
 .navbar__link-021 {
   }
 .navbar__span-live-time {
-    display: none;
+    display: inline-flex;
     align-items: center;
     gap: calc(var(--spacing) * 1.5);
     font-size: var(--text-xs);
@@ -409,9 +409,21 @@
     border-style: var(--site-border-style);
     border-width: 1px;
     border-radius: calc(infinity * 1px);
-    @media (width >= 40rem) {
-      display: inline-flex;
-    }
+  }
+.navbar__span-live-time-mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--spacing) * 1.5);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    color: var(--color-navy-400);
+    margin-top: calc(var(--spacing) * 4);
+  }
+.navbar__span-live-time-mobile .navbar__clock-icon {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
   }
 .navbar__span-live-time {
     border-color: color-mix(in srgb, #102b24 20%, transparent);
@@ -463,8 +475,12 @@
     }
   }
 
-/* ─── MOBILE: Unbold all items ─── */
+/* ─── MOBILE: Hide time in top bar, show in mobile nav ─── */
 @media (max-width: 40rem) {
+  .navbar__span-live-time {
+    display: none !important;
+  }
+
   .navbar__link-008,
   .navbar__link-021,
   .navbar__link-027,

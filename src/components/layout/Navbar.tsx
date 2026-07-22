@@ -147,6 +147,10 @@ export default function Navbar() {
             <span className="navbar__span-044">Enquire</span>
             <ArrowUpRight className="navbar__arrow-up-right-045" />
           </Link>
+          <span className="navbar__span-live-time-mobile">
+            <Clock className="navbar__clock-icon" />
+            <LiveTime />
+          </span>
         </div>
       </div>
     </header>
