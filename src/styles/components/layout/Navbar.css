@@ -422,9 +422,19 @@
     }
   }
 
-/* ─── MOBILE: Unbold & smaller page names, smaller enquire button ─── */
+/* ─── MOBILE: Unbold & smaller header text ─── */
 @media (max-width: 40rem) {
+  .navbar__strong-016 {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+  }
+
   .navbar__span-041 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-normal);
+  }
+
+  .navbar__span-044 {
     font-size: var(--text-lg);
     font-weight: var(--font-weight-normal);
   }

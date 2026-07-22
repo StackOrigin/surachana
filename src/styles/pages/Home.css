@@ -96,7 +96,23 @@
     margin-top: calc(var(--spacing) * 6);
   }
 .home__div-015 {
-    margin-top: calc(var(--spacing) * 10);
+    margin-top: calc(var(--spacing) * 4);
+  }
+@media (width >= 40rem) {
+    .home__div-015 {
+        margin-top: calc(var(--spacing) * 10);
+    }
+  }
+@media (width < 40rem) {
+    .home__div-015 {
+        gap: calc(var(--spacing) * 3);
+    }
+
+    .home__div-016 {
+        gap: calc(var(--spacing) * 3);
+        padding-block: calc(var(--spacing) * 2);
+        padding-inline: calc(var(--spacing) * 2);
+    }
   }
 .home__p-032 {
     margin-bottom: calc(var(--spacing) * 1);
@@ -410,19 +426,10 @@
       background-color: color-mix(in oklab, var(--color-gold-400) 10%, transparent);
     }
   }
-.home__div-016 {
-    background-color: transparent;
-    border: none;
-  }
-
 
 .home__section-021,
 .home__section-069 {
     background-color: var(--color-navy-950);
-  }
-.home__section-009,
-.home__section-058 {
-    background-color: var(--color-white);
   }
 .home__section-058 {
     padding-block: calc(var(--spacing) * 10);
@@ -1094,6 +1101,37 @@
       gap: calc(var(--spacing) * 8);
     }
   }
+  .home__article-030 {
+    @media (width < 48rem) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'number'
+        'meta'
+        'copy'
+        'image';
+    }
+  }
+  .home__article-030 > .home__span-031 {
+    @media (width < 48rem) {
+      grid-area: number;
+    }
+  }
+  .home__article-030 > :nth-child(2) {
+    @media (width < 48rem) {
+      grid-area: meta;
+    }
+  }
+  .home__article-030 > .home__p-034 {
+    @media (width < 48rem) {
+      grid-area: copy;
+    }
+  }
+  .home__article-030 > .home__div-035 {
+    @media (width < 48rem) {
+      display: block;
+      grid-area: image;
+    }
+  }
 .home__reveal-054 {
     @media (width >= 64rem) {
       grid-column: span 3 / span 3;
@@ -1225,3 +1263,158 @@
       line-height: var(--site-leading, var(--text-5xl--line-height));
     }
   }
+
+/* =================================================================
+   SECTION 02 — REDESIGNED: Decorative backgrounds + card enhancements
+   ================================================================= */
+
+/* Soft radial background glow */
+.home__section-009 {
+  background-color: var(--color-white);
+  background-image:
+    radial-gradient(ellipse 70% 50% at 0% 30%, color-mix(in oklab, var(--color-gold-300) 7%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 45% at 100% 70%, color-mix(in oklab, var(--color-navy-200) 8%, transparent) 0%, transparent 100%);
+}
+
+/* Subtle grid pattern overlay using pseudo-element */
+.home__section-009::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--color-navy-950) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--color-navy-950) 3%, transparent) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Card container refinements */
+.home__div-016 {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--color-cream-50) 50%, transparent) 0%,
+    var(--color-white) 50%,
+    color-mix(in oklab, var(--color-gold-300) 4%, transparent) 100%
+  );
+  border: 1px solid color-mix(in oklab, var(--color-navy-200) 18%, transparent);
+  border-radius: 16px;
+  backdrop-filter: blur(4px);
+  cursor: default;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-duration: 500ms;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+/* Gradient border shine effect using pseudo-element */
+.home__div-016::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--color-gold-300) 25%, transparent) 0%,
+    transparent 35%,
+    transparent 65%,
+    color-mix(in oklab, var(--color-navy-200) 20%, transparent) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Animated gold top bar on card */
+.home__div-016::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 25%;
+  right: 25%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold-400) 50%,
+    transparent 100%
+  );
+  border-radius: 16px 16px 0 0;
+  opacity: 0;
+  transition: opacity 500ms ease, left 500ms ease, right 500ms ease;
+}
+
+.home__div-016:hover::after {
+  opacity: 1;
+  left: -1px;
+  right: -1px;
+}
+
+/* Hover state for cards */
+.home__div-016:hover {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--color-cream-50) 70%, transparent) 0%,
+    var(--color-white) 50%,
+    color-mix(in oklab, var(--color-gold-300) 7%, transparent) 100%
+  );
+  border-color: color-mix(in oklab, var(--color-gold-400) 25%, transparent);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.05),
+    0 2px 8px rgba(0,0,0,0.03);
+  transform: translateY(-3px) scale(1.01);
+}
+
+/* Number gradient text enhancement */
+.home__span-017 {
+  background: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Accent tag with decorative line */
+.home__span-020 {
+  position: relative;
+  padding-left: calc(var(--spacing) * 4);
+}
+
+.home__span-020::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 1.5px;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+/* Underline animation on card title */
+.home__h3-018 {
+  position: relative;
+  display: inline-block;
+}
+
+.home__h3-018::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--color-gold-400), var(--color-gold-500), transparent);
+  border-radius: 2px;
+  transition: width 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.home__div-016:hover .home__h3-018::after {
+  width: 100%;
+}
+
