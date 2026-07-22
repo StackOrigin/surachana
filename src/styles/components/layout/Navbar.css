@@ -245,6 +245,10 @@
   }
 .navbar__small-017 {
     font-size: 8px;
+    font-style: italic;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0.06em;
   }
 .navbar__link-021 {
     font-size: 13px;
@@ -264,6 +268,9 @@
 .navbar__strong-016 {
     --site-tracking: 0.06em;
     letter-spacing: 0.06em;
+  }
+.navbar__strong-016 .navbar__school-name {
+    text-transform: uppercase;
   }
 .navbar__link-027 {
     --site-tracking: 0.12em;
@@ -389,6 +396,40 @@
   }
 .navbar__link-021 {
   }
+.navbar__span-live-time {
+    display: none;
+    align-items: center;
+    gap: calc(var(--spacing) * 1.5);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 1.5);
+    border-style: var(--site-border-style);
+    border-width: 1px;
+    border-radius: calc(infinity * 1px);
+    @media (width >= 40rem) {
+      display: inline-flex;
+    }
+  }
+.navbar__span-live-time {
+    border-color: color-mix(in srgb, #102b24 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-navy-900) 20%, transparent);
+    }
+  }
+.navbar__header-003 .navbar__span-live-time {
+    border-color: color-mix(in srgb, #fff 25%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-white) 25%, transparent);
+    }
+  }
+.navbar__clock-icon {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+    flex-shrink: 0;
+  }
 .navbar__link-027 {
     @media (width >= 40rem) {
       display: inline-flex;
@@ -443,5 +484,10 @@
   .navbar__span-041,
   .navbar__span-044 {
     font-size: var(--text-lg);
+  }
+
+  .navbar__span-042 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
   }
 }
