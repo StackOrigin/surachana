@@ -1,8 +1,7 @@
-- [x] Update src/data/schoolData.ts: add FacultyMember.level and assign Principal/Junior/Senior/Other
-- [x] Update src/pages/Faculty.tsx: render grouped sections (Principal, Junior Level Teachers, Senior Level Teachers, then Other/Our Team)
-- [ ] Update src/styles/pages/Faculty.css if needed for section spacing
-- [ ] Build/test: run npm run build (or dev server) and verify /faculty UI
+# Academics Mobile Spacing Optimization
 
+## Steps
 
-
+- [x] 1. Add mobile spacing overrides to `Academics.css` (section padding, card padding, grid gap, heading size, button gap)
+- [x] 2. Enhance mobile overrides in `AcademicJourney.css` (focus items gap, CTA link margin)
 
