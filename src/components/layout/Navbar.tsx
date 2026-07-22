@@ -1,8 +1,9 @@
 import "../../styles/components/layout/Navbar.css";
 import { useEffect, useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Clock, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
+import LiveTime from '../ui/LiveTime';
 import { cn } from '../../utils/cn';
 
 const primaryLinkPaths = ['/', '/about', '/academics', '/faculty', '/gallery', '/contact'];
@@ -66,7 +67,7 @@ export default function Navbar() {
               />
             </span>
             <span>
-              <strong className="navbar__strong-016">{SCHOOL.name}</strong>
+              <strong className="navbar__strong-016"><span className="navbar__school-name">Surachana</span> English School</strong>
               <small className={cn("editorial-kicker navbar__small-017", isScrolled ? "navbar__small-018" : "navbar__small-019")}>
                 {SCHOOL.tagline}
               </small>
@@ -91,6 +92,10 @@ export default function Navbar() {
           </div>
 
           <div className="navbar__div-026">
+            <span className="navbar__span-live-time">
+              <Clock className="navbar__clock-icon" />
+              <LiveTime />
+            </span>
             <Link
               to="/admission"
               className={cn(
@@ -142,6 +147,10 @@ export default function Navbar() {
             <span className="navbar__span-044">Enquire</span>
             <ArrowUpRight className="navbar__arrow-up-right-045" />
           </Link>
+          <span className="navbar__span-live-time-mobile">
+            <Clock className="navbar__clock-icon" />
+            <LiveTime />
+          </span>
         </div>
       </div>
     </header>

@@ -2,7 +2,6 @@ import "../../styles/components/layout/Footer.css";
 import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
-
 const nivakshaLogoSrc = import.meta.env.DEV
   ? '/schools/surachana/nivakshaLogo.jpeg'
   : './schools/surachana/nivakshaLogo.jpeg';
