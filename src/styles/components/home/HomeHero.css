@@ -528,7 +528,6 @@
     inset: 0;
     height: 100%;
     clip-path: inset(0);
-    --mobile-pan: 0px;
   }
 
   .book-scene {
@@ -541,7 +540,6 @@
   }
 
   .book-scene.is-active {
-    transform: translateX(var(--mobile-pan));
   }
 
   .book-headline {
