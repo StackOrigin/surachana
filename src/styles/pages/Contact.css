@@ -108,12 +108,16 @@
     gap: calc(var(--spacing) * 5);
   }
 .contact__div-003 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: calc(var(--spacing) * 6);
   }
 .contact__div-013 {
     gap: calc(var(--spacing) * 12);
   }
 .contact__form-018 {
+    background-color: var(--color-navy-900);
+    padding: calc(var(--spacing) * 8);
+    border-radius: var(--radius-2xl);
   }
 .contact__div-033 {
   }
@@ -292,6 +296,22 @@
 .contact__p-012 {
     color: var(--color-navy-400);
   }
+.contact__form-018 .contact__label-021,
+.contact__form-018 .contact__label-023,
+.contact__form-018 .contact__label-025,
+.contact__form-018 .contact__label-027,
+.contact__form-018 .contact__label-029,
+.contact__form-018 .contact__input-022,
+.contact__form-018 .contact__input-024,
+.contact__form-018 .contact__input-026,
+.contact__form-018 .contact__select-028,
+.contact__form-018 .contact__textarea-030 {
+    color: var(--color-white);
+  }
+.contact__select-028,
+.contact__select-028 option {
+    color: var(--color-black);
+  }
 .contact__p-011,
 .contact__label-021,
 .contact__label-023,
@@ -346,6 +366,8 @@
 .contact__textarea-030 {
     --site-outline-style: none;
     outline-style: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 .contact__div-009 {
     &:is(:where(.contact__div-008):hover *) {
@@ -394,7 +416,6 @@
       width: auto;
     }
   }
-.contact__div-003,
 .contact__div-020 {
     @media (width >= 40rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -430,3 +451,10 @@
       padding-inline: calc(var(--spacing) * 8);
     }
   }
+
+@media (max-width: 40rem) {
+  .contact__p-011 {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}

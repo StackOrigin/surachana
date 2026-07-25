@@ -1,7 +1,6 @@
 .about__div-007,
 .about__div-031,
 .about__div-047,
-.about__div-052,
 .about__div-060,
 .about__div-061 {
     position: absolute;
@@ -339,7 +338,7 @@
     padding-inline: calc(var(--spacing) * 4);
   }
 .about__div-031 {
-    padding-inline: calc(var(--spacing) * 5);
+    padding-inline: calc(var(--spacing) * 3);
   }
 .about__div-031 {
     padding-block: calc(var(--spacing) * 3);
@@ -415,7 +414,6 @@
     font-weight: var(--font-weight-medium);
   }
 .about__div-031 {
-    white-space: nowrap;
   }
 .about__div-015,
 .about__check-circle-065 {
@@ -515,6 +513,11 @@
       left: calc(1/2 * 100%);
     }
   }
+.about__div-052 {
+    @media (width >= 48rem) {
+      position: absolute;
+    }
+  }
 .about__div-053 {
     @media (width >= 48rem) {
       margin-left: calc(var(--spacing) * 0);
@@ -593,12 +596,12 @@
     }
   }
 .about__reveal-027 {
-    @media (width >= 64rem) {
+    @media (width >= 48rem) {
       grid-column: span 2 / span 2;
     }
   }
 .about__reveal-034 {
-    @media (width >= 64rem) {
+    @media (width >= 48rem) {
       grid-column: span 3 / span 3;
     }
   }
@@ -618,7 +621,7 @@
     }
   }
 .about__div-026 {
-    @media (width >= 64rem) {
+    @media (width >= 48rem) {
       grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
@@ -640,14 +643,14 @@
 
 /* ─── MOBILE: Spacing adjustments ─── */
 @media (max-width: 40rem) {
-  /* Reduce section padding for ALL sections */
+  /* Increase section padding for ALL sections */
   .about__section-001,
   .about__section-011,
   .about__section-024,
   .about__section-037,
   .about__section-044,
   .about__section-059 {
-    padding-block: calc(var(--spacing) * 8);
+    padding-block: calc(var(--spacing) * 14);
   }
 
   /* Reduce card inner padding */
@@ -698,6 +701,12 @@
   }
 
   /* Reduce timeline spacing */
+  .about__div-048 {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 6);
+  }
+
   .about__div-053 {
     margin-left: calc(var(--spacing) * 6);
   }

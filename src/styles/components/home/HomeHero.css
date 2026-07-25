@@ -537,6 +537,7 @@
     height: 100%;
     object-fit: contain;
     transition: opacity 700ms ease;
+    will-change: auto;
   }
 
   .book-scene.is-active {
@@ -570,8 +571,17 @@
     display: none;
   }
 
+  .home-hero__div-016 {
+    gap: calc(var(--spacing) * 2);
+  }
+
+  .home-hero__link-017,
   .home-hero__link-019 {
     width: auto;
-    padding-inline: calc(var(--spacing) * 8);
+    padding-inline: calc(var(--spacing) * 4);
+  }
+
+  .home-hero__link-019 {
+    align-self: flex-start;
   }
 }
