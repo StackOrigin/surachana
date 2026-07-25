@@ -17,7 +17,6 @@ export default function HomeHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
   const [activeScene, setActiveScene] = useState(0);
-  const dragStateRef = useRef({ startX: 0, currentTranslate: 0, isDragging: false });
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -59,33 +58,6 @@ export default function HomeHero() {
     return () => window.clearInterval(interval);
   }, []);
 
-  // Mobile touch-drag panning for images
-  const handleTouchStart = (e: React.TouchEvent) => {
-    const visual = visualRef.current;
-    if (!visual) return;
-    const drag = dragStateRef.current;
-    drag.isDragging = true;
-    drag.startX = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    const visual = visualRef.current;
-    if (!visual) return;
-    const drag = dragStateRef.current;
-    if (!drag.isDragging) return;
-
-    const diff = e.touches[0].clientX - drag.startX;
-    const maxTranslate = 60; // max pixels to pan
-    const clamped = Math.max(-maxTranslate, Math.min(maxTranslate, drag.currentTranslate + diff * 0.5));
-    visual.style.setProperty('--mobile-pan', `${clamped}px`);
-    drag.currentTranslate = clamped;
-    drag.startX = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    dragStateRef.current.isDragging = false;
-  };
-
   return (
     <section
       ref={sectionRef}
@@ -105,9 +77,6 @@ export default function HomeHero() {
         <div
           className="book-visual"
           ref={visualRef}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
         >
           {scenes.map((scene, index) => (
             <img
