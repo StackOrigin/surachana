@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { IMAGES, PROGRAMS } from '../../data/schoolData';
 import Reveal from '../ui/Reveal';
-import PointerDepth from '../ui/PointerDepth';
 import { cn } from '../../utils/cn';
 
 const images = [IMAGES.earlyYears, IMAGES.primaryYears, IMAGES.lowerSecondaryAcademics];
@@ -48,11 +47,11 @@ export default function AcademicJourney() {
           </div>
 
           <div key={active} className="journey-panel academic-journey__div-015">
-            <PointerDepth className="academic-journey__pointer-depth-016">
+            <div className="academic-journey__pointer-depth-016">
               <div className="academic-journey__div-017">
                 <img src={images[active]} alt={`${program.title} at ${program.ages.toLowerCase()}`} className="cinematic-image academic-journey__img-018" loading="lazy" />
               </div>
-            </PointerDepth>
+            </div>
             <div className="academic-journey__div-019">
               <div>
                 <span className="editorial-kicker academic-journey__span-020">{program.ages}</span>

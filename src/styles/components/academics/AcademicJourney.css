@@ -394,3 +394,30 @@
     margin-top: calc(var(--spacing) * 3);
   }
 }
+
+/* Requested polish: keep first section image still and reduce large gaps. */
+.cinematic-image {
+  animation: none !important;
+}
+
+.academic-journey__section-001 {
+  padding-block: calc(var(--spacing) * 12) !important;
+}
+
+.academic-journey__reveal-003 {
+  margin-bottom: calc(var(--spacing) * 8);
+}
+
+.academic-journey__div-007 {
+  gap: calc(var(--spacing) * 6);
+}
+
+@media (width >= 64rem) {
+  .academic-journey__section-001 {
+    padding-block: calc(var(--spacing) * 18) !important;
+  }
+
+  .academic-journey__div-007 {
+    gap: calc(var(--spacing) * 8) !important;
+  }
+}

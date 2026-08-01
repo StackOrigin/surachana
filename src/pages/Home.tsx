@@ -16,6 +16,9 @@ const programImages = [IMAGES.earlyYears, IMAGES.primaryYears, IMAGES.lowerSecon
 
 export default function Home() {
   useScrollToTop();
+  const featuredGalleryItems = [GALLERY_ITEMS[7], GALLERY_ITEMS[12], GALLERY_ITEMS[4], ...GALLERY_ITEMS]
+    .filter((item, index, items) => item?.src && items.findIndex((candidate) => candidate?.src === item.src) === index)
+    .slice(0, 3);
 
   return (
     <main>
@@ -162,47 +165,51 @@ export default function Home() {
 
       <CampusStory />
 
-      <section className="home__section-037">
-        <div className="home__div-038">
-          <div className="home__div-039">
-            <Reveal variant="slide-left">
-              <p className="editorial-kicker home__p-040">05 · Seen around school</p>
-              <h2 className="home__h2-041">
-                The small moments
-                <span className="home__span-042">make the story.</span>
-              </h2>
-            </Reveal>
-            <Link to="/gallery" className="home__link-043">
-              Open the gallery <ArrowRight className="home__arrow-right-044" />
-            </Link>
-          </div>
+      {featuredGalleryItems.length > 0 && (
+        <section className="home__section-037">
+          <div className="home__div-038">
+            <div className="home__div-039">
+              <Reveal variant="slide-left">
+                <p className="editorial-kicker home__p-040">05 · Seen around school</p>
+                <h2 className="home__h2-041">
+                  The small moments
+                  <span className="home__span-042">make the story.</span>
+                </h2>
+              </Reveal>
+              <Link to="/gallery" className="home__link-043">
+                Open the gallery <ArrowRight className="home__arrow-right-044" />
+              </Link>
+            </div>
 
-          <div className="home__div-045">
-            <Reveal variant="clip" className="home__reveal-046">
-              <Link to="/gallery" className="home__link-047">
-                <img src={GALLERY_ITEMS[7].src} alt={GALLERY_ITEMS[7].alt} className="home__img-048" loading="lazy" />
-                <span className="editorial-kicker home__span-049">Culture · together</span>
-              </Link>
-            </Reveal>
-            <Reveal variant="clip" delay={130} className="home__reveal-050">
-              <Link to="/gallery" className="home__link-051">
-                <img src={GALLERY_ITEMS[12].src} alt={GALLERY_ITEMS[12].alt} className="home__img-052" loading="lazy" />
-                <span className="editorial-kicker home__span-053">Quiet discoveries</span>
-              </Link>
-            </Reveal>
-            <Reveal variant="clip" delay={240} className="home__reveal-054">
-              <Link to="/gallery" className="home__link-055">
-                <img src={GALLERY_ITEMS[4].src} alt={GALLERY_ITEMS[4].alt} className="home__img-056" loading="lazy" />
-                <span className="editorial-kicker home__span-057">Play with purpose</span>
-              </Link>
-            </Reveal>
+            <div className="home__div-045">
+              {featuredGalleryItems.map((item, index) => (
+                <Reveal
+                  key={item.src}
+                  variant="clip"
+                  delay={index * 120}
+                  className={index === 0 ? "home__reveal-046" : index === 1 ? "home__reveal-050" : "home__reveal-054"}
+                >
+                  <Link to="/gallery" className={index === 0 ? "home__link-047" : index === 1 ? "home__link-051" : "home__link-055"}>
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className={index === 0 ? "home__img-048" : index === 1 ? "home__img-052" : "home__img-056"}
+                      loading="lazy"
+                    />
+                    <span className={index === 0 ? "editorial-kicker home__span-049" : index === 1 ? "editorial-kicker home__span-053" : "editorial-kicker home__span-057"}>
+                      {item.category}
+                    </span>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── School Quote ── */}
       <section className="home__section-058">
-        <div className="home__div-059">
+          <div className="home__div-059">
           <div className="home__div-060">
             <img src={IMAGES.leadership} alt={`${SCHOOL.name} leadership`} className="home__img-061" loading="lazy" />
             <div className="home__div-062" />
@@ -255,13 +262,12 @@ export default function Home() {
                 <span className="home__span-082">Apply for admission</span>
                 <ArrowRight className="home__arrow-right-083" />
               </Link>
-              <a
-                href={`tel:${SCHOOL.phone}`}
+              <Link
+                to="/contact"
                 className="home__a-084"
               >
                 <span>Talk to our team</span>
-               
-              </a>
+              </Link>
             </div>
           </Reveal>
 
