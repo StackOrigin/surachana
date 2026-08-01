@@ -13,21 +13,54 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({ phone: '', email: '' });
+
+  function updateFieldError(field: 'phone' | 'email', message: string) {
+    setFieldErrors((current) => ({ ...current, [field]: message }));
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitting(true);
     setError('');
+    setFieldErrors({ phone: '', email: '' });
 
     const form = new FormData(e.currentTarget);
+    const fullName = String(form.get('fullName') || '').trim();
+    const phone = String(form.get('phone') || '').trim();
+    const email = String(form.get('email') || '').trim();
+    const subject = String(form.get('subject') || '').trim();
+    const message = String(form.get('message') || '').trim();
+
+    if (fullName.length < 2) {
+      setError('Please enter your full name.');
+      return;
+    }
+    if (!isValidPhone(phone)) {
+      updateFieldError('phone', 'Please enter a valid phone number.');
+      return;
+    }
+    if (!isValidEmail(email)) {
+      updateFieldError('email', 'Please enter a valid email address.');
+      return;
+    }
+    if (!subject) {
+      setError('Please choose a subject.');
+      return;
+    }
+    if (message.length < 10) {
+      setError('Please write a message with at least 10 characters.');
+      return;
+    }
+
+    setSubmitting(true);
 
     try {
       await submitInquiry({
-        type: mapSubjectToType(String(form.get('subject') || 'general')),
-        fullName: String(form.get('fullName') || ''),
-        phone: String(form.get('phone') || ''),
-        email: String(form.get('email') || ''),
-        message: String(form.get('message') || ''),
+        type: mapSubjectToType(subject),
+        fullName,
+        phone,
+        email,
+        message,
       });
       setSubmitted(true);
     } catch (caught) {
@@ -85,7 +118,7 @@ export default function Contact() {
                     <p className="contact__p-017">Thank you for reaching out. We'll get back to you within 24 hours.</p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="contact__form-018">
+                  <form onSubmit={handleSubmit} className="contact__form-018" noValidate>
                     {error && (
                       <div className="contact__div-019" role="alert">
                         {error}
@@ -97,13 +130,54 @@ export default function Contact() {
                         <input id="contact-full-name" name="fullName" type="text" autoComplete="name" required className="contact__input-022" placeholder="Your name" />
                       </div>
                       <div>
-                        <label htmlFor="contact-phone" className="contact__label-023">Phone Number</label>
-                        <input id="contact-phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" className="contact__input-024" placeholder="+977-" />
+                        <label htmlFor="contact-phone" className="contact__label-023">Phone Number *</label>
+                        <input
+                          id="contact-phone"
+                          name="phone"
+                          type="tel"
+                          autoComplete="tel"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          required
+                          className="contact__input-024"
+                          placeholder="98XXXXXXXX"
+                          onInput={(event) => {
+                            const input = event.currentTarget;
+                            input.value = onlyNumbers(input.value);
+                            updateFieldError('phone', isValidPhone(input.value) || !input.value ? '' : 'Please enter a valid phone number.');
+                          }}
+                          aria-invalid={Boolean(fieldErrors.phone)}
+                          aria-describedby={fieldErrors.phone ? 'contact-phone-error' : undefined}
+                        />
+                        {fieldErrors.phone && (
+                          <p id="contact-phone-error" className="contact__field-error">
+                            {fieldErrors.phone}
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div>
                       <label htmlFor="contact-email" className="contact__label-025">Email Address *</label>
-                      <input id="contact-email" name="email" type="email" autoComplete="email" required className="contact__input-026" placeholder="your@email.com" />
+                      <input
+                        id="contact-email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        className="contact__input-026"
+                        placeholder="your@email.com"
+                        onChange={(event) => {
+                          const value = event.currentTarget.value.trim();
+                          updateFieldError('email', isValidEmail(value) || !value ? '' : 'Please enter a valid email address.');
+                        }}
+                        aria-invalid={Boolean(fieldErrors.email)}
+                        aria-describedby={fieldErrors.email ? 'contact-email-error' : undefined}
+                      />
+                      {fieldErrors.email && (
+                        <p id="contact-email-error" className="contact__field-error">
+                          {fieldErrors.email}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label htmlFor="contact-subject" className="contact__label-027">Subject *</label>
@@ -178,4 +252,16 @@ export default function Contact() {
 
 function mapSubjectToType(value: string) {
   return value || 'general';
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function isValidPhone(value: string) {
+  return value.replace(/[^\d]/g, '').length >= 7;
+}
+
+function onlyNumbers(value: string) {
+  return value.replace(/\D/g, '');
 }

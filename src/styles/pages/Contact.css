@@ -458,3 +458,52 @@
     word-break: break-word;
   }
 }
+
+/* Requested contact form polish */
+.contact__section-001 {
+  padding-block: calc(var(--spacing) * 12) !important;
+}
+
+.contact__div-003 {
+  margin-bottom: calc(var(--spacing) * 10);
+}
+
+.contact__div-013 {
+  gap: calc(var(--spacing) * 8);
+}
+
+.contact__form-018 .contact__select-028 {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.contact__form-018 .contact__select-028 option {
+  color: var(--color-black);
+}
+
+.contact__form-018 .contact__input-022,
+.contact__form-018 .contact__input-024,
+.contact__form-018 .contact__input-026,
+.contact__form-018 .contact__textarea-030 {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.contact__field-error {
+  margin-top: calc(var(--spacing) * 1.5);
+  color: var(--color-red-200);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  font-weight: var(--font-weight-medium);
+}
+
+.contact__input-024[aria-invalid="true"],
+.contact__input-026[aria-invalid="true"] {
+  border-color: var(--color-red-300);
+}
+
+@media (width >= 48rem) {
+  .contact__section-001 {
+    padding-block: calc(var(--spacing) * 16) !important;
+  }
+}

@@ -5,6 +5,9 @@ import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
 const nivakshaLogoSrc = import.meta.env.DEV
   ? '/schools/surachana/nivakshaLogo.jpeg'
   : './schools/surachana/nivakshaLogo.jpeg';
+const schoolLogoSrc = import.meta.env.DEV
+  ? '/schools/surachana/school_logo.jpg'
+  : './schools/surachana/school_logo.jpg';
 
 export default function Footer() {
   return (
@@ -13,7 +16,9 @@ export default function Footer() {
         <div className="footer__div-003">
           <div>
             <Link to="/" className="footer__link-004">
-              <span className="footer__span-005">{SCHOOL.shortName.charAt(0)}</span>
+              <span className="footer__span-005">
+                <img src={schoolLogoSrc} alt={`${SCHOOL.name} logo`} className="footer__img-026" loading="lazy" />
+              </span>
               <span>
                 <strong className="footer__strong-006">{SCHOOL.name}</strong>
                 <small className="editorial-kicker footer__small-007">{SCHOOL.tagline}</small>

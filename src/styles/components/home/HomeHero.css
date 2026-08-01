@@ -583,3 +583,14 @@
     align-self: flex-start;
   }
 }
+
+/* Requested polish: keep hero actions together in one row. */
+.home-hero__div-016 {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.home-hero__link-019 {
+  width: auto;
+}

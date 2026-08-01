@@ -29,11 +29,31 @@ type ValueItem = { title: string; description: string; icon: string };
 type GalleryItem = { src: string; alt: string; category: string };
 type FacultyLevel = 'principal' | 'junior' | 'senior' | 'other';
 type FacultyMember = { name: string; position: string; department: string; image: string; bio: string; level: FacultyLevel };
+type BackendStaffMember = {
+  name?: string;
+  designation?: string;
+  department?: string;
+  memberType?: 'teacher' | 'staff';
+  subjects?: string[];
+  photoUrl?: string;
+  bio?: string;
+  email?: string;
+  order?: number;
+  isLeadership?: boolean;
+};
+type BackendAlbum = {
+  title?: string;
+  description?: string;
+  coverUrl?: string;
+  images?: { url?: string; caption?: string; order?: number }[];
+};
 
 type AdmissionStep = { step: number; title: string; description: string };
 type TimelineItem = { year: string; title: string; description: string };
 
 type SiteData = {
+  id?: string;
+  slug?: string;
   school?: SchoolDetails;
   images?: ImageMap;
   achievements?: Achievement[];
@@ -47,6 +67,12 @@ type SiteData = {
   requiredDocuments?: string[];
   timeline?: TimelineItem[];
 };
+
+const SCHOOL_CONTEXT =
+  import.meta.env.VITE_SCHOOL_ID?.trim()
+  || import.meta.env.VITE_SCHOOL_SLUG?.trim()
+  || 'current';
+let activeSchoolContext = SCHOOL_CONTEXT;
 
 const asset = (filename: string) =>
   import.meta.env.DEV ? `/schools/surachana/${filename}` : `./schools/surachana/${filename}`;
@@ -123,6 +149,9 @@ export const SCHOOL: SchoolDetails = {
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.trim()
   || (import.meta.env.DEV ? 'http://127.0.0.1:4000' : '');
 
+const schoolApiPath = (suffix = '', schoolContext = activeSchoolContext) =>
+  `${API_BASE_URL}/api/schools/${encodeURIComponent(schoolContext)}${suffix}`;
+
 export const IMAGES = {
   hero1: files[0], hero2: files[1], hero3: files[2], students1: files[3], students2: files[4],
   students3: files[5], drawing: files[6], campus: files[7], building: files[8], building2: files[9],
@@ -185,102 +214,9 @@ export const WHY_CHOOSE: ValueItem[] = [
 ];
 
 export const GALLERY_CATEGORIES = ['All', 'School Life', 'Learning', 'Activities', 'Community'];
-const galleryCategories = ['School Life', 'Learning', 'Activities', 'Community'];
-export const GALLERY_ITEMS: GalleryItem[] = [...files, ...files.slice(0, 6)].map((src, index) => ({
-  src,
-  alt: `Surachana school moment ${index + 1}`,
-  category: galleryCategories[index % galleryCategories.length],
-}));
+export const GALLERY_ITEMS: GalleryItem[] = [];
 
-export const FACULTY: FacultyMember[] = [
-  // Principal
-  {
-    name: 'School Leadership',
-    position: 'Principal',
-    department: 'Surachana English School',
-    image: files[1],
-    bio: 'Guiding the school community with shared purpose and care.',
-    level: 'principal',
-  },
-
-  // Junior Level Teachers
-  {
-    name: 'Early Years Team',
-    position: 'Junior Level Teachers',
-    department: 'Early Years',
-    image: files[2],
-    bio: 'Helping young learners feel secure, curious, and ready to take part.',
-    level: 'junior',
-  },
-  {
-    name: 'Language Team',
-    position: 'Junior Level Teachers',
-    department: 'Communication Skills',
-    image: files[10],
-    bio: 'Supporting reading, writing, and confident expression in the classroom.',
-    level: 'junior',
-  },
-  {
-    name: 'Math Team',
-    position: 'Junior Level Teachers',
-    department: 'Numeracy',
-    image: files[11],
-    bio: 'Helping students build clear thinking through practice and problem solving.',
-    level: 'junior',
-  },
-
-  // Senior Level Teachers
-  {
-    name: 'Secondary Team',
-    position: 'Senior Level Teachers',
-    department: 'Lower Secondary',
-    image: files[4],
-    bio: 'Supporting deeper subject learning and the journey toward SEE.',
-    level: 'senior',
-  },
-  {
-    name: 'Science Team',
-    position: 'Senior Level Teachers',
-    department: 'Practical Learning',
-    image: files[12],
-    bio: 'Encouraging curiosity, observation, and hands-on learning.',
-    level: 'senior',
-  },
-  {
-    name: 'Creative Learning Team',
-    position: 'Senior Level Teachers',
-    department: 'Arts & Expression',
-    image: files[13],
-    bio: 'Creating space for art, movement, and confidence beyond textbooks.',
-    level: 'senior',
-  },
-
-  // Existing “Our Team” groups (kept for completeness)
-  {
-    name: 'Primary Team',
-    position: 'Class Teachers',
-    department: 'Primary Level',
-    image: IMAGES.primaryTeam,
-    bio: 'Building strong foundations through explanation, practice, and encouragement.',
-    level: 'other',
-  },
-  {
-    name: 'Activities Team',
-    position: 'Co-curricular Mentors',
-    department: 'Student Life',
-    image: IMAGES.activitiesTeam,
-    bio: 'Creating opportunities for expression, teamwork, movement, and confidence.',
-    level: 'other',
-  },
-  {
-    name: 'Student Support',
-    position: 'School Community',
-    department: 'Pastoral Care',
-    image: IMAGES.studentSupport,
-    bio: 'Helping students feel heard, connected, and ready to learn.',
-    level: 'other',
-  },
-];
+export const FACULTY: FacultyMember[] = [];
 
 
 export const ADMISSION_STEPS: AdmissionStep[] = [
@@ -310,12 +246,14 @@ export async function loadBackendSchoolData() {
   if (import.meta.env.VITE_DISABLE_BACKEND === 'true' || !API_BASE_URL) return;
 
   try {
-    const response = await fetchWithTimeout(`${API_BASE_URL}/api/site-data`, undefined, 3500);
+    const response = await fetchWithTimeout(resolveSiteDataUrl(), undefined, 3500);
     if (!response.ok) throw new Error(`Backend returned ${response.status}`);
 
     const payload = await readJsonResponse(response) as { ok: boolean; data?: SiteData } | null;
     if (!payload?.ok || !payload.data) throw new Error('Backend response was not usable.');
+    activeSchoolContext = payload.data.id || payload.data.slug || SCHOOL_CONTEXT;
     applySiteData(payload.data);
+    await loadBackendFeatureModules();
   } catch (error) {
     console.warn('Using bundled school data because backend data could not be loaded.', error);
   }
@@ -336,7 +274,7 @@ export async function submitInquiry(input: {
     throw new Error(`Online enquiries are temporarily unavailable. Please call ${SCHOOL.phone}.`);
   }
 
-  const response = await fetchWithTimeout(`${API_BASE_URL}/api/inquiries`, {
+  const response = await fetchWithTimeout(schoolApiPath('/inquiries'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ...input, source: 'surachana-website' }),
@@ -350,24 +288,104 @@ export async function submitInquiry(input: {
 
 function applySiteData(data: SiteData) {
   if (data.school) Object.assign(SCHOOL, data.school);
-  if (data.images) Object.assign(IMAGES, normalizeImages(data.images));
   replaceArray(ACHIEVEMENTS, data.achievements);
   replaceArray(PROGRAMS, data.programs);
   replaceArray(VALUES, data.values);
   replaceArray(WHY_CHOOSE, data.whyChoose);
-  replaceArray(GALLERY_CATEGORIES, data.galleryCategories);
-  replaceArray(GALLERY_ITEMS, data.galleryItems?.map((item) => ({ ...item, src: normalizeAssetPath(item.src) })));
-  replaceArray(FACULTY, data.faculty?.map((member) => ({ ...member, image: normalizeAssetPath(member.image) })));
+  replaceGalleryItems(data.galleryItems?.map((item) => ({ ...item, src: normalizeAssetPath(item.src) })));
   replaceArray(ADMISSION_STEPS, data.admissionSteps);
   replaceArray(REQUIRED_DOCUMENTS, data.requiredDocuments);
   replaceArray(TIMELINE, data.timeline);
 }
 
-function normalizeImages(images: ImageMap) {
-  return Object.fromEntries(Object.entries(images).map(([key, value]) => [key, normalizeAssetPath(value)]));
+async function loadBackendFeatureModules() {
+  const [staffResult, albumsResult] = await Promise.allSettled([
+    fetchFeatureModule<BackendStaffMember>('staff'),
+    fetchFeatureModule<BackendAlbum>('albums'),
+  ]);
+
+  if (staffResult.status === 'fulfilled' && staffResult.value.length) {
+    replaceArray(FACULTY, staffResult.value.map(mapStaffMember));
+  }
+
+  if (albumsResult.status === 'fulfilled' && albumsResult.value.length) {
+    const galleryItems = albumsResult.value
+      .flatMap((album, albumIndex) => {
+        const images = album.images?.length
+          ? album.images
+          : album.coverUrl
+            ? [{ url: album.coverUrl, caption: album.description, order: 0 }]
+            : [];
+
+        return images
+          .filter((image) => Boolean(image.url))
+          .sort((a, b) => (a.order || 0) - (b.order || 0))
+          .map((image, imageIndex) => ({
+            src: normalizeAssetPath(image.url || ''),
+            alt: image.caption || album.title || `${SCHOOL.shortName} school moment ${albumIndex + imageIndex + 1}`,
+            category: album.title || 'School Life',
+          }));
+      });
+
+    if (galleryItems.length) {
+      replaceGalleryItems(galleryItems);
+    }
+  }
+}
+
+function replaceGalleryItems(items: GalleryItem[] | undefined) {
+  if (!items) return;
+
+  const uniqueItems = Array.from(
+    new Map(items.filter((item) => item.src).map((item) => [item.src, item])).values(),
+  );
+  replaceArray(GALLERY_ITEMS, uniqueItems);
+  replaceArray(GALLERY_CATEGORIES, ['All', ...Array.from(new Set(uniqueItems.map((item) => item.category)))]);
+}
+
+function resolveSiteDataUrl() {
+  if (SCHOOL_CONTEXT === 'current') return schoolApiPath('', 'current');
+  return schoolApiPath('/site-data', SCHOOL_CONTEXT);
+}
+
+async function fetchFeatureModule<T>(moduleName: string) {
+  const response = await fetchWithTimeout(schoolApiPath(`/${moduleName}`), undefined, 3500);
+  if (!response.ok) return [];
+  const payload = await readJsonResponse(response) as { ok: boolean; data?: T[] } | null;
+  return payload?.ok && Array.isArray(payload.data) ? payload.data : [];
+}
+
+function mapStaffMember(member: BackendStaffMember): FacultyMember {
+  const designation = member.designation?.trim() || (member.memberType === 'staff' ? 'Staff' : 'Teacher');
+  const department = member.department?.trim() || member.subjects?.join(', ') || SCHOOL.shortName;
+
+  return {
+    name: member.name?.trim() || 'Faculty Member',
+    position: designation,
+    department,
+    image: normalizeAssetPath(member.photoUrl || ''),
+    bio: member.bio?.trim() || buildStaffBio(designation, department),
+    level: resolveFacultyLevel(member),
+  };
+}
+
+function resolveFacultyLevel(member: BackendStaffMember): FacultyLevel {
+  const text = `${member.designation || ''} ${member.department || ''}`.toLowerCase();
+  if (member.isLeadership || text.includes('principal') || text.includes('leader')) return 'principal';
+  if (member.memberType === 'staff') return 'other';
+  if (text.includes('junior') || text.includes('early') || text.includes('primary')) return 'junior';
+  if (text.includes('senior') || text.includes('secondary')) return 'senior';
+  return 'other';
+}
+
+function buildStaffBio(position: string, department: string) {
+  return `${position}${department ? `, ${department}` : ''}.`;
 }
 
 function normalizeAssetPath(src: string) {
+  if (!src) return src;
+  if (src.startsWith('http://') || src.startsWith('https://')) return src;
+  if (src.startsWith('/uploads/')) return API_BASE_URL ? `${API_BASE_URL}${src}` : src;
   if (!src || import.meta.env.DEV || !src.startsWith('/schools/')) return src;
   return `.${src}`;
 }

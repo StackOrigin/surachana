@@ -629,3 +629,97 @@
   from { opacity: 0; transform: scale(0.92) translateY(28px); }
   to { opacity: 1; transform: none; }
 }
+
+.gallery__div-030 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: calc(var(--spacing) * 5);
+}
+
+.gallery__button-031 {
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+  background: var(--color-white);
+  border: 1px solid color-mix(in srgb, #102b24 12%, transparent);
+  border-radius: var(--radius-lg);
+  padding: calc(var(--spacing) * 3);
+}
+
+.gallery__img-033 {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  scale: 1;
+  rotate: 0deg;
+}
+
+.gallery__button-031:hover .gallery__img-033 {
+  scale: 1;
+  rotate: 0deg;
+}
+
+.gallery__div-034,
+.gallery__div-035,
+.gallery__span-038 {
+  display: none;
+}
+
+.gallery__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 4);
+  margin-top: calc(var(--spacing) * 10);
+}
+
+.gallery__page-button {
+  border: 1px solid color-mix(in srgb, #102b24 18%, transparent);
+  border-radius: calc(infinity * 1px);
+  padding: calc(var(--spacing) * 3) calc(var(--spacing) * 5);
+  color: var(--color-navy-900);
+  background: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.gallery__page-button:disabled {
+  cursor: not-allowed;
+  opacity: 45%;
+}
+
+.gallery__page-status {
+  color: var(--color-navy-500);
+}
+
+@media (width >= 40rem) {
+  .gallery__div-030 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 64rem) {
+  .gallery__div-030 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: auto;
+  }
+
+  .gallery__variant-001.gallery__variant-001.gallery__variant-001,
+  .gallery__variant-002.gallery__variant-002.gallery__variant-002,
+  .gallery__variant-003.gallery__variant-003.gallery__variant-003,
+  .gallery__variant-004.gallery__variant-004.gallery__variant-004,
+  .gallery__variant-005.gallery__variant-005.gallery__variant-005,
+  .gallery__variant-006.gallery__variant-006.gallery__variant-006,
+  .gallery__variant-007.gallery__variant-007.gallery__variant-007,
+  .gallery__variant-008.gallery__variant-008.gallery__variant-008,
+  .gallery__variant-009.gallery__variant-009.gallery__variant-009,
+  .gallery__variant-010.gallery__variant-010.gallery__variant-010,
+  .gallery__variant-011.gallery__variant-011.gallery__variant-011,
+  .gallery__variant-012.gallery__variant-012.gallery__variant-012,
+  .gallery__variant-013.gallery__variant-013.gallery__variant-013,
+  .gallery__variant-014.gallery__variant-014.gallery__variant-014,
+  .gallery__variant-015.gallery__variant-015.gallery__variant-015,
+  .gallery__variant-016.gallery__variant-016.gallery__variant-016,
+  .gallery__button-032.gallery__button-032 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}

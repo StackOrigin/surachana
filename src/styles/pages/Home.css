@@ -1471,3 +1471,30 @@
   }
 }
 
+/* Requested polish fixes */
+.home__span-020 {
+  display: none !important;
+}
+
+.home__div-016 {
+  grid-template-columns: auto 1fr !important;
+}
+
+.home__section-009,
+.home__section-058,
+.home__section-069 {
+  padding-block: calc(var(--spacing) * 8) !important;
+}
+
+.home__section-021,
+.home__section-037 {
+  padding-block: calc(var(--spacing) * 12) !important;
+}
+
+@media (width >= 64rem) {
+  .home__section-009,
+  .home__section-021,
+  .home__section-037 {
+    padding-block: calc(var(--spacing) * 14) !important;
+  }
+}

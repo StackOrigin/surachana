@@ -566,6 +566,73 @@
   }
 .admission__a-012 {
   }
+
+/* Requested enquiry/admission polish */
+.admission__section-001,
+.admission__section-014,
+.admission__section-025,
+.admission__section-043,
+.admission__section-073 {
+  padding-block: calc(var(--spacing) * 12) !important;
+}
+
+.admission__div-005,
+.admission__div-027,
+.admission__div-045,
+.admission__div-075 {
+  gap: calc(var(--spacing) * 8) !important;
+}
+
+.admission__p-008,
+.admission__p-048 {
+  margin-top: calc(var(--spacing) * 4);
+}
+
+.admission__reveal-016 {
+  margin-bottom: calc(var(--spacing) * 8);
+}
+
+.admission__a-010,
+.admission__a-012 {
+  min-height: 3.5rem;
+}
+
+.admission__a-012 {
+  color: var(--color-white);
+}
+
+.admission__input-053:invalid,
+.admission__input-056:invalid,
+.admission__input-059:invalid,
+.admission__input-062:invalid,
+.admission__input-065:invalid,
+.admission__textarea-068:invalid {
+  box-shadow: none;
+}
+
+.admission__field-error {
+  margin-top: calc(var(--spacing) * 1.5);
+  color: var(--color-red-700);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  font-weight: var(--font-weight-medium);
+}
+
+.admission__input-059[aria-invalid="true"],
+.admission__input-062[aria-invalid="true"],
+.admission__input-065[aria-invalid="true"] {
+  border-color: var(--color-red-300);
+}
+
+@media (width >= 48rem) {
+  .admission__section-001,
+  .admission__section-014,
+  .admission__section-025,
+  .admission__section-043,
+  .admission__section-073 {
+    padding-block: calc(var(--spacing) * 16) !important;
+  }
+}
 .admission__a-012 {
   }
 .admission__input-053,

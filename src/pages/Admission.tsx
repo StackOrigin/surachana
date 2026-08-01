@@ -1,5 +1,6 @@
 import "../styles/pages/Admission.css";
 import { useState, type FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { AlertCircle, ArrowDownRight, Check, Clock, FileText, Mail, MapPin, Phone } from 'lucide-react';
 import { ADMISSION_STEPS, REQUIRED_DOCUMENTS, SCHOOL, submitInquiry } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
@@ -11,6 +12,13 @@ const eligibility = [
   { level: 'LKG / UKG', criteria: 'Age 4–5 years with basic school readiness.' },
   { level: 'Class 1–5', criteria: 'Age-appropriate placement with previous school records.' },
   { level: 'Class 6–8', criteria: 'Successful completion of an entrance assessment.' },
+];
+
+const GRADE_OPTIONS = [
+  'Nursery',
+  'LKG',
+  'UKG',
+  ...Array.from({ length: 10 }, (_, index) => `Class ${index + 1}`),
 ];
 
 export default function Admission() {
@@ -25,19 +33,78 @@ export default function Admission() {
   });
   const [formState, setFormState] = useState<'idle' | 'sending' | 'sent'>('idle');
   const [formError, setFormError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({ grade: '', phone: '', email: '' });
 
   function updateAdmissionForm(field: keyof typeof admissionForm, value: string) {
-    setAdmissionForm((current) => ({ ...current, [field]: value }));
+    const nextValue = field === 'phone' ? onlyNumbers(value) : value;
+    setAdmissionForm((current) => ({ ...current, [field]: nextValue }));
+
+    if (field === 'grade') {
+      setFieldErrors((current) => ({
+        ...current,
+        grade: isValidGrade(nextValue) || !nextValue ? '' : 'Please choose a class from Nursery to Class 10.',
+      }));
+    }
+
+    if (field === 'phone') {
+      setFieldErrors((current) => ({
+        ...current,
+        phone: isValidPhone(nextValue) || !nextValue ? '' : 'Please enter a valid phone number.',
+      }));
+    }
+
+    if (field === 'email') {
+      const trimmedEmail = nextValue.trim();
+      setFieldErrors((current) => ({
+        ...current,
+        email: isValidEmail(trimmedEmail) || !trimmedEmail ? '' : 'Please enter a valid email address.',
+      }));
+    }
   }
 
   async function handleAdmissionSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormError('');
+    setFieldErrors({ grade: '', phone: '', email: '' });
     setFormState('sending');
 
     const guardianName = admissionForm.guardianName.trim();
     const studentName = admissionForm.studentName.trim();
     const grade = admissionForm.grade.trim();
+    const phone = admissionForm.phone.trim();
+    const email = admissionForm.email.trim();
+    const message = admissionForm.message.trim();
+
+    if (guardianName.length < 2) {
+      setFormState('idle');
+      setFormError('Please enter the parent or guardian name.');
+      return;
+    }
+    if (studentName.length < 2) {
+      setFormState('idle');
+      setFormError('Please enter the student name.');
+      return;
+    }
+    if (!grade) {
+      setFormState('idle');
+      setFieldErrors((current) => ({ ...current, grade: 'Please enter the class or grade.' }));
+      return;
+    }
+    if (!isValidGrade(grade)) {
+      setFormState('idle');
+      setFieldErrors((current) => ({ ...current, grade: 'Please choose a class from Nursery to Class 10.' }));
+      return;
+    }
+    if (!isValidPhone(phone)) {
+      setFormState('idle');
+      setFieldErrors((current) => ({ ...current, phone: 'Please enter a valid phone number.' }));
+      return;
+    }
+    if (email && !isValidEmail(email)) {
+      setFormState('idle');
+      setFieldErrors((current) => ({ ...current, email: 'Please enter a valid email address, or leave it blank.' }));
+      return;
+    }
 
     try {
       await submitInquiry({
@@ -46,11 +113,11 @@ export default function Admission() {
         guardianName,
         studentName,
         grade,
-        phone: admissionForm.phone.trim(),
-        email: admissionForm.email.trim(),
+        phone,
+        email,
         preferredContact: 'phone',
         message:
-          admissionForm.message.trim() ||
+          message ||
           `Admission inquiry for ${studentName || 'a student'}${grade ? ` in ${grade}` : ''}.`,
       });
       setAdmissionForm({
@@ -93,12 +160,12 @@ export default function Admission() {
                   </p>
                 </div>
                 <div className="admission__div-009">
-                  <a href={`tel:${SCHOOL.phone}`} className="tactile admission__a-010">
+                  <a href={`tel:${SCHOOL.phone.replace(/[^\d+]/g, '')}`} className="tactile admission__a-010">
                     Call admissions <Phone className="admission__phone-011" />
                   </a>
-                  <a href={SCHOOL.email ? `mailto:${SCHOOL.email}?subject=Campus Visit Request` : SCHOOL.social.facebook} target={SCHOOL.email ? undefined : '_blank'} rel={SCHOOL.email ? undefined : 'noreferrer'} className="tactile admission__a-012">
+                  <Link to="/contact" className="tactile admission__a-012">
                     Plan a visit <ArrowDownRight className="admission__arrow-down-right-013" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -184,7 +251,7 @@ export default function Admission() {
             </Reveal>
 
             <Reveal variant="slide-right" delay={120}>
-              <form onSubmit={handleAdmissionSubmit} className="admission__form-049">
+              <form onSubmit={handleAdmissionSubmit} className="admission__form-049" noValidate>
                 <div className="admission__div-050">
                   <label className="admission__label-051">
                     <span className="editorial-kicker admission__span-052">Parent / guardian</span>
@@ -212,29 +279,49 @@ export default function Admission() {
                   </label>
                   <label className="admission__label-057">
                     <span className="editorial-kicker admission__span-058">Class / grade</span>
-                    <input
+                    <select
                       name="grade"
                       required
-                      autoComplete="off"
                       value={admissionForm.grade}
                       onChange={(event) => updateAdmissionForm('grade', event.target.value)}
                       className="admission__input-059"
-                      placeholder="Nursery, Class 1, Class 8..."
-                    />
+                      aria-invalid={Boolean(fieldErrors.grade)}
+                      aria-describedby={fieldErrors.grade ? 'admission-grade-error' : undefined}
+                    >
+                      <option value="">Select class / grade</option>
+                      {GRADE_OPTIONS.map((gradeOption) => (
+                        <option key={gradeOption} value={gradeOption}>
+                          {gradeOption}
+                        </option>
+                      ))}
+                    </select>
+                    {fieldErrors.grade && (
+                      <p id="admission-grade-error" className="admission__field-error">
+                        {fieldErrors.grade}
+                      </p>
+                    )}
                   </label>
                   <label className="admission__label-060">
                     <span className="editorial-kicker admission__span-061">Phone</span>
                     <input
                       name="phone"
                       type="tel"
-                      inputMode="tel"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
                       required
                       autoComplete="tel"
                       value={admissionForm.phone}
                       onChange={(event) => updateAdmissionForm('phone', event.target.value)}
                       className="admission__input-062"
                       placeholder="98XXXXXXXX"
+                      aria-invalid={Boolean(fieldErrors.phone)}
+                      aria-describedby={fieldErrors.phone ? 'admission-phone-error' : undefined}
                     />
+                    {fieldErrors.phone && (
+                      <p id="admission-phone-error" className="admission__field-error">
+                        {fieldErrors.phone}
+                      </p>
+                    )}
                   </label>
                   <label className="admission__label-063">
                     <span className="editorial-kicker admission__span-064">Email</span>
@@ -246,7 +333,14 @@ export default function Admission() {
                       onChange={(event) => updateAdmissionForm('email', event.target.value)}
                       className="admission__input-065"
                       placeholder="you@example.com"
+                      aria-invalid={Boolean(fieldErrors.email)}
+                      aria-describedby={fieldErrors.email ? 'admission-email-error' : undefined}
                     />
+                    {fieldErrors.email && (
+                      <p id="admission-email-error" className="admission__field-error">
+                        {fieldErrors.email}
+                      </p>
+                    )}
                   </label>
                   <label className="admission__label-066">
                     <span className="editorial-kicker admission__span-067">Message</span>
@@ -322,4 +416,21 @@ export default function Admission() {
       </section>
     </main>
   );
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function isValidPhone(value: string) {
+  return value.replace(/[^\d]/g, '').length >= 7;
+}
+
+function isValidGrade(value: string) {
+  const grade = Number(value);
+  return Number.isInteger(grade) && grade >= 1 && grade <= 10;
+}
+
+function onlyNumbers(value: string) {
+  return value.replace(/\D/g, '');
 }

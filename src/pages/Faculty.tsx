@@ -24,12 +24,8 @@ export default function Faculty() {
           
 
           {(() => {
-            const byLevel = {
-              principal: FACULTY.filter((m) => m.level === 'principal'),
-              junior: FACULTY.filter((m) => m.level === 'junior'),
-              senior: FACULTY.filter((m) => m.level === 'senior'),
-              other: FACULTY.filter((m) => m.level === 'other'),
-            };
+            const leaders = FACULTY.filter((member) => member.level === 'principal');
+            const staff = FACULTY.filter((member) => member.level !== 'principal');
 
             const renderGrid = (members: typeof FACULTY, centered = false) => (
               <div className={centered ? 'faculty__div-003 faculty__div-003--center' : 'faculty__div-003'}>
@@ -41,15 +37,17 @@ export default function Faculty() {
                     className={i % 3 === 0 ? 'faculty__reveal-004' : 'faculty__reveal-005'}
                   >
                     <div className="tactile faculty__div-006">
-                      <div className="faculty__div-007">
-                        <img
-                          src={member.image}
-                          alt={member.name}
-                          className="faculty__img-008"
-                          loading="lazy"
-                        />
-                        <div className="faculty__div-009" />
-                      </div>
+                      {member.image && (
+                        <div className="faculty__div-007">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="faculty__img-008"
+                            loading="lazy"
+                          />
+                          <div className="faculty__div-009" />
+                        </div>
+                      )}
                       <div className="faculty__div-010">
                         <div className="faculty__div-011">
                           <h3 className="faculty__h3-012">{member.name}</h3>
@@ -72,34 +70,16 @@ export default function Faculty() {
                     title="School Leader"
                     subtitle="Guidance, direction, and care at the heart of Surachana."
                   />
-                  {byLevel.principal.length ? renderGrid(byLevel.principal, true) : null}
-                </section>
-
-                <section>
-                  <SectionTitle
-                    badge="Junior Level"
-                    title="Junior Level Teachers"
-                    subtitle="Building strong foundations and confidence for younger learners."
-                  />
-                  {byLevel.junior.length ? renderGrid(byLevel.junior) : null}
-                </section>
-
-                <section>
-                  <SectionTitle
-                    badge="Senior Level"
-                    title="Senior Level Teachers"
-                    subtitle="Deeper subject learning and preparation for the next step."
-                  />
-                  {byLevel.senior.length ? renderGrid(byLevel.senior) : null}
+                  {leaders.length ? renderGrid(leaders, true) : null}
                 </section>
 
                 <section>
                   <SectionTitle
                     badge="Our Team"
-                    title="Experienced & Passionate Educators"
-                    subtitle="Meet the teaching teams who shape learning, participation, and student wellbeing across the school."
+                    title="Faculty & Staff"
+                    subtitle="Meet the teachers and staff who shape learning, participation, and student wellbeing across the school."
                   />
-                  {byLevel.other.length ? renderGrid(byLevel.other) : null}
+                  {staff.length ? renderGrid(staff) : null}
                 </section>
               </>
             );
