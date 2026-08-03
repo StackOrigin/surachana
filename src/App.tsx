@@ -15,19 +15,23 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import { resetScrollImmediately } from './utils/scroll';
 import { SCHOOL } from './data/schoolData';
+import { useSchoolData } from './hooks/useSchoolData';
 import PageHero from './components/ui/PageHero';
 import { Link } from 'react-router-dom';
 
-const routeMeta: Record<string, { title: string; description: string }> = {
-  '/': { title: SCHOOL.name, description: SCHOOL.seoDescription },
-  '/about': { title: `About ${SCHOOL.shortName}`, description: SCHOOL.aboutSubtitle },
-  '/academics': { title: `Academics | ${SCHOOL.shortName}`, description: `Explore the learning journey and academic programs at ${SCHOOL.name}.` },
-  '/admission': { title: `Admissions | ${SCHOOL.shortName}`, description: `Learn about admission steps, eligibility, and how to contact ${SCHOOL.name}.` },
-  '/gallery': { title: `Gallery | ${SCHOOL.shortName}`, description: `See school life, learning, activities, and community moments at ${SCHOOL.name}.` },
-  '/faculty': { title: `Faculty | ${SCHOOL.shortName}`, description: `Meet the educators and support teams at ${SCHOOL.name}.` },
-  '/contact': { title: `Contact | ${SCHOOL.shortName}`, description: `Contact ${SCHOOL.name} in ${SCHOOL.locationLine}.` },
-  '/admin': { title: `Admin preview | ${SCHOOL.shortName}`, description: 'School administration interface preview.' },
-};
+function getRouteMeta(pathname: string): { title: string; description: string } {
+  const routeMeta: Record<string, { title: string; description: string }> = {
+    '/': { title: SCHOOL.name, description: SCHOOL.seoDescription },
+    '/about': { title: `About ${SCHOOL.shortName}`, description: SCHOOL.aboutSubtitle },
+    '/academics': { title: `Academics | ${SCHOOL.shortName}`, description: `Explore the learning journey and academic programs at ${SCHOOL.name}.` },
+    '/admission': { title: `Admissions | ${SCHOOL.shortName}`, description: `Learn about admission steps, eligibility, and how to contact ${SCHOOL.name}.` },
+    '/gallery': { title: `Gallery | ${SCHOOL.shortName}`, description: `See school life, learning, activities, and community moments at ${SCHOOL.name}.` },
+    '/faculty': { title: `Faculty | ${SCHOOL.shortName}`, description: `Meet the educators and support teams at ${SCHOOL.name}.` },
+    '/contact': { title: `Contact | ${SCHOOL.shortName}`, description: `Contact ${SCHOOL.name} in ${SCHOOL.locationLine}.` },
+    '/admin': { title: `Admin preview | ${SCHOOL.shortName}`, description: 'School administration interface preview.' },
+  };
+  return routeMeta[pathname] || { title: `Page not found | ${SCHOOL.shortName}`, description: SCHOOL.seoDescription };
+}
 
 function resetScrollBeforeNavigation(event: MouseEvent<HTMLDivElement>) {
   if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -43,16 +47,23 @@ function AppShell() {
   const location = useLocation();
   const adminEnabled = import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === 'true';
   const isAdmin = location.pathname.startsWith('/admin') && adminEnabled;
+  const dataVersion = useSchoolData();
 
   useEffect(() => {
-    const meta = routeMeta[location.pathname] || {
-      title: `Page not found | ${SCHOOL.shortName}`,
-      description: SCHOOL.seoDescription,
-    };
+    const isAdminRoute =
+      location.pathname.startsWith('/admin') ||
+      window.location.hash.startsWith('#/admin');
+    if (isAdminRoute) {
+      window.location.replace('https://nivaksha.me/admin');
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const meta = getRouteMeta(location.pathname);
     document.title = meta.title;
     document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
     document.querySelector('meta[name="robots"]')?.setAttribute('content', isAdmin ? 'noindex, nofollow' : 'index, follow');
-  }, [isAdmin, location.pathname]);
+  }, [isAdmin, location.pathname, dataVersion]);
 
   return (
     <div className="app__div-001" onClickCapture={resetScrollBeforeNavigation}>

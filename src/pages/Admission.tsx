@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AlertCircle, ArrowDownRight, Check, Clock, FileText, Mail, MapPin, Phone } from 'lucide-react';
 import { ADMISSION_STEPS, REQUIRED_DOCUMENTS, SCHOOL, submitInquiry } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import Reveal from '../components/ui/Reveal';
 
@@ -23,6 +24,7 @@ const GRADE_OPTIONS = [
 
 export default function Admission() {
   useScrollToTop();
+  useSchoolData();
   const [admissionForm, setAdmissionForm] = useState({
     guardianName: '',
     studentName: '',
@@ -42,7 +44,7 @@ export default function Admission() {
     if (field === 'grade') {
       setFieldErrors((current) => ({
         ...current,
-        grade: isValidGrade(nextValue) || !nextValue ? '' : 'Please choose a class from Nursery to Class 10.',
+        grade: isValidGrade(nextValue) || !nextValue ? '' : 'Please choose a valid class or grade.',
       }));
     }
 
@@ -92,7 +94,7 @@ export default function Admission() {
     }
     if (!isValidGrade(grade)) {
       setFormState('idle');
-      setFieldErrors((current) => ({ ...current, grade: 'Please choose a class from Nursery to Class 10.' }));
+      setFieldErrors((current) => ({ ...current, grade: 'Please choose a valid class or grade.' }));
       return;
     }
     if (!isValidPhone(phone)) {
@@ -427,8 +429,7 @@ function isValidPhone(value: string) {
 }
 
 function isValidGrade(value: string) {
-  const grade = Number(value);
-  return Number.isInteger(grade) && grade >= 1 && grade <= 10;
+  return GRADE_OPTIONS.includes(value);
 }
 
 function onlyNumbers(value: string) {

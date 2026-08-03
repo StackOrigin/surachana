@@ -7,6 +7,7 @@ import {
 
 import { ACHIEVEMENTS, GALLERY_ITEMS, IMAGES, PROGRAMS, SCHOOL } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import Reveal from '../components/ui/Reveal';
 import CampusStory from '../components/home/CampusStory';
 import HomeHero from '../components/home/HomeHero';
@@ -16,6 +17,7 @@ const programImages = [IMAGES.earlyYears, IMAGES.primaryYears, IMAGES.lowerSecon
 
 export default function Home() {
   useScrollToTop();
+  useSchoolData();
   const featuredGalleryItems = [GALLERY_ITEMS[7], GALLERY_ITEMS[12], GALLERY_ITEMS[4], ...GALLERY_ITEMS]
     .filter((item, index, items) => item?.src && items.findIndex((candidate) => candidate?.src === item.src) === index)
     .slice(0, 3);

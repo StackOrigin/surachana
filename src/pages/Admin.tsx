@@ -27,6 +27,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import { IMAGES, SCHOOL } from '../data/schoolData';
+import { useSchoolData } from '../hooks/useSchoolData';
 import { cn } from '../utils/cn';
 
 type SectionId = 'overview' | 'admissions' | 'messages' | 'notices' | 'calendar' | 'gallery' | 'staff' | 'settings';
@@ -195,6 +196,7 @@ function IconButton({
 }
 
 export default function Admin() {
+  useSchoolData();
   const [activeSection, setActiveSection] = useState<SectionId>('overview');
   const [admissions, setAdmissions] = useState(admissionSeed);
   const [notices, setNotices] = useState(noticeSeed);

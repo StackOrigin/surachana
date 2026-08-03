@@ -1,8 +1,9 @@
 import "../styles/pages/Contact.css";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MapPin, Phone, Mail, Clock, CheckCircle, Send } from 'lucide-react';
-import { SCHOOL, submitInquiry } from '../data/schoolData';
+import { SCHOOL, resolveMapUrl, submitInquiry } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import SectionTitle from '../components/ui/SectionTitle';
 import Button from '../components/ui/Button';
@@ -10,10 +11,22 @@ import Reveal from '../components/ui/Reveal';
 
 export default function Contact() {
   useScrollToTop();
+  useSchoolData();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({ phone: '', email: '' });
+  const [mapEmbedUrl, setMapEmbedUrl] = useState(SCHOOL.mapUrl);
+
+  useEffect(() => {
+    let active = true;
+    resolveMapUrl(SCHOOL.mapUrl).then((url) => {
+      if (active) setMapEmbedUrl(url);
+    });
+    return () => {
+      active = false;
+    };
+  }, [SCHOOL.mapUrl]);
 
   function updateFieldError(field: 'phone' | 'email', message: string) {
     setFieldErrors((current) => ({ ...current, [field]: message }));
@@ -208,7 +221,7 @@ export default function Contact() {
               <div className="contact__div-033">
                 <div className="contact__div-034">
                   <iframe
-                    src={SCHOOL.mapUrl}
+                    src={mapEmbedUrl}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}

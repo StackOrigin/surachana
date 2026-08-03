@@ -2,6 +2,7 @@ import "../../styles/components/layout/Footer.css";
 import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
+import { useSchoolData } from '../../hooks/useSchoolData';
 const nivakshaLogoSrc = import.meta.env.DEV
   ? '/schools/surachana/nivakshaLogo.jpeg'
   : './schools/surachana/nivakshaLogo.jpeg';
@@ -10,6 +11,9 @@ const schoolLogoSrc = import.meta.env.DEV
   : './schools/surachana/school_logo.jpg';
 
 export default function Footer() {
+  useSchoolData();
+  const location = SCHOOL.address || SCHOOL.locationLine;
+
   return (
     <footer className="footer__footer-001">
       <div className="footer__div-002">
@@ -51,7 +55,7 @@ export default function Footer() {
             <ul className="footer__ul-015">
               <li className="footer__li-016">
                 <MapPin className="footer__map-pin-017" />
-                <span>{SCHOOL.address}</span>
+                <span>{location}</span>
               </li>
               <li className="footer__li-018">
                 <Phone className="footer__phone-019" />
