@@ -1,437 +1,374 @@
 import "../styles/pages/Admission.css";
-import { useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { AlertCircle, ArrowDownRight, Check, Clock, FileText, Mail, MapPin, Phone } from 'lucide-react';
-import { ADMISSION_STEPS, REQUIRED_DOCUMENTS, SCHOOL, submitInquiry } from '../data/schoolData';
-import { useScrollToTop } from '../hooks/useScrollAnimation';
-import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
-import Reveal from '../components/ui/Reveal';
 
-const eligibility = [
-  { level: 'Nursery', criteria: 'Child must be 3 years old by the admission date.' },
-  { level: 'LKG / UKG', criteria: 'Age 4–5 years with basic school readiness.' },
-  { level: 'Class 1–5', criteria: 'Age-appropriate placement with previous school records.' },
-  { level: 'Class 6–8', criteria: 'Successful completion of an entrance assessment.' },
-];
-
-const GRADE_OPTIONS = [
-  'Nursery',
-  'LKG',
-  'UKG',
-  ...Array.from({ length: 10 }, (_, index) => `Class ${index + 1}`),
-];
+const schoolLogoSrc = import.meta.env.DEV
+  ? '/schools/surachana/school_logo.jpg'
+  : './schools/surachana/school_logo.jpg';
 
 export default function Admission() {
-  useScrollToTop();
-  useSchoolData();
-  const [admissionForm, setAdmissionForm] = useState({
-    guardianName: '',
-    studentName: '',
-    grade: '',
-    phone: '',
-    email: '',
-    message: '',
-  });
-  const [formState, setFormState] = useState<'idle' | 'sending' | 'sent'>('idle');
-  const [formError, setFormError] = useState('');
-  const [fieldErrors, setFieldErrors] = useState({ grade: '', phone: '', email: '' });
-
-  function updateAdmissionForm(field: keyof typeof admissionForm, value: string) {
-    const nextValue = field === 'phone' ? onlyNumbers(value) : value;
-    setAdmissionForm((current) => ({ ...current, [field]: nextValue }));
-
-    if (field === 'grade') {
-      setFieldErrors((current) => ({
-        ...current,
-        grade: isValidGrade(nextValue) || !nextValue ? '' : 'Please choose a valid class or grade.',
-      }));
-    }
-
-    if (field === 'phone') {
-      setFieldErrors((current) => ({
-        ...current,
-        phone: isValidPhone(nextValue) || !nextValue ? '' : 'Please enter a valid phone number.',
-      }));
-    }
-
-    if (field === 'email') {
-      const trimmedEmail = nextValue.trim();
-      setFieldErrors((current) => ({
-        ...current,
-        email: isValidEmail(trimmedEmail) || !trimmedEmail ? '' : 'Please enter a valid email address.',
-      }));
-    }
-  }
-
-  async function handleAdmissionSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setFormError('');
-    setFieldErrors({ grade: '', phone: '', email: '' });
-    setFormState('sending');
-
-    const guardianName = admissionForm.guardianName.trim();
-    const studentName = admissionForm.studentName.trim();
-    const grade = admissionForm.grade.trim();
-    const phone = admissionForm.phone.trim();
-    const email = admissionForm.email.trim();
-    const message = admissionForm.message.trim();
-
-    if (guardianName.length < 2) {
-      setFormState('idle');
-      setFormError('Please enter the parent or guardian name.');
-      return;
-    }
-    if (studentName.length < 2) {
-      setFormState('idle');
-      setFormError('Please enter the student name.');
-      return;
-    }
-    if (!grade) {
-      setFormState('idle');
-      setFieldErrors((current) => ({ ...current, grade: 'Please enter the class or grade.' }));
-      return;
-    }
-    if (!isValidGrade(grade)) {
-      setFormState('idle');
-      setFieldErrors((current) => ({ ...current, grade: 'Please choose a valid class or grade.' }));
-      return;
-    }
-    if (!isValidPhone(phone)) {
-      setFormState('idle');
-      setFieldErrors((current) => ({ ...current, phone: 'Please enter a valid phone number.' }));
-      return;
-    }
-    if (email && !isValidEmail(email)) {
-      setFormState('idle');
-      setFieldErrors((current) => ({ ...current, email: 'Please enter a valid email address, or leave it blank.' }));
-      return;
-    }
-
-    try {
-      await submitInquiry({
-        type: 'admission',
-        fullName: guardianName,
-        guardianName,
-        studentName,
-        grade,
-        phone,
-        email,
-        preferredContact: 'phone',
-        message:
-          message ||
-          `Admission inquiry for ${studentName || 'a student'}${grade ? ` in ${grade}` : ''}.`,
-      });
-      setAdmissionForm({
-        guardianName: '',
-        studentName: '',
-        grade: '',
-        phone: '',
-        email: '',
-        message: '',
-      });
-      setFormState('sent');
-    } catch (error) {
-      setFormState('idle');
-      setFormError(error instanceof Error ? error.message : 'Could not send admission inquiry.');
-    }
-  }
-
   return (
-    <main>
+    <main className="admission-page">
       <PageHero
         title="Admissions"
-        subtitle={`A clear, thoughtful path into the ${SCHOOL.shortName} community—so families know what to expect at every step.`}
+        subtitle="A clear, thoughtful path into the Surachana community for every family."
         breadcrumb="Admission"
       />
 
-      <section className="admission__section-001">
-        <div className="admission__div-002">
-          <Reveal variant="clip">
-            <div className="admission__div-003">
-              <div className="editorial-grid admission__div-004" />
-              <div className="admission__div-005">
-                <div>
-                  <span className="editorial-kicker admission__span-006">Now welcoming families · 2083 BS</span>
-                  <h2 className="admission__h2-007">
-                    Your child’s next chapter can begin here.
-                  </h2>
-                  <p className="admission__p-008">
-                    Applications are open from Nursery to Class 10. We invite families to visit,
-                    meet our educators, and understand the learning environment before making a decision.
-                  </p>
-                </div>
-                <div className="admission__div-009">
-                  <a href={`tel:${SCHOOL.phone.replace(/[^\d+]/g, '')}`} className="tactile admission__a-010">
-                    Call admissions <Phone className="admission__phone-011" />
-                  </a>
-                  <Link to="/contact" className="tactile admission__a-012">
-                    Plan a visit <ArrowDownRight className="admission__arrow-down-right-013" />
-                  </Link>
-                </div>
-              </div>
+      <section className="admission-intro">
+        <div className="admission-intro__inner">
+          <div className="admission-intro__content">
+            <p className="admission-kicker">Admissions open</p>
+            <h2>Begin your child’s journey with confidence.</h2>
+            <p>
+              We welcome families to apply for a place in a warm, academically focused learning environment
+              where each child is encouraged to grow, belong, and thrive.
+            </p>
+          </div>
+
+          <div className="admission-intro__stats">
+            <div>
+              <strong>Nursery</strong>
+              <span>to Class 8</span>
             </div>
-          </Reveal>
+            <div>
+              <strong>Friendly</strong>
+              <span>school community</span>
+            </div>
+            <div>
+              <strong>Supportive</strong>
+              <span>admission guidance</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="admission__section-014">
-        <div className="admission__div-015">
-          <Reveal variant="slide-left" className="admission__reveal-016">
-            <p className="editorial-kicker admission__p-017">01 · The process</p>
-            <h2 className="admission__h2-018">
-              Five simple steps,
-              <span className="admission__span-019">with people to guide you.</span>
+      <section className="admission-application">
+        <div className="admission-paper">
+          <header className="admission-paper__header">
+            <div className="school-mark" aria-label="School emblem">
+              <img src={schoolLogoSrc} alt="Surachana English School logo" className="school-mark__img" />
+            </div>
+
+            <div className="admission-paper__title-wrap">
+              <h1>SURACHANA English School</h1>
+              <p>Godawari -14, Thaiba, Lalitpur</p>
+              <p>☎ 01-5560537</p>
+            </div>
+
+            <div className="admission-paper__photo-box" aria-hidden="true" />
+          </header>
+
+          <div className="admission-paper__banner">APPLICATION FOR ADMISSION</div>
+
+          <form className="admission-paper__form">
+            <div className="form-row form-row--compact">
+              <label className="field field--wide">
+                <span>Form No. <em>:-</em></span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--names">
+              <label className="field field--full">
+                <span>Name of the Applicant : <small>(IN BLOCK LETTERS)</small></span>
+                <div className="inline-fields inline-fields--three">
+                  <input type="text" placeholder="First Name" />
+                  <input type="text" placeholder="Middle name" />
+                  <input type="text" placeholder="Last Name" />
+                </div>
+              </label>
+            </div>
+
+            <div className="form-row form-row--split">
+              <div className="field-group">
+                <label className="field field--date">
+                  <span>Date of Birth (in B.S.) :</span>
+                  <div className="inline-fields inline-fields--three">
+                    <input type="text" placeholder="Year" />
+                    <input type="text" placeholder="Month" />
+                    <input type="text" placeholder="Day" />
+                  </div>
+                </label>
+              </div>
+
+              <div className="field-group field-group--right">
+                <label className="field">
+                  <span>Gender :</span>
+                  <div className="option-row">
+                    <label className="check"><input type="checkbox" /> <span>Boy</span></label>
+                    <label className="check"><input type="checkbox" /> <span>Girl</span></label>
+                  </div>
+                </label>
+                <label className="field field--compact">
+                  <span>Mother Tongue:</span>
+                  <input type="text" />
+                </label>
+                <label className="field field--compact">
+                  <span>Class Applied For :</span>
+                  <input type="text" />
+                </label>
+              </div>
+            </div>
+
+            <div className="form-row">
+              <label className="field field--full">
+                <span>Name &amp; Address of the Last School Attended:</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--three-cols">
+              <label className="field">
+                <span>Class:</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Division Secured in the Last Exam :</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Percentage :</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Rank :</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--five-cols">
+              <label className="field">
+                <span>Chronic disease (if any) :</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Allergic to (if any):</span>
+                <input type="text" />
+              </label>
+              <label className="field field--wide-option">
+                <span>Seeking admission as :</span>
+                <div className="option-row option-row--stacked">
+                  <label className="check"><input type="checkbox" /> <span>DAY SCHOLAR</span></label>
+                  <label className="check"><input type="checkbox" /> <span>SCHOLAR</span></label>
+                </div>
+              </label>
+            </div>
+
+            <div className="form-row form-row--names">
+              <label className="field field--full">
+                <span>Father's Name: <small>(IN BLOCK LETTERS)</small></span>
+                <div className="inline-fields inline-fields--three">
+                  <input type="text" placeholder="First Name" />
+                  <input type="text" placeholder="Middle name" />
+                  <input type="text" placeholder="Last Name" />
+                </div>
+              </label>
+            </div>
+
+            <div className="form-row form-row--split-second">
+              <label className="field">
+                <span>Nationality</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Tel. No.</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Mobile No.</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Occupation</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Post:</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row">
+              <label className="field field--full">
+                <span>Name of the Office / Organization and Address :</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--names">
+              <label className="field field--full">
+                <span>Mother's Name: <small>(IN BLOCK LETTERS)</small></span>
+                <div className="inline-fields inline-fields--three">
+                  <input type="text" placeholder="First Name" />
+                  <input type="text" placeholder="Middle name" />
+                  <input type="text" placeholder="Last Name" />
+                </div>
+              </label>
+            </div>
+
+            <div className="form-row form-row--split-second">
+              <label className="field">
+                <span>Occupation</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Post:</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Mobile No.</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row">
+              <label className="field field--full">
+                <span>Name of the Office / Organization and Address :</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--address">
+              <div className="address-block">
+                <h3>Temporary</h3>
+                <label className="field"><span>Block No.</span><input type="text" /></label>
+                <label className="field"><span>Ward No.</span><input type="text" /></label>
+                <label className="field"><span>Village / Town</span><input type="text" /></label>
+                <label className="field"><span>VDC / Municipality</span><input type="text" /></label>
+                <label className="field"><span>District :</span><input type="text" /></label>
+              </div>
+
+              <div className="address-block">
+                <h3>Permanent</h3>
+                <label className="field"><span>Block No.</span><input type="text" /></label>
+                <label className="field"><span>Ward No.</span><input type="text" /></label>
+                <label className="field"><span>Village / Town</span><input type="text" /></label>
+                <label className="field"><span>VDC / Municipality</span><input type="text" /></label>
+                <label className="field"><span>District :</span><input type="text" /></label>
+              </div>
+            </div>
+
+            <div className="form-row form-row--two-cols">
+              <label className="field field--full">
+                <span>Local Guardian's Name:</span>
+                <input type="text" />
+              </label>
+              <label className="field field--full">
+                <span>Mobile:</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--four-cols">
+              <label className="field">
+                <span>Address:</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Tel. (Res):</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Relationship:</span>
+                <input type="text" />
+              </label>
+              <label className="field">
+                <span>Occupation:</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--two-cols">
+              <label className="field">
+                <span>Post:</span>
+                <input type="text" />
+              </label>
+              <label className="field field--full">
+                <span>Name of the Office / Organization and Address:</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--topline">
+              <label className="field field--full">
+                <span>Referral:</span>
+                <input type="text" />
+              </label>
+              <label className="field field--date-small">
+                <span>Date:</span>
+                <input type="text" />
+              </label>
+            </div>
+
+            <div className="form-row form-row--final">
+              <div className="notes">
+                <p><strong>N.B.</strong> Documents to be submitted;</p>
+                <p>(1) copy of birth certificate (2) copy of the mark-sheet of the last exam (3) two copies of P.P size Photo (4) Must have EMIS</p>
+                <p>Transfer for Class 2 to 9.</p>
+                <p><strong>Official Remarks:</strong></p>
+                <p>Date:</p>
+              </div>
+
+              <div className="signature-block">
+                <p>Signature of parents / Guardians</p>
+                <div className="signature-line" />
+                <p>Authorized Signature</p>
+              </div>
+            </div>
+
+            <div className="form-row form-row--submit">
+              <button type="submit" className="admission-submit-btn">Submit Application</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section className="admission-visit">
+        <div className="admission-visit__inner">
+          <div className="admission-visit__copy">
+            <p className="admission-visit__label">COME AND SEE FOR YOURSELF</p>
+            <h2>
+              A school visit tells<br />
+              you more than a<br />
+              <strong>brochure</strong> can.
             </h2>
-          </Reveal>
-
-          <div className="admission__div-020">
-            {ADMISSION_STEPS.map((item, index) => (
-              <Reveal key={item.step} variant={index % 2 === 0 ? 'slide-left' : 'slide-right'} delay={index * 70}>
-                <article className="admission__article-021">
-                  <span className="admission__span-022">{String(item.step).padStart(2, '0')}</span>
-                  <h3 className="admission__h3-023">{item.title}</h3>
-                  <p className="admission__p-024">{item.description}</p>
-                </article>
-              </Reveal>
-            ))}
           </div>
-        </div>
-      </section>
 
-      <section className="admission__section-025">
-        <div className="admission__div-026">
-          <div className="admission__div-027">
-            <Reveal variant="slide-left">
-              <p className="editorial-kicker admission__p-028">02 · Eligibility</p>
-              <h2 className="admission__h2-029">Finding the right starting point.</h2>
-              <div className="admission__div-030">
-                {eligibility.map((item) => (
-                  <div key={item.level} className="admission__div-031">
-                    <strong className="admission__strong-032">{item.level}</strong>
-                    <p className="admission__p-033">{item.criteria}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-
-            <Reveal variant="slide-right" delay={150}>
-              <div className="admission__div-034">
-                <FileText className="admission__file-text-035" />
-                <p className="editorial-kicker admission__p-036">03 · What to bring</p>
-                <h2 className="admission__h2-037">Required documents.</h2>
-                <ul className="admission__ul-038">
-                  {REQUIRED_DOCUMENTS.map((document) => (
-                    <li key={document} className="admission__li-039">
-                      <Check className="admission__check-040" />
-                      {document}
-                    </li>
-                  ))}
-                </ul>
-                <div className="admission__div-041">
-                  <AlertCircle className="admission__alert-circle-042" />
-                  Originals are required only for verification during admission.
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="admission__section-043">
-        <div className="admission__div-044">
-          <div className="admission__div-045">
-            <Reveal variant="slide-left">
-              <p className="editorial-kicker admission__p-046">04 · Admission inquiry</p>
-              <h2 className="admission__h2-047">
-                Share your details with the admission team.
-              </h2>
-              <p className="admission__p-048">
-                The school office will receive this request directly and can follow up with
-                available classes, visit timing, and next steps.
-              </p>
-            </Reveal>
-
-            <Reveal variant="slide-right" delay={120}>
-              <form onSubmit={handleAdmissionSubmit} className="admission__form-049" noValidate>
-                <div className="admission__div-050">
-                  <label className="admission__label-051">
-                    <span className="editorial-kicker admission__span-052">Parent / guardian</span>
-                    <input
-                      name="guardianName"
-                      required
-                      autoComplete="name"
-                      value={admissionForm.guardianName}
-                      onChange={(event) => updateAdmissionForm('guardianName', event.target.value)}
-                      className="admission__input-053"
-                      placeholder="Your full name"
-                    />
-                  </label>
-                  <label className="admission__label-054">
-                    <span className="editorial-kicker admission__span-055">Student name</span>
-                    <input
-                      name="studentName"
-                      required
-                      autoComplete="off"
-                      value={admissionForm.studentName}
-                      onChange={(event) => updateAdmissionForm('studentName', event.target.value)}
-                      className="admission__input-056"
-                      placeholder="Child's full name"
-                    />
-                  </label>
-                  <label className="admission__label-057">
-                    <span className="editorial-kicker admission__span-058">Class / grade</span>
-                    <select
-                      name="grade"
-                      required
-                      value={admissionForm.grade}
-                      onChange={(event) => updateAdmissionForm('grade', event.target.value)}
-                      className="admission__input-059"
-                      aria-invalid={Boolean(fieldErrors.grade)}
-                      aria-describedby={fieldErrors.grade ? 'admission-grade-error' : undefined}
-                    >
-                      <option value="">Select class / grade</option>
-                      {GRADE_OPTIONS.map((gradeOption) => (
-                        <option key={gradeOption} value={gradeOption}>
-                          {gradeOption}
-                        </option>
-                      ))}
-                    </select>
-                    {fieldErrors.grade && (
-                      <p id="admission-grade-error" className="admission__field-error">
-                        {fieldErrors.grade}
-                      </p>
-                    )}
-                  </label>
-                  <label className="admission__label-060">
-                    <span className="editorial-kicker admission__span-061">Phone</span>
-                    <input
-                      name="phone"
-                      type="tel"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      required
-                      autoComplete="tel"
-                      value={admissionForm.phone}
-                      onChange={(event) => updateAdmissionForm('phone', event.target.value)}
-                      className="admission__input-062"
-                      placeholder="98XXXXXXXX"
-                      aria-invalid={Boolean(fieldErrors.phone)}
-                      aria-describedby={fieldErrors.phone ? 'admission-phone-error' : undefined}
-                    />
-                    {fieldErrors.phone && (
-                      <p id="admission-phone-error" className="admission__field-error">
-                        {fieldErrors.phone}
-                      </p>
-                    )}
-                  </label>
-                  <label className="admission__label-063">
-                    <span className="editorial-kicker admission__span-064">Email</span>
-                    <input
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      value={admissionForm.email}
-                      onChange={(event) => updateAdmissionForm('email', event.target.value)}
-                      className="admission__input-065"
-                      placeholder="you@example.com"
-                      aria-invalid={Boolean(fieldErrors.email)}
-                      aria-describedby={fieldErrors.email ? 'admission-email-error' : undefined}
-                    />
-                    {fieldErrors.email && (
-                      <p id="admission-email-error" className="admission__field-error">
-                        {fieldErrors.email}
-                      </p>
-                    )}
-                  </label>
-                  <label className="admission__label-066">
-                    <span className="editorial-kicker admission__span-067">Message</span>
-                    <textarea
-                      name="message"
-                      rows={5}
-                      value={admissionForm.message}
-                      onChange={(event) => updateAdmissionForm('message', event.target.value)}
-                      className="admission__textarea-068"
-                      placeholder="Tell us what you would like to know."
-                    />
-                  </label>
-                </div>
-
-                {formError && (
-                  <div className="admission__div-069" role="alert">
-                    {formError}
-                  </div>
-                )}
-
-                {formState === 'sent' && (
-                  <div className="admission__div-070" role="status" aria-live="polite">
-                    Admission inquiry sent. The school office can now see it in the admin dashboard.
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={formState === 'sending'}
-                  className="tactile admission__button-071"
-                >
-                  {formState === 'sending' ? 'Sending inquiry' : 'Send admission inquiry'}
-                  <ArrowDownRight className="admission__arrow-down-right-072" />
-                </button>
-              </form>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="admission__section-073">
-        <div className="admission__div-074">
-          <Reveal variant="scale">
-            <div className="admission__div-075">
-              <div>
-                <p className="editorial-kicker admission__p-076">Come and see for yourself</p>
-                <h2 className="admission__h2-077">
-                  A school visit tells you more than a brochure can.
-                </h2>
-              </div>
-              <div className="admission__div-078">
-                {[
-                  [Phone, 'Call', SCHOOL.phone, `tel:${SCHOOL.phone}`],
-                  [Mail, 'Write', SCHOOL.email, `mailto:${SCHOOL.email}`],
-                  [MapPin, 'Visit', SCHOOL.address, '/#/contact'],
-                  [Clock, 'Office hours', SCHOOL.hours, '/#/contact'],
-                ].map(([Icon, label, value, href]) => {
-                  const ItemIcon = Icon as typeof Phone;
-                  return (
-                    <a key={String(label)} href={String(href)} className="admission__a-079">
-                      <ItemIcon className="admission__item-icon-080" />
-                      <span>
-                        <strong className="editorial-kicker admission__strong-081">{String(label)}</strong>
-                        <span className="admission__span-082">{String(value)}</span>
-                      </span>
-                    </a>
-                  );
-                })}
+          <div className="admission-visit__details">
+            <div className="admission-visit__row">
+              <div className="admission-visit__icon">☎</div>
+              <div className="admission-visit__text">
+                <strong>CALL</strong>
+                <strong>01-5560537</strong>
               </div>
             </div>
-          </Reveal>
+
+            <div className="admission-visit__row">
+              <div className="admission-visit__icon">✉</div>
+              <div className="admission-visit__text">
+                <strong>WRITE</strong>
+                <strong>surachana.eschool@gmail.com</strong>
+              </div>
+            </div>
+
+            <div className="admission-visit__row">
+              <div className="admission-visit__icon">◉</div>
+              <div className="admission-visit__text">
+                <strong>VISIT</strong>
+                <strong>Thaiba, Lalitpur</strong>
+              </div>
+            </div>
+
+            <div className="admission-visit__row">
+              <div className="admission-visit__icon">◔</div>
+              <div className="admission-visit__text">
+                <strong>OFFICE HOURS</strong>
+                <strong>Sunday to Friday</strong>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
   );
-}
-
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
-function isValidPhone(value: string) {
-  return value.replace(/[^\d]/g, '').length >= 7;
-}
-
-function isValidGrade(value: string) {
-  return GRADE_OPTIONS.includes(value);
-}
-
-function onlyNumbers(value: string) {
-  return value.replace(/\D/g, '');
 }

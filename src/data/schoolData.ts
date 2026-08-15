@@ -107,7 +107,7 @@ const files = [
 export const SCHOOL: SchoolDetails = {
   name: 'Surachana English School',
   shortName: 'Surachana',
-  tagline: 'Education is the light of our life.',
+  tagline: 'सुवर्णा अंग्रेजी स्कूल',
   address: 'Thaiba, Lalitpur, Nepal',
   locationLine: 'Thaiba · Lalitpur',
   phone: '01-5560537',
@@ -134,17 +134,17 @@ export const SCHOOL: SchoolDetails = {
   storyTitle: 'Learning that brings children into the light',
   story: [
     'Surachana English School serves families in Thaiba with a warm, community-minded approach to education.',
-    'Its guiding thought—“Education is the light of our life”—is reflected in a school culture built around participation, encouragement, and steady progress.',
+    'A school culture rooted in participation, encouragement, and steady progress helps children grow with confidence and purpose.',
     'Learning extends beyond lessons into celebrations, shared activities, creativity, and the friendships that make school memorable.',
   ],
   leadershipName: 'School Leadership',
   leadershipTitle: 'Surachana English School',
   leadershipMessage: [
     'Welcome to Surachana English School.',
-    'We see education as a light: something that helps children understand their world, recognise their strengths, and move forward with confidence.',
+    'We believe education should help children understand their world, recognise their strengths, and move forward with confidence.',
     'Together with families, we aim to make each school day purposeful, caring, and full of reasons to participate.',
   ],
-  seoDescription: 'Surachana English School in Thaiba, Lalitpur — education is the light of our life.',
+  seoDescription: 'Surachana English School in Thaiba, Lalitpur — a warm, community-minded school for growing learners.',
   heroLines: ['A brighter way to learn', 'begins here.', ''],
 };
 
@@ -215,7 +215,7 @@ export const WHY_CHOOSE: ValueItem[] = [
   { title: 'Family Connection', description: 'Direct communication between families and school.', icon: 'messageCircle' },
 ];
 
-export const GALLERY_CATEGORIES = ['All', 'School Life', 'Learning', 'Activities', 'Community'];
+export const GALLERY_CATEGORIES = ['All', 'Parents Day 2024', 'Korean Activity 2024', 'Sports 2024', 'Educational Tour 2024', 'Extra Curriculum 2024', 'Health Checkup 2024'];
 export const GALLERY_ITEMS: GalleryItem[] = [];
 
 export const FACULTY: FacultyMember[] = [];
@@ -461,7 +461,7 @@ function applyAlbums(albums: BackendAlbum[]) {
         .map((image, imageIndex) => ({
           src: normalizeAssetPath(image.url || ''),
           alt: image.caption || album.title || `${SCHOOL.shortName} school moment ${albumIndex + imageIndex + 1}`,
-          category: album.title || 'School Life',
+          category: album.title || 'Extra Curriculum 2024',
         }));
     });
 
@@ -473,9 +473,13 @@ function applyAlbums(albums: BackendAlbum[]) {
 function replaceGalleryItems(items: GalleryItem[] | undefined) {
   if (!items) return;
 
+  const currentYear = new Date().getFullYear();
   const uniqueItems = Array.from(
     new Map(items.filter((item) => item.src).map((item) => [item.src, item])).values(),
-  );
+  ).map((item) => ({
+    ...item,
+    category: /\d{4}$/.test(item.category) ? item.category : `${item.category} ${currentYear}`,
+  }));
   replaceArray(GALLERY_ITEMS, uniqueItems);
   replaceArray(GALLERY_CATEGORIES, ['All', ...Array.from(new Set(uniqueItems.map((item) => item.category)))]);
 }
