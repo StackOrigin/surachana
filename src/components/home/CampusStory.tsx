@@ -2,6 +2,7 @@ import "../../styles/components/home/CampusStory.css";
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { IMAGES, SCHOOL } from '../../data/schoolData';
+import { useSchoolData } from '../../hooks/useSchoolData';
 import Reveal from '../ui/Reveal';
 import PointerDepth from '../ui/PointerDepth';
 import { cn } from '../../utils/cn';
@@ -14,6 +15,7 @@ const moments = [
 ];
 
 export default function CampusStory() {
+  useSchoolData();
   const [active, setActive] = useState(0);
   const steps = useRef<Array<HTMLButtonElement | null>>([]);
 

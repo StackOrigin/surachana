@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { ArrowUpRight, Clock, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
+import { useSchoolData } from '../../hooks/useSchoolData';
 import LiveTime from '../ui/LiveTime';
 import { cn } from '../../utils/cn';
 
@@ -15,6 +16,7 @@ const schoolLogoSrc = import.meta.env.DEV
   : './schools/surachana/school_logo.jpg';
 
 export default function Navbar() {
+  useSchoolData();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();

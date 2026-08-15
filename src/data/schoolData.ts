@@ -31,10 +31,12 @@ type FacultyLevel = 'principal' | 'junior' | 'senior' | 'other';
 type FacultyMember = { name: string; position: string; department: string; image: string; bio: string; level: FacultyLevel };
 type BackendStaffMember = {
   name?: string;
+  position?: string;
   designation?: string;
   department?: string;
   memberType?: 'teacher' | 'staff';
   subjects?: string[];
+  image?: string;
   photoUrl?: string;
   bio?: string;
   email?: string;
@@ -62,7 +64,7 @@ type SiteData = {
   whyChoose?: ValueItem[];
   galleryCategories?: string[];
   galleryItems?: GalleryItem[];
-  faculty?: FacultyMember[];
+  faculty?: BackendStaffMember[];
   admissionSteps?: AdmissionStep[];
   requiredDocuments?: string[];
   timeline?: TimelineItem[];
@@ -242,21 +244,108 @@ export const TIMELINE: TimelineItem[] = [
   { year: 'Today', title: 'Learning continues', description: 'Surachana English School continues to help young people learn, participate, and move forward with confidence.' },
 ];
 
-export async function loadBackendSchoolData() {
-  if (import.meta.env.VITE_DISABLE_BACKEND === 'true' || !API_BASE_URL) return;
+// ---------------------------------------------------------------------------
+// Data version pub/sub — allows useSyncExternalStore to trigger re-renders
+// when backend data mutates the module-level arrays.
+// ---------------------------------------------------------------------------
+let dataVersion = 0;
+const dataListeners = new Set<() => void>();
 
+export function subscribeToData(listener: () => void) {
+  dataListeners.add(listener);
+  return () => { dataListeners.delete(listener); };
+}
+
+export function getDataVersion() {
+  return dataVersion;
+}
+
+function notifyDataUpdate() {
+  dataVersion++;
+  dataListeners.forEach((listener) => listener());
+}
+
+// ---------------------------------------------------------------------------
+const cache = {
+  siteData: null as Promise<void> | null,
+  staff: null as Promise<void> | null,
+  albums: null as Promise<void> | null,
+};
+
+// The site-data endpoint contains the publish-ready faculty records. The
+// lightweight staff endpoint is retained only for installations where that
+// collection is not included in site-data.
+let facultySource: 'site-data' | 'staff' | null = null;
+
+function getCachedData<T>(key: string): T | null {
   try {
-    const response = await fetchWithTimeout(resolveSiteDataUrl(), undefined, 3500);
-    if (!response.ok) throw new Error(`Backend returned ${response.status}`);
-
-    const payload = await readJsonResponse(response) as { ok: boolean; data?: SiteData } | null;
-    if (!payload?.ok || !payload.data) throw new Error('Backend response was not usable.');
-    activeSchoolContext = payload.data.id || payload.data.slug || SCHOOL_CONTEXT;
-    applySiteData(payload.data);
-    await loadBackendFeatureModules();
-  } catch (error) {
-    console.warn('Using bundled school data because backend data could not be loaded.', error);
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { data: T; timestamp: number };
+    if (Date.now() - parsed.timestamp > 5 * 60 * 1000) return null;
+    return parsed.data;
+  } catch {
+    return null;
   }
+}
+
+function setCachedData<T>(key: string, data: T) {
+  try {
+    sessionStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() }));
+  } catch {
+    // sessionStorage might be full or unavailable — silently skip.
+  }
+}
+
+// ---------------------------------------------------------------------------
+// School meta (theme + SEO) — called on bootstrap and after backend data load.
+// ---------------------------------------------------------------------------
+export function applySchoolMeta() {
+  document.title = `${SCHOOL.name} — ${SCHOOL.tagline}`;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', SCHOOL.seoDescription);
+  const root = document.documentElement;
+  root.style.setProperty('--color-navy-950', SCHOOL.theme.navy950);
+  root.style.setProperty('--color-navy-900', SCHOOL.theme.navy900);
+  root.style.setProperty('--color-gold-400', SCHOOL.theme.gold400);
+  root.style.setProperty('--color-gold-700', SCHOOL.theme.gold700);
+  root.style.setProperty('--color-cream-50', SCHOOL.theme.cream50);
+  root.style.setProperty('--color-cream-100', SCHOOL.theme.cream100);
+}
+
+// ---------------------------------------------------------------------------
+// loadSiteData — fetches the "fat" site-data payload only (no staff/albums).
+// Cached in-memory + sessionStorage. Non-blocking: caller does not need to
+// await (components re-render via useSchoolData when data arrives).
+// ---------------------------------------------------------------------------
+export function loadSiteData(): Promise<void> {
+  if (import.meta.env.VITE_DISABLE_BACKEND === 'true' || !API_BASE_URL) return Promise.resolve();
+  if (cache.siteData) return cache.siteData;
+
+  cache.siteData = (async () => {
+    try {
+      const response = await fetchWithTimeout(resolveSiteDataUrl(), undefined, 3500);
+      if (!response.ok) throw new Error(`Backend returned ${response.status}`);
+
+      const payload = await readJsonResponse(response) as { ok: boolean; data?: SiteData } | null;
+      if (!payload?.ok || !payload.data) throw new Error('Backend response was not usable.');
+      activeSchoolContext = payload.data.id || payload.data.slug || SCHOOL_CONTEXT;
+      applySiteData(payload.data);
+      applySchoolMeta();
+      notifyDataUpdate();
+    } catch (error) {
+      console.warn('Using bundled school data because backend data could not be loaded.', error);
+    }
+  })();
+
+  return cache.siteData;
+}
+
+/**
+ * Backward-compatible wrapper — only loads site data (no feature modules).
+ * Feature modules (staff, albums) are now loaded lazily by their respective pages.
+ */
+export async function loadBackendSchoolData() {
+  await loadSiteData();
 }
 
 export async function submitInquiry(input: {
@@ -293,43 +382,91 @@ function applySiteData(data: SiteData) {
   replaceArray(VALUES, data.values);
   replaceArray(WHY_CHOOSE, data.whyChoose);
   replaceGalleryItems(data.galleryItems?.map((item) => ({ ...item, src: normalizeAssetPath(item.src) })));
+  if (data.faculty?.length) applyFacultyRecords(data.faculty, 'site-data');
   replaceArray(ADMISSION_STEPS, data.admissionSteps);
   replaceArray(REQUIRED_DOCUMENTS, data.requiredDocuments);
   replaceArray(TIMELINE, data.timeline);
 }
 
-async function loadBackendFeatureModules() {
-  const [staffResult, albumsResult] = await Promise.allSettled([
-    fetchFeatureModule<BackendStaffMember>('staff'),
-    fetchFeatureModule<BackendAlbum>('albums'),
-  ]);
+// ---------------------------------------------------------------------------
+// loadFaculty — lazily fetches staff data. Called only when the Faculty page
+// is visited. Cached in-memory + sessionStorage.
+// ---------------------------------------------------------------------------
+export function loadFaculty(): Promise<void> {
+  if (import.meta.env.VITE_DISABLE_BACKEND === 'true' || !API_BASE_URL) return Promise.resolve();
+  if (cache.staff) return cache.staff;
 
-  if (staffResult.status === 'fulfilled' && staffResult.value.length) {
-    replaceArray(FACULTY, staffResult.value.map(mapStaffMember));
-  }
+  cache.staff = (async () => {
+    // Prefer the complete public payload. Some backend deployments expose a
+    // minimal /staff response (IDs and names only), which must not replace it.
+    await loadSiteData();
+    if (facultySource === 'site-data') return;
 
-  if (albumsResult.status === 'fulfilled' && albumsResult.value.length) {
-    const galleryItems = albumsResult.value
-      .flatMap((album, albumIndex) => {
-        const images = album.images?.length
-          ? album.images
-          : album.coverUrl
-            ? [{ url: album.coverUrl, caption: album.description, order: 0 }]
-            : [];
-
-        return images
-          .filter((image) => Boolean(image.url))
-          .sort((a, b) => (a.order || 0) - (b.order || 0))
-          .map((image, imageIndex) => ({
-            src: normalizeAssetPath(image.url || ''),
-            alt: image.caption || album.title || `${SCHOOL.shortName} school moment ${albumIndex + imageIndex + 1}`,
-            category: album.title || 'School Life',
-          }));
-      });
-
-    if (galleryItems.length) {
-      replaceGalleryItems(galleryItems);
+    // Try sessionStorage cache first
+    const cached = getCachedData<BackendStaffMember[]>('surachana:staff');
+    if (cached) {
+      applyFacultyRecords(cached);
+      return;
     }
+
+    try {
+      const staff = await fetchFeatureModule<BackendStaffMember>('staff');
+      if (staff.length) {
+        setCachedData('surachana:staff', staff);
+        applyFacultyRecords(staff);
+      }
+    } catch (error) {
+      console.warn('Could not load faculty data from backend.', error);
+    }
+  })();
+
+  return cache.staff;
+}
+
+// ---------------------------------------------------------------------------
+// loadGallery — lazily fetches album data. Called only when the Gallery page
+// is visited. Cached in-memory + sessionStorage.
+// ---------------------------------------------------------------------------
+export function loadGallery(): Promise<void> {
+  if (import.meta.env.VITE_DISABLE_BACKEND === 'true' || !API_BASE_URL) return Promise.resolve();
+  if (cache.albums) return cache.albums;
+
+  cache.albums = (async () => {
+    try {
+      const albums = await fetchFeatureModule<BackendAlbum>('albums');
+      applyAlbums(albums);
+      notifyDataUpdate();
+    } catch (error) {
+      console.warn('Could not load gallery data from backend.', error);
+    }
+  })();
+
+  return cache.albums;
+}
+
+function applyAlbums(albums: BackendAlbum[]) {
+  if (!albums.length) return;
+
+  const galleryItems = albums
+    .flatMap((album, albumIndex) => {
+      const images = album.images?.length
+        ? album.images
+        : album.coverUrl
+          ? [{ url: album.coverUrl, caption: album.description, order: 0 }]
+          : [];
+
+      return images
+        .filter((image) => Boolean(image.url))
+        .sort((a, b) => (a.order || 0) - (b.order || 0))
+        .map((image, imageIndex) => ({
+          src: normalizeAssetPath(image.url || ''),
+          alt: image.caption || album.title || `${SCHOOL.shortName} school moment ${albumIndex + imageIndex + 1}`,
+          category: album.title || 'School Life',
+        }));
+    });
+
+  if (galleryItems.length) {
+    replaceGalleryItems(galleryItems);
   }
 }
 
@@ -356,17 +493,28 @@ async function fetchFeatureModule<T>(moduleName: string) {
 }
 
 function mapStaffMember(member: BackendStaffMember): FacultyMember {
-  const designation = member.designation?.trim() || (member.memberType === 'staff' ? 'Staff' : 'Teacher');
+  const designation = member.position?.trim()
+    || member.designation?.trim()
+    || (member.memberType === 'staff' ? 'Staff' : 'Teacher');
   const department = member.department?.trim() || member.subjects?.join(', ') || SCHOOL.shortName;
+  const image = normalizeAssetPath(member.image || member.photoUrl || '');
 
   return {
     name: member.name?.trim() || 'Faculty Member',
     position: designation,
     department,
-    image: normalizeAssetPath(member.photoUrl || ''),
+    image,
     bio: member.bio?.trim() || buildStaffBio(designation, department),
     level: resolveFacultyLevel(member),
   };
+}
+
+function applyFacultyRecords(staff: BackendStaffMember[], source: 'site-data' | 'staff' = 'staff') {
+  if (!staff.length) return;
+  if (facultySource === 'site-data' && source !== 'site-data') return;
+  replaceArray(FACULTY, staff.map(mapStaffMember));
+  facultySource = source;
+  notifyDataUpdate();
 }
 
 function resolveFacultyLevel(member: BackendStaffMember): FacultyLevel {
@@ -380,6 +528,87 @@ function resolveFacultyLevel(member: BackendStaffMember): FacultyLevel {
 
 function buildStaffBio(position: string, department: string) {
   return `${position}${department ? `, ${department}` : ''}.`;
+}
+
+const GOOGLE_MAPS_DOMAIN = 'google.com';
+const GOOGLE_MAPS_SHORT_DOMAIN = 'maps.app.goo.gl';
+
+function isGoogleMapsUrl(url: string) {
+  try {
+    const host = new URL(url).hostname;
+    return host === GOOGLE_MAPS_SHORT_DOMAIN || host.endsWith(GOOGLE_MAPS_DOMAIN);
+  } catch {
+    return false;
+  }
+}
+
+function extractIframeSource(value: string) {
+  const iframeMatch = value.match(/<iframe\b[^>]*\bsrc\s*=\s*(["'])(.*?)\1/i);
+  return iframeMatch?.[2]?.trim() || value.trim();
+}
+
+function isGoogleMapsEmbedUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+    return parsed.hostname.endsWith(GOOGLE_MAPS_DOMAIN) && parsed.pathname.startsWith('/maps/embed');
+  } catch {
+    return false;
+  }
+}
+
+function toEmbedUrl(rawUrl: string) {
+  if (!rawUrl) return rawUrl;
+  const url = rawUrl.includes('?') ? rawUrl : `${rawUrl}?`;
+  try {
+    const parsed = new URL(url);
+    parsed.searchParams.set('output', 'embed');
+    return parsed.toString();
+  } catch {
+    return rawUrl;
+  }
+}
+
+/**
+ * Resolves a user-supplied Google Maps link into a form that can be embedded
+ * in an <iframe>. Google shares links like maps.app.goo.gl/xxx with the
+ * x-frame-options: SAMEORIGIN header, which makes the browser refuse to load
+ * them inside an iframe. We follow the redirect to the canonical destination
+ * and append &output=embed so the map renders correctly.
+ */
+export async function resolveMapUrl(mapUrl: string, timeoutMs = 6000): Promise<string> {
+  const source = extractIframeSource(mapUrl);
+  if (!source) return source;
+
+  // Google Maps' generated iframe links already include the required embed
+  // parameters (notably the long `pb` value), so use them without rewriting.
+  if (isGoogleMapsEmbedUrl(source)) return source;
+  if (!isGoogleMapsUrl(source)) return source;
+
+  // Already an embeddable Google Maps URL.
+  if (source.includes('output=embed')) return source;
+
+  try {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+    let resolvedUrl = source;
+    try {
+      const response = await fetch(source, {
+        redirect: 'follow',
+        signal: controller.signal,
+        headers: { Accept: 'text/html' },
+      });
+      resolvedUrl = response.url || mapUrl;
+    } catch {
+      // Fall back to the raw URL; embed may still work for non-short links.
+      resolvedUrl = source;
+    } finally {
+      window.clearTimeout(timeout);
+    }
+
+    return toEmbedUrl(resolvedUrl);
+  } catch {
+    return source;
+  }
 }
 
 function normalizeAssetPath(src: string) {
@@ -398,7 +627,7 @@ async function fetchWithTimeout(input: RequestInfo | URL, init?: RequestInit, ti
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(input, { ...init, signal: controller.signal });
+    return await fetch(input, { cache: 'no-store', ...init, signal: controller.signal });
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
       throw new Error('The request timed out. Please try again.');

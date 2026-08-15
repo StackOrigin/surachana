@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowDownRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { IMAGES, SCHOOL } from '../../data/schoolData';
+import { useSchoolData } from '../../hooks/useSchoolData';
 import Magnetic from '../ui/Magnetic';
 import { cn } from '../../utils/cn';
 
@@ -14,6 +15,7 @@ const scenes = [
 ];
 
 export default function HomeHero() {
+  useSchoolData();
   const sectionRef = useRef<HTMLElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
   const [activeScene, setActiveScene] = useState(0);

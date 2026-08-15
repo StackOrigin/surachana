@@ -2,8 +2,9 @@ import "../styles/pages/Gallery.css";
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { GALLERY_CATEGORIES, GALLERY_ITEMS, SCHOOL } from '../data/schoolData';
+import { GALLERY_CATEGORIES, GALLERY_ITEMS, SCHOOL, loadGallery } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import Reveal from '../components/ui/Reveal';
 import { cn } from '../utils/cn';
@@ -31,11 +32,17 @@ const captions = [
 
 export default function Gallery() {
   useScrollToTop();
+  useSchoolData();
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [page, setPage] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    loadGallery().finally(() => setLoading(false));
+  }, []);
 
   const filtered = GALLERY_ITEMS
     .map((item, originalIndex) => ({ ...item, originalIndex }))
@@ -166,7 +173,7 @@ export default function Gallery() {
 
           {filtered.length === 0 && (
             <p className="gallery__p-040">
-              No photographs in this chapter yet.
+              {loading ? 'Loading gallery…' : 'No photographs in this chapter yet.'}
             </p>
           )}
 

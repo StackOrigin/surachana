@@ -1,6 +1,7 @@
 import "../../styles/components/ui/PageHero.css";
 import { Link } from 'react-router-dom';
 import { SCHOOL } from '../../data/schoolData';
+import { useSchoolData } from '../../hooks/useSchoolData';
 
 interface PageHeroProps {
   title: string;
@@ -9,6 +10,7 @@ interface PageHeroProps {
 }
 
 export default function PageHero({ title, subtitle, breadcrumb }: PageHeroProps) {
+  useSchoolData();
   return (
     <section className="page-hero__section-001">
       <div className="editorial-grid page-hero__div-002" />

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Eye, Target } from 'lucide-react';
 import { SCHOOL, IMAGES, VALUES, TIMELINE } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import SectionTitle from '../components/ui/SectionTitle';
 import Button from '../components/ui/Button';
@@ -11,6 +12,7 @@ import { cn } from '../utils/cn';
 
 export default function About() {
   useScrollToTop();
+  useSchoolData();
 
   return (
     <main>

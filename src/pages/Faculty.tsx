@@ -1,8 +1,10 @@
 import "../styles/pages/Faculty.css";
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { FACULTY, SCHOOL } from '../data/schoolData';
+import { FACULTY, SCHOOL, loadFaculty } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import SectionTitle from '../components/ui/SectionTitle';
 import Button from '../components/ui/Button';
@@ -10,6 +12,12 @@ import Reveal from '../components/ui/Reveal';
 
 export default function Faculty() {
   useScrollToTop();
+  useSchoolData();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadFaculty().finally(() => setLoading(false));
+  }, []);
 
   return (
     <main>
@@ -22,6 +30,12 @@ export default function Faculty() {
       <section className="faculty__section-001">
         <div className="faculty__div-002">
           
+
+          {loading && FACULTY.length === 0 && (
+            <p style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-navy-900, #123e55)' }}>
+              Loading faculty…
+            </p>
+          )}
 
           {(() => {
             const leaders = FACULTY.filter((member) => member.level === 'principal');
