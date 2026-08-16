@@ -9,6 +9,8 @@ import SectionTitle from '../components/ui/SectionTitle';
 import Button from '../components/ui/Button';
 import Reveal from '../components/ui/Reveal';
 import { cn } from '../utils/cn';
+import directorPhoto from '../assets/director.png';
+import principalPhoto from '../assets/director.png';
 
 export default function About() {
   useScrollToTop();
@@ -89,14 +91,14 @@ export default function About() {
         </div>
       </section>
 
-      {/* Principal Message */}
+      {/* Director Message */}
       <section className="about__section-024">
         <div className="about__div-025">
           <div className="about__div-026">
             <Reveal variant="clip" className="about__reveal-027">
               <div className="about__div-028">
                 <div className="about__div-029">
-                  <img src={IMAGES.principal} alt={SCHOOL.leadershipName} className="about__img-030" loading="lazy" />
+                  <img src={directorPhoto} alt={SCHOOL.leadershipName} className="about__img-030" loading="lazy" />
                 </div>
                 <div className="about__div-031">
                   <p className="about__p-032">{SCHOOL.leadershipName}</p>
@@ -106,11 +108,41 @@ export default function About() {
             </Reveal>
 
             <Reveal variant="slide-right" className="about__reveal-034" delay={200}>
-              <SectionTitle badge="From the Principal" title="A Message of Welcome" align="left" />
+              <SectionTitle badge="From the Director" title="A Message of Welcome" align="left" />
               <div className="about__div-035">
                 <p>Dear Parents and Students,</p>
                 {SCHOOL.leadershipMessage.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 <p className="about__p-036">
+                  Together, let us build a brighter future for our children.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Principal Message */}
+      <section className="about__section-069">
+        <div className="about__div-070">
+          <div className="about__div-071">
+            <Reveal variant="clip" className="about__reveal-072">
+              <div className="about__div-073">
+                <div className="about__div-074">
+                  <img src={principalPhoto} alt={SCHOOL.principalName} className="about__img-075" loading="lazy" />
+                </div>
+                <div className="about__div-076">
+                  <p className="about__p-077">{SCHOOL.principalName}</p>
+                  <p className="about__p-078">{SCHOOL.principalTitle}</p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal variant="slide-right" className="about__reveal-079" delay={200}>
+              <SectionTitle badge="From the Principal" title="A Message of Welcome" align="left" />
+              <div className="about__div-080">
+                <p>Dear Parents and Students,</p>
+                {SCHOOL.principalMessage.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                <p className="about__p-081">
                   Together, let us build a brighter future for our children.
                 </p>
               </div>
@@ -160,10 +192,8 @@ export default function About() {
                     "about__div-049",
                     i % 2 === 0 ? "about__div-050" : "about__div-051"
                   )}>
-                    {/* Dot */}
                     <div className="about__div-052" />
                     
-                    {/* Content */}
                     <div className={cn(
                       "about__div-053",
                       i % 2 === 0 ? "about__div-054" : "about__div-055"
