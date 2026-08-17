@@ -24,7 +24,9 @@ export default function Footer() {
                 <img src={schoolLogoSrc} alt={`${SCHOOL.name} logo`} className="footer__img-026" loading="lazy" />
               </span>
               <span>
-                <strong className="footer__strong-006">{SCHOOL.name}</strong>
+                <strong className="footer__strong-006">
+                  <span className="footer__school-name">{SCHOOL.shortName}</span> {SCHOOL.name.replace(SCHOOL.shortName, '').trim()}
+                </strong>
                 <small className="editorial-kicker footer__small-007">{SCHOOL.tagline}</small>
               </span>
             </Link>

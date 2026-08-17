@@ -18,6 +18,9 @@ type SchoolDetails = {
   leadershipName: string;
   leadershipTitle: string;
   leadershipMessage: string[];
+  principalName: string;
+  principalTitle: string;
+  principalMessage: string[];
   seoDescription: string;
   heroLines: [string, string, string];
 };
@@ -27,7 +30,7 @@ type Achievement = { number: string; label: string; icon: string };
 type Program = { title: string; ages: string; description: string; focus: string[]; icon: string };
 type ValueItem = { title: string; description: string; icon: string };
 type GalleryItem = { src: string; alt: string; category: string };
-type FacultyLevel = 'principal' | 'junior' | 'senior' | 'other';
+type FacultyLevel = 'director' | 'principal' | 'junior' | 'senior' | 'other';
 type FacultyMember = { name: string; position: string; department: string; image: string; bio: string; level: FacultyLevel };
 type BackendStaffMember = {
   name?: string;
@@ -107,7 +110,8 @@ const files = [
 export const SCHOOL: SchoolDetails = {
   name: 'Surachana English School',
   shortName: 'Surachana',
-  tagline: 'Education is the light of our life.',
+  tagline: 'A bright, welcoming place to begin',
+
   address: 'Thaiba, Lalitpur, Nepal',
   locationLine: 'Thaiba · Lalitpur',
   phone: '01-5560537',
@@ -134,17 +138,24 @@ export const SCHOOL: SchoolDetails = {
   storyTitle: 'Learning that brings children into the light',
   story: [
     'Surachana English School serves families in Thaiba with a warm, community-minded approach to education.',
-    'Its guiding thought—“Education is the light of our life”—is reflected in a school culture built around participation, encouragement, and steady progress.',
+    'A school culture rooted in participation, encouragement, and steady progress helps children grow with confidence and purpose.',
     'Learning extends beyond lessons into celebrations, shared activities, creativity, and the friendships that make school memorable.',
   ],
   leadershipName: 'School Leadership',
   leadershipTitle: 'Surachana English School',
   leadershipMessage: [
     'Welcome to Surachana English School.',
-    'We see education as a light: something that helps children understand their world, recognise their strengths, and move forward with confidence.',
+    'We believe education should help children understand their world, recognise their strengths, and move forward with confidence.',
     'Together with families, we aim to make each school day purposeful, caring, and full of reasons to participate.',
   ],
-  seoDescription: 'Surachana English School in Thaiba, Lalitpur — education is the light of our life.',
+  principalName: 'Principal',
+  principalTitle: 'Surachana English School',
+  principalMessage: [
+    'A warm welcome to all our students and families.',
+    'Our school is a place where every child is encouraged to learn, grow, and discover their own strengths.',
+    'We work closely with parents to ensure each student feels supported, valued, and ready for the future.',
+  ],
+  seoDescription: 'Surachana English School in Thaiba, Lalitpur — a warm, community-minded school for growing learners.',
   heroLines: ['A brighter way to learn', 'begins here.', ''],
 };
 
@@ -159,7 +170,7 @@ export const IMAGES = {
   students3: files[5], drawing: files[6], campus: files[7], building: files[8], building2: files[9],
   teacher1: files[1], teacher2: files[2], teacher3: files[3], teacher4: files[4], teacher5: files[5],
   teacher6: files[6], sports1: files[3], sports2: files[4], sports3: files[5], library: files[7],
-  reading: files[8], principal: files[1], cultural1: files[6], cultural2: files[7], celebration: files[8],
+  reading: files[8], director: asset('director.png'), cultural1: files[6], cultural2: files[7], celebration: files[8],
   heroPhoto1: files[10], heroPhoto2: files[11], heroPhoto3: files[12], heroPhoto4: files[13],
   earlyYears: asset('earlyYears.jpeg'),
   primaryYears: asset('primaryYears.jpeg'),
@@ -172,6 +183,7 @@ export const IMAGES = {
   makeAndExpress: files[18],
   about1: files[19], about2: files[20],
   leadership: files[21],
+  principal: asset('leadership.jpeg'),
 };
 
 export const NAV_LINKS = [
@@ -215,7 +227,7 @@ export const WHY_CHOOSE: ValueItem[] = [
   { title: 'Family Connection', description: 'Direct communication between families and school.', icon: 'messageCircle' },
 ];
 
-export const GALLERY_CATEGORIES = ['All', 'School Life', 'Learning', 'Activities', 'Community'];
+export const GALLERY_CATEGORIES = ['All', 'Parents Day', 'Korean Activity', 'Sports', 'Educational Tour', 'Extra Curriculum', 'Health Checkup'];
 export const GALLERY_ITEMS: GalleryItem[] = [];
 
 export const FACULTY: FacultyMember[] = [];
@@ -461,7 +473,7 @@ function applyAlbums(albums: BackendAlbum[]) {
         .map((image, imageIndex) => ({
           src: normalizeAssetPath(image.url || ''),
           alt: image.caption || album.title || `${SCHOOL.shortName} school moment ${albumIndex + imageIndex + 1}`,
-          category: album.title || 'School Life',
+          category: album.title || 'Extra Curriculum',
         }));
     });
 
@@ -473,9 +485,13 @@ function applyAlbums(albums: BackendAlbum[]) {
 function replaceGalleryItems(items: GalleryItem[] | undefined) {
   if (!items) return;
 
+  const currentYear = new Date().getFullYear();
   const uniqueItems = Array.from(
     new Map(items.filter((item) => item.src).map((item) => [item.src, item])).values(),
-  );
+  ).map((item) => ({
+    ...item,
+    category: /\d{4}$/.test(item.category) ? item.category : `${item.category} ${currentYear}`,
+  }));
   replaceArray(GALLERY_ITEMS, uniqueItems);
   replaceArray(GALLERY_CATEGORIES, ['All', ...Array.from(new Set(uniqueItems.map((item) => item.category)))]);
 }
@@ -519,7 +535,8 @@ function applyFacultyRecords(staff: BackendStaffMember[], source: 'site-data' | 
 
 function resolveFacultyLevel(member: BackendStaffMember): FacultyLevel {
   const text = `${member.designation || ''} ${member.department || ''}`.toLowerCase();
-  if (member.isLeadership || text.includes('principal') || text.includes('leader')) return 'principal';
+  if (text.includes('principal')) return 'principal';
+  if (member.isLeadership || text.includes('director') || text.includes('leader')) return 'director';
   if (member.memberType === 'staff') return 'other';
   if (text.includes('junior') || text.includes('early') || text.includes('primary')) return 'junior';
   if (text.includes('senior') || text.includes('secondary')) return 'senior';

@@ -166,11 +166,14 @@
 .navbar__div-036 {
     background-color: var(--color-cream-50);
   }
-.navbar__header-002.navbar__header-002 {
-    background-color: color-mix(in srgb, #f7f4ec 95%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-cream-50) 95%, transparent);
-    }
+.navbar__header-003.navbar__header-003 {
+    background: linear-gradient(135deg, #2b6a8f 0%, #2c5f86 100%);
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  }
+.navbar__header-002.navbar__header-002,
+.navbar__header-003.navbar__header-003 {
+    background: linear-gradient(135deg, #2e5f88 0%, #2a4d72 100%);
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.12);
   }
 .navbar__link-028.navbar__link-028 {
     background-color: var(--color-gold-400);
@@ -181,6 +184,12 @@
 .navbar__span-010.navbar__span-010,
 .navbar__link-029.navbar__link-029 {
     background-color: var(--color-white);
+  }
+.navbar__header-002.navbar__header-002,
+.navbar__header-003.navbar__header-003,
+.navbar__header-002.navbar__header-002 *,
+.navbar__header-003.navbar__header-003 * {
+    color: var(--color-white);
   }
 .navbar__span-011.navbar__span-011 {
     background-color: color-mix(in srgb, #fff 90%, transparent);
@@ -245,10 +254,11 @@
   }
 .navbar__small-017 {
     font-size: 8px;
-    font-style: italic;
+    font-style: normal;
     font-weight: 700;
     text-transform: none;
     letter-spacing: 0.06em;
+    font-family: "Noto Sans Devanagari", "Mangal", "Nirmala UI", serif;
   }
 .navbar__link-021 {
     font-size: 13px;
@@ -271,6 +281,10 @@
   }
 .navbar__strong-016 .navbar__school-name {
     text-transform: uppercase;
+    color: var(--color-gold-400);
+  }
+.navbar__strong-016 {
+    color: var(--color-white);
   }
 .navbar__link-027 {
     --site-tracking: 0.12em;
@@ -505,6 +519,22 @@
   .navbar__span-042 {
     font-size: var(--text-lg);
     font-weight: var(--font-weight-bold);
+  }
+
+  /* Make mobile navigation links black (override header white rule) */
+  .navbar__header-002.navbar__header-002 .navbar__link-040,
+  .navbar__header-002.navbar__header-002 .navbar__span-041,
+  .navbar__header-003.navbar__header-003 .navbar__link-040,
+  .navbar__header-003.navbar__header-003 .navbar__span-041 {
+    color: var(--color-navy-950);
+  }
+
+  /* Keep mobile Enquire button text white on dark navy background */
+  .navbar__header-002.navbar__header-002 .navbar__link-043,
+  .navbar__header-002.navbar__header-002 .navbar__span-044,
+  .navbar__header-003.navbar__header-003 .navbar__link-043,
+  .navbar__header-003.navbar__header-003 .navbar__span-044 {
+    color: var(--color-white);
   }
 
 }

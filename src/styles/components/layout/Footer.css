@@ -6,6 +6,8 @@
   }
 .footer__small-007 {
     margin-top: calc(var(--spacing) * 2);
+    font-family: "Noto Sans Devanagari", "Mangal", "Nirmala UI", serif;
+    font-style: normal;
   }
 .footer__link-009 {
     margin-top: calc(var(--spacing) * 8);
@@ -131,19 +133,20 @@
   }
 .footer__footer-001,
 .footer__div-022 {
-    border-color: color-mix(in srgb, #102b24 15%, transparent);
+    border-color: color-mix(in srgb, #000000 15%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-navy-900) 15%, transparent);
+      border-color: color-mix(in oklab, #000000 15%, transparent);
     }
   }
 .footer__link-009 {
     border-color: var(--color-navy-950);
   }
 .footer__footer-001 {
-    background-color: var(--color-cream-100);
+    background: #ffffff;
+    color: #000000;
   }
 .footer__span-005 {
-    background-color: var(--color-navy-950);
+    background-color: var(--color-white);
   }
 .footer__div-002 {
     padding-inline: calc(var(--spacing) * 5);
@@ -211,20 +214,28 @@
 .footer__map-pin-017,
 .footer__phone-019,
 .footer__mail-021 {
-    color: var(--color-gold-700);
+    color: rgba(0, 0, 0, 0.9);
   }
 .footer__div-022 {
-    color: var(--color-navy-400);
+    color: rgba(0, 0, 0, 0.75);
   }
 .footer__small-007 {
-    color: var(--color-navy-500);
+    color: rgba(0, 0, 0, 0.75);
   }
 .footer__link-013,
-.footer__ul-015 {
-    color: var(--color-navy-700);
+.footer__ul-015,
+.footer__link-009 {
+    color: rgba(0, 0, 0, 0.92);
+  }
+.footer__strong-006 {
+    color: var(--color-navy-900);
+  }
+.footer__school-name {
+    color: var(--color-gold-400);
+    text-transform: uppercase;
   }
 .footer__footer-001 {
-    color: var(--color-navy-950);
+    color: #000000;
   }
 .footer__span-005 {
     font-style: italic;
