@@ -521,4 +521,20 @@
     font-weight: var(--font-weight-bold);
   }
 
+  /* Make mobile navigation links black (override header white rule) */
+  .navbar__header-002.navbar__header-002 .navbar__link-040,
+  .navbar__header-002.navbar__header-002 .navbar__span-041,
+  .navbar__header-003.navbar__header-003 .navbar__link-040,
+  .navbar__header-003.navbar__header-003 .navbar__span-041 {
+    color: var(--color-navy-950);
+  }
+
+  /* Keep mobile Enquire button text white on dark navy background */
+  .navbar__header-002.navbar__header-002 .navbar__link-043,
+  .navbar__header-002.navbar__header-002 .navbar__span-044,
+  .navbar__header-003.navbar__header-003 .navbar__link-043,
+  .navbar__header-003.navbar__header-003 .navbar__span-044 {
+    color: var(--color-white);
+  }
+
 }

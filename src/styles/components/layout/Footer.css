@@ -133,17 +133,17 @@
   }
 .footer__footer-001,
 .footer__div-022 {
-    border-color: color-mix(in srgb, #102b24 15%, transparent);
+    border-color: color-mix(in srgb, #000000 15%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-navy-900) 15%, transparent);
+      border-color: color-mix(in oklab, #000000 15%, transparent);
     }
   }
 .footer__link-009 {
     border-color: var(--color-navy-950);
   }
 .footer__footer-001 {
-    background: linear-gradient(135deg, #2e5f88 0%, #2a4d72 100%);
-    color: var(--color-white);
+    background: #ffffff;
+    color: #000000;
   }
 .footer__span-005 {
     background-color: var(--color-white);
@@ -214,24 +214,24 @@
 .footer__map-pin-017,
 .footer__phone-019,
 .footer__mail-021 {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.9);
   }
 .footer__div-022 {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(0, 0, 0, 0.75);
   }
 .footer__small-007 {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(0, 0, 0, 0.75);
   }
 .footer__link-013,
 .footer__ul-015,
 .footer__link-009 {
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(0, 0, 0, 0.92);
   }
 .footer__strong-006 {
-    color: var(--color-white);
+    color: #000000;
   }
 .footer__footer-001 {
-    color: var(--color-white);
+    color: #000000;
   }
 .footer__span-005 {
     font-style: italic;
