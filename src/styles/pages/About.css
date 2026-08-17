@@ -888,9 +888,17 @@
     gap: calc(var(--spacing) * 2);
   }
 
-  /* Ensure director and principal images have the same height on mobile */
+  /* Ensure director and principal images have the same size on mobile */
+  .about__div-028,
+  .about__div-073 {
+    width: 100%;
+    max-width: var(--container-sm);
+    margin-inline: auto;
+  }
+
   .about__div-029,
   .about__div-074 {
+    width: 100%;
     height: clamp(22rem, 80vw, 28rem);
     aspect-ratio: auto;
   }

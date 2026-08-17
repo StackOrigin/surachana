@@ -228,7 +228,11 @@
     color: rgba(0, 0, 0, 0.92);
   }
 .footer__strong-006 {
-    color: #000000;
+    color: var(--color-navy-900);
+  }
+.footer__school-name {
+    color: var(--color-gold-400);
+    text-transform: uppercase;
   }
 .footer__footer-001 {
     color: #000000;
