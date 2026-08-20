@@ -201,6 +201,12 @@
     object-fit: cover;
     border-radius: 50%;
   }
+.navbar__school-name-img {
+    display: block;
+    height: calc(var(--spacing) * 10);
+    width: auto;
+    object-fit: contain;
+  }
 /* padding on the <img> can break the circular mask; the wrapper handles masking */
 .navbar__img-012 {
     display: block;
@@ -519,6 +525,10 @@
   .navbar__span-042 {
     font-size: var(--text-lg);
     font-weight: var(--font-weight-bold);
+  }
+
+  .navbar__school-name-img {
+    height: calc(var(--spacing) * 7);
   }
 
   /* Make mobile navigation links black (override header white rule) */
