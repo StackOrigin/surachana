@@ -6,6 +6,7 @@ import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
 import { useSchoolData } from '../../hooks/useSchoolData';
 import LiveTime from '../ui/LiveTime';
 import { cn } from '../../utils/cn';
+import schoolNameImg from '../../assets/SchoolName.png';
 
 const primaryLinkPaths = ['/', '/about', '/academics', '/faculty', '/gallery', '/contact'];
 const primaryLinks = primaryLinkPaths
@@ -69,10 +70,12 @@ export default function Navbar() {
               />
             </span>
             <span>
-              <strong className="navbar__strong-016"><span className="navbar__school-name">Surachana</span> English School</strong>
-              <small className={cn("editorial-kicker navbar__small-017", isScrolled ? "navbar__small-018" : "navbar__small-019")}>
-                {SCHOOL.tagline}
-              </small>
+              <img
+                src={schoolNameImg}
+                alt={SCHOOL.name}
+                className="navbar__school-name-img"
+                loading="eager"
+              />
             </span>
           </Link>
 
