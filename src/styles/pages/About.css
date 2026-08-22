@@ -108,8 +108,8 @@
   }
 .about__div-029,
 .about__div-074 {
-  aspect-ratio: 9/16;
-  }
+  aspect-ratio: 3 / 4;
+}
 .about__div-005 {
     aspect-ratio: 4/3;
   }
@@ -177,6 +177,7 @@
 .about__img-008,
 .about__img-030,
 .about__img-075 {
+    display: block;
     width: 100%;
   }
 .about__div-045,
@@ -327,6 +328,7 @@
 .about__img-030,
 .about__img-075 {
     object-fit: cover;
+    object-position: center;
   }
 .about__div-040 {
     padding: calc(var(--spacing) * 6);
@@ -654,7 +656,8 @@
 .about__section-024,
 .about__section-037,
 .about__section-044,
-.about__section-059 {
+.about__section-059,
+.about-voices {
   padding-block: calc(var(--spacing) * 12) !important;
 }
 
@@ -684,7 +687,8 @@
   .about__section-024,
   .about__section-037,
   .about__section-044,
-  .about__section-059 {
+  .about__section-059,
+  .about-voices {
     padding-block: calc(var(--spacing) * 16) !important;
   }
 }
@@ -697,7 +701,8 @@
   .about__section-024,
   .about__section-037,
   .about__section-044,
-  .about__section-059 {
+  .about__section-059,
+  .about-voices {
     padding-block: calc(var(--spacing) * 14);
   }
 
@@ -765,159 +770,195 @@
   }
 }
 
-/* ─── Principal Message section ─── */
-.about__section-069 {
-  background-color: var(--color-cream-100);
-  padding-block: calc(var(--spacing) * 20);
-  overflow: hidden;
+/* ─── Leadership notes ─── */
+.about-voices {
+  background-color: color-mix(in srgb, #eef3f0 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-navy-50) 50%, transparent);
+  }
 }
 
-.about__div-070 {
+.about-voices__inner {
   margin-inline: auto;
   max-width: var(--container-7xl);
   padding-inline: calc(var(--spacing) * 4);
 }
 
-.about__div-071 {
+.about-voices__grid {
   display: grid;
-  align-items: center;
-  gap: calc(var(--spacing) * 12);
+  gap: calc(var(--spacing) * 5);
 }
 
-.about__reveal-072 {
-  grid-column: span 2 / span 2;
-}
-
-.about__reveal-079 {
-  grid-column: span 3 / span 3;
-}
-
-.about__div-073 {
-  position: relative;
-  max-width: var(--container-sm);
-  margin-inline: auto;
-}
-
-.about__div-074 {
-  aspect-ratio: 9/16;
-  border-radius: var(--radius-3xl);
-  overflow: hidden;
-  --site-shadow: 0 20px 25px -5px var(--site-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--site-shadow-color, rgb(0 0 0 / 0.1));
-  box-shadow: var(--site-inset-shadow), var(--site-inset-ring-shadow), var(--site-ring-offset-shadow), var(--site-ring-shadow), var(--site-shadow);
-}
-
-.about__img-075 {
-  width: 100%;
+.about-voices__grid > * {
   height: 100%;
-  object-fit: cover;
 }
 
-.about__div-076 {
-  position: absolute;
-  bottom: calc(var(--spacing) * -2);
-  left: calc(1/2 * 100%);
-  --site-translate-x: calc(calc(1/2 * 100%) * -1);
-  translate: var(--site-translate-x) var(--site-translate-y);
+.about-voices__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-3xl);
+  padding: 0;
+}
+
+.about-voices__card--light {
   background-color: var(--color-white);
-  border-radius: var(--radius-xl);
-  padding-inline: calc(var(--spacing) * 3);
-  padding-block: calc(var(--spacing) * 3);
-  text-align: center;
-  --site-shadow: 0 10px 15px -3px var(--site-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--site-shadow-color, rgb(0 0 0 / 0.1));
+  border: 1px solid color-mix(in srgb, #d9e4df 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-color: color-mix(in oklab, var(--color-navy-100) 50%, transparent);
+  }
+  --site-shadow: 0 1px 3px 0 var(--site-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--site-shadow-color, rgb(0 0 0 / 0.1));
   box-shadow: var(--site-inset-shadow), var(--site-inset-ring-shadow), var(--site-ring-offset-shadow), var(--site-ring-shadow), var(--site-shadow);
 }
 
-.about__p-077 {
+.about-voices__card--light::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background-color: var(--color-gold-500);
+}
+
+.about-voices__card--dark {
+  background-color: var(--color-navy-900);
+  color: var(--color-navy-200);
+}
+
+.about-voices__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: calc(var(--spacing) * 6);
+}
+
+.about-voices__mark {
+  width: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 8);
+  margin-bottom: calc(var(--spacing) * 3);
+  color: var(--color-gold-500);
+  opacity: 0.85;
+}
+
+.about-voices__role {
   font-family: var(--font-heading);
-  font-size: var(--text-sm);
-  line-height: var(--site-leading, var(--text-sm--line-height));
-  --site-font-weight: var(--font-weight-bold);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-navy-900);
-}
-
-.about__p-078 {
   font-size: var(--text-xs);
-  line-height: var(--site-leading, var(--text-xs--line-height));
-  color: var(--color-navy-500);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gold-600);
+  margin-bottom: calc(var(--spacing) * 4);
 }
 
-.about__div-080 {
-  padding-inline: 0;
-  color: var(--color-navy-600);
+.about-voices__card--dark .about-voices__role {
+  color: var(--color-gold-400);
+}
+
+.about-voices__quote {
+  flex: 1;
+  margin: 0;
   --site-leading: var(--leading-relaxed);
   line-height: var(--leading-relaxed);
+  font-size: var(--text-sm);
+  color: var(--color-navy-600);
 }
 
-.about__div-080 p + p {
+.about-voices__card--dark .about-voices__quote {
+  color: var(--color-navy-200);
+}
+
+.about-voices__quote p + p {
   margin-top: calc(var(--spacing) * 3);
 }
 
-.about__p-081 {
-  --site-font-weight: var(--font-weight-medium);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-navy-900);
+.about-voices__photo {
+  position: relative;
+  width: 100%;
+  height: clamp(16rem, 42vw, 22rem);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.about-voices__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.about-voices__person {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: calc(var(--spacing) * 10) calc(var(--spacing) * 6) calc(var(--spacing) * 4);
+  background: linear-gradient(to top, rgb(15 23 42 / 0.82) 0%, rgb(15 23 42 / 0) 100%);
+}
+
+.about-voices__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-cream-50);
+}
+
+.about-voices__title {
+  font-size: var(--text-xs);
+  color: var(--color-gold-400);
 }
 
 @media (width >= 40rem) {
-  .about__div-070 {
+  .about-voices__inner {
     padding-inline: calc(var(--spacing) * 6);
   }
 }
 
 @media (width >= 48rem) {
-  .about__div-071 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: calc(var(--spacing) * 12);
+  .about-voices__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: calc(var(--spacing) * 6);
+    align-items: stretch;
   }
 
-  .about__section-069 {
-    padding-block: calc(var(--spacing) * 16);
+  .about-voices__card--dark {
+    margin-top: calc(var(--spacing) * 8);
+  }
+
+  .about-voices__card {
+    padding: 0;
+  }
+
+  .about-voices__body {
+    padding: calc(var(--spacing) * 7);
+  }
+
+  .about-voices__photo {
+    height: 22rem;
   }
 }
 
 @media (width >= 64rem) {
-  .about__div-070 {
+  .about-voices__inner {
     padding-inline: calc(var(--spacing) * 8);
-  }
-
-  .about__div-073 {
-    margin-inline: calc(var(--spacing) * 0);
   }
 }
 
 @media (max-width: 40rem) {
-  .about__section-069 {
-    padding-block: calc(var(--spacing) * 14);
+  .about-voices__card {
+    padding: 0;
   }
 
-  .about__div-071 {
-    gap: calc(var(--spacing) * 12);
-  }
-  
-  .about__div-071 > :first-child {
-    justify-self: center;
-    margin-inline: auto;
+  .about-voices__body {
+    padding: calc(var(--spacing) * 5);
   }
 
-  /* Ensure director and principal images have the same size on mobile */
-  .about__div-028,
-  .about__div-073 {
-    width: 100%;
-    max-width: var(--container-sm);
-    margin-inline: auto;
+  .about-voices__photo {
+    height: 18rem;
   }
 
-  .about__div-029,
-  .about__div-074 {
-    width: 100%;
-    height: clamp(22rem, 80vw, 28rem);
-    aspect-ratio: auto;
-  }
-
-  .about__img-030,
-  .about__img-075 {
-    object-fit: cover;
-    object-position: top center;
+  .about-voices__mark {
+    width: calc(var(--spacing) * 7);
+    height: calc(var(--spacing) * 7);
+    margin-bottom: calc(var(--spacing) * 3);
   }
 }
