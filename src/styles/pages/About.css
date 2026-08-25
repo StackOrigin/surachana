@@ -875,7 +875,7 @@
 .about-voices__photo {
   position: relative;
   width: 100%;
-  height: clamp(16rem, 42vw, 22rem);
+  height: clamp(22rem, 50vw, 30rem);
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -933,7 +933,15 @@
   }
 
   .about-voices__photo {
-    height: 22rem;
+    height: 28rem;
+  }
+
+  .about-voices__photo--principal {
+    height: 24rem;
+  }
+
+  .about-voices__photo--principal img {
+    object-position: center 15%;
   }
 }
 
@@ -953,7 +961,7 @@
   }
 
   .about-voices__photo {
-    height: 18rem;
+    height: 22rem;
   }
 
   .about-voices__mark {

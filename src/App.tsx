@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 
 function getRouteMeta(pathname: string): { title: string; description: string } {
   const routeMeta: Record<string, { title: string; description: string }> = {
-    '/': { title: SCHOOL.name, description: SCHOOL.seoDescription },
+    '/': { title: `${SCHOOL.name} | Thaiba, Lalitpur`, description: SCHOOL.seoDescription },
     '/about': { title: `About ${SCHOOL.shortName}`, description: SCHOOL.aboutSubtitle },
     '/academics': { title: `Academics | ${SCHOOL.shortName}`, description: `Explore the learning journey and academic programs at ${SCHOOL.name}.` },
     '/admission': { title: `Admissions | ${SCHOOL.shortName}`, description: `Learn about admission steps, eligibility, and how to contact ${SCHOOL.name}.` },

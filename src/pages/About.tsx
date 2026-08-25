@@ -124,7 +124,7 @@ export default function About() {
 
             <Reveal variant="slide-right" delay={160}>
               <article className="about-voices__card about-voices__card--dark">
-                <div className="about-voices__photo">
+                <div className="about-voices__photo about-voices__photo--principal">
                   <img src={principalPhoto} alt={SCHOOL.principalName} loading="lazy" />
                   <div className="about-voices__person">
                     <p className="about-voices__name">{SCHOOL.principalName}</p>
