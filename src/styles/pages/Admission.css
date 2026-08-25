@@ -475,14 +475,9 @@
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid rgba(18, 22, 22, 0.2);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
 }
 
-.admission-submit-btn,
-.admission-download-btn {
+.admission-submit-btn {
   background: #0d1f1d;
   color: #f8f4ed;
   border: 2px solid #1a2a27;
@@ -496,19 +491,11 @@
   transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
 }
 
-.admission-download-btn {
-  background: #f8f4ed;
-  color: #0d1f1d;
-}
-
-.admission-submit-btn:hover,
-.admission-download-btn:hover {
+.admission-submit-btn:hover {
   background: #1a2a27;
-  color: #f8f4ed;
 }
 
-.admission-submit-btn:active,
-.admission-download-btn:active {
+.admission-submit-btn:active {
   transform: translateY(1px);
 }
 

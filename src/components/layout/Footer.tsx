@@ -21,13 +21,11 @@ export default function Footer() {
           <div>
             <Link to="/" className="footer__link-004">
               <span className="footer__span-005">
-                <img src={schoolLogoSrc} alt={`${SCHOOL.name} logo`} className="footer__img-026" loading="lazy" />
+                <img src={schoolLogoSrc} alt="Surachana English School logo" className="footer__img-026" loading="lazy" />
               </span>
               <span>
-                <strong className="footer__strong-006">
-                  <span className="footer__school-name">{SCHOOL.shortName}</span> {SCHOOL.name.replace(SCHOOL.shortName, '').trim()}
-                </strong>
-                <small className="editorial-kicker footer__small-007">{SCHOOL.tagline}</small>
+                <strong className="footer__strong-006"><span className="footer__school-name">SURACHANA</span> English School</strong>
+                <small className="editorial-kicker footer__small-007">A bright, welcoming place to begin</small>
               </span>
             </Link>
             <p className="footer__p-008">
@@ -74,8 +72,8 @@ export default function Footer() {
         </div>
 
         <div className="editorial-kicker footer__div-022">
-          <span>© {new Date().getFullYear()} {SCHOOL.name}</span>
-          <span>{SCHOOL.locationLine} · Nepal</span>
+          <span>© {new Date().getFullYear()} Surachana English School</span>
+          <span>Thaiba · Lalitpur · Nepal</span>
           <a
             href="https://nivaksha.me"
             target="_blank"

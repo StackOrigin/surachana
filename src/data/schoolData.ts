@@ -313,7 +313,7 @@ function setCachedData<T>(key: string, data: T) {
 // School meta (theme + SEO) — called on bootstrap and after backend data load.
 // ---------------------------------------------------------------------------
 export function applySchoolMeta() {
-  document.title = `${SCHOOL.name} — ${SCHOOL.tagline}`;
+  document.title = `${SCHOOL.name} | Thaiba, Lalitpur`;
   document.querySelector('meta[name="description"]')?.setAttribute('content', SCHOOL.seoDescription);
   const root = document.documentElement;
   root.style.setProperty('--color-navy-950', SCHOOL.theme.navy950);

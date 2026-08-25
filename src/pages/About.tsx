@@ -1,6 +1,6 @@
 import "../styles/pages/About.css";
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight, Eye, Target } from 'lucide-react';
+import { CheckCircle, ArrowRight, Eye, Target, Quote } from 'lucide-react';
 import { SCHOOL, IMAGES, VALUES, TIMELINE } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
 import { useSchoolData } from '../hooks/useSchoolData';
@@ -91,61 +91,56 @@ export default function About() {
         </div>
       </section>
 
-      {/* Director Message */}
-      <section className="about__section-024">
-        <div className="about__div-025">
-          <div className="about__div-026">
-            <Reveal variant="clip" className="about__reveal-027">
-              <div className="about__div-028">
-                <div className="about__div-029">
-                  <img src={directorPhoto} alt={SCHOOL.leadershipName} className="about__img-030" loading="lazy" />
+      {/* Leadership notes */}
+      <section className="about-voices">
+        <div className="about-voices__inner">
+          <SectionTitle
+            badge="Leadership"
+            title="Notes from the Desk"
+            subtitle="Two voices, one purpose — a word from those who guide the school each day."
+          />
+
+          <div className="about-voices__grid">
+            <Reveal variant="slide-left">
+              <article className="about-voices__card about-voices__card--light">
+                <div className="about-voices__photo">
+                  <img src={directorPhoto} alt={SCHOOL.leadershipName} loading="lazy" />
+                  <div className="about-voices__person">
+                    <p className="about-voices__name">{SCHOOL.leadershipName}</p>
+                    <p className="about-voices__title">{SCHOOL.leadershipTitle}</p>
+                  </div>
                 </div>
-                <div className="about__div-031">
-                  <p className="about__p-032">{SCHOOL.leadershipName}</p>
-                  <p className="about__p-033">{SCHOOL.leadershipTitle}</p>
+                <div className="about-voices__body">
+                  <Quote className="about-voices__mark" aria-hidden />
+                  <p className="about-voices__role">From the Director</p>
+                  <blockquote className="about-voices__quote">
+                    {SCHOOL.leadershipMessage.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </blockquote>
                 </div>
-              </div>
+              </article>
             </Reveal>
 
-            <Reveal variant="slide-right" className="about__reveal-034" delay={200}>
-              <SectionTitle badge="From the Director" title="A Message of Welcome" align="left" />
-              <div className="about__div-035">
-                <p>Dear Parents and Students,</p>
-                {SCHOOL.leadershipMessage.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                <p className="about__p-036">
-                  Together, let us build a brighter future for our children.
-                </p>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Principal Message */}
-      <section className="about__section-069">
-        <div className="about__div-070">
-          <div className="about__div-071">
-            <Reveal variant="clip" className="about__reveal-072">
-              <div className="about__div-073">
-                <div className="about__div-074">
-                  <img src={principalPhoto} alt={SCHOOL.principalName} className="about__img-075" loading="lazy" />
+            <Reveal variant="slide-right" delay={160}>
+              <article className="about-voices__card about-voices__card--dark">
+                <div className="about-voices__photo about-voices__photo--principal">
+                  <img src={principalPhoto} alt={SCHOOL.principalName} loading="lazy" />
+                  <div className="about-voices__person">
+                    <p className="about-voices__name">{SCHOOL.principalName}</p>
+                    <p className="about-voices__title">{SCHOOL.principalTitle}</p>
+                  </div>
                 </div>
-                <div className="about__div-076">
-                  <p className="about__p-077">{SCHOOL.principalName}</p>
-                  <p className="about__p-078">{SCHOOL.principalTitle}</p>
+                <div className="about-voices__body">
+                  <Quote className="about-voices__mark" aria-hidden />
+                  <p className="about-voices__role">From the Principal</p>
+                  <blockquote className="about-voices__quote">
+                    {SCHOOL.principalMessage.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </blockquote>
                 </div>
-              </div>
-            </Reveal>
-
-            <Reveal variant="slide-right" className="about__reveal-079" delay={200}>
-              <SectionTitle badge="From the Principal" title="A Message of Welcome" align="left" />
-              <div className="about__div-080">
-                <p>Dear Parents and Students,</p>
-                {SCHOOL.principalMessage.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                <p className="about__p-081">
-                  Together, let us build a brighter future for our children.
-                </p>
-              </div>
+              </article>
             </Reveal>
           </div>
         </div>

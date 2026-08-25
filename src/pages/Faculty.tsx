@@ -38,8 +38,8 @@ export default function Faculty() {
           )}
 
           {(() => {
-            const leaders = FACULTY.filter((member) => member.level === 'principal');
-            const staff = FACULTY.filter((member) => member.level !== 'principal');
+            const leaders = FACULTY.filter((member) => member.level === 'principal' || member.level === 'director');
+            const staff = FACULTY.filter((member) => member.level !== 'principal' && member.level !== 'director');
 
             const renderGrid = (members: typeof FACULTY, centered = false) => (
               <div className={centered ? 'faculty__div-003 faculty__div-003--center' : 'faculty__div-003'}>
