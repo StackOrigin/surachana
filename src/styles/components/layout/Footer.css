@@ -25,7 +25,6 @@
 .footer__p-014 {
     margin-bottom: calc(var(--spacing) * 6);
   }
-.footer__strong-006,
 .footer__small-007 {
     display: block;
   }
@@ -133,17 +132,17 @@
   }
 .footer__footer-001,
 .footer__div-022 {
-    border-color: color-mix(in srgb, #000000 15%, transparent);
+    border-color: color-mix(in srgb, #ffffff 25%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, #000000 15%, transparent);
+      border-color: color-mix(in oklab, #ffffff 25%, transparent);
     }
   }
 .footer__link-009 {
-    border-color: var(--color-navy-950);
+    border-color: color-mix(in srgb, #ffffff 35%, transparent);
   }
 .footer__footer-001 {
-    background: #ffffff;
-    color: #000000;
+    background: linear-gradient(135deg, #2e5f88 0%, #2a4d72 100%);
+    color: var(--color-white);
   }
 .footer__span-005 {
     background-color: var(--color-white);
@@ -162,13 +161,8 @@
     padding-bottom: calc(var(--spacing) * 2);
   }
 .footer__span-005,
-.footer__strong-006,
 .footer__p-008 {
     font-family: var(--font-heading);
-  }
-.footer__strong-006 {
-    font-size: var(--text-2xl);
-    line-height: var(--site-leading, var(--text-2xl--line-height));
   }
 .footer__span-005 {
     width: calc(var(--spacing) * 14);
@@ -179,7 +173,6 @@
     color: var(--color-gold-300);
     font-size: var(--text-3xl);
     line-height: var(--site-leading, var(--text-3xl--line-height));
-    font-style: italic;
     border-radius: 9999px;
     overflow: hidden;
   }
@@ -189,14 +182,16 @@
     object-fit: contain;
     padding: 0.25rem;
   }
+.footer__school-name-img {
+    display: block;
+    height: calc(var(--spacing) * 10);
+    width: auto;
+    object-fit: contain;
+  }
 .footer__link-009,
 .footer__link-013 {
     font-size: var(--text-sm);
     line-height: var(--site-leading, var(--text-sm--line-height));
-  }
-.footer__strong-006 {
-    --site-leading: 1;
-    line-height: 1;
   }
 .footer__p-008 {
     --site-leading: var(--leading-tight);
@@ -214,31 +209,21 @@
 .footer__map-pin-017,
 .footer__phone-019,
 .footer__mail-021 {
-    color: rgba(0, 0, 0, 0.9);
+    color: rgba(255, 255, 255, 0.95);
   }
 .footer__div-022 {
-    color: rgba(0, 0, 0, 0.75);
+    color: rgba(255, 255, 255, 0.8);
   }
 .footer__small-007 {
-    color: rgba(0, 0, 0, 0.75);
+    color: rgba(255, 255, 255, 0.8);
   }
 .footer__link-013,
 .footer__ul-015,
 .footer__link-009 {
-    color: rgba(0, 0, 0, 0.92);
-  }
-.footer__strong-006 {
-    color: var(--color-navy-900);
-  }
-.footer__school-name {
-    color: var(--color-gold-400);
-    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.95);
   }
 .footer__footer-001 {
-    color: #000000;
-  }
-.footer__span-005 {
-    font-style: italic;
+    color: var(--color-white);
   }
 .footer__link-013 {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --site-gradient-from, --site-gradient-via, --site-gradient-to;
@@ -248,7 +233,7 @@
 .footer__link-013 {
   }
 .footer__link-023 {
-    color: var(--color-navy-700);
+    color: rgba(255, 255, 255, 0.9);
     display: inline-flex;
     align-items: center;
     flex-direction: row;
@@ -269,7 +254,7 @@
     font-weight: var(--font-weight-medium);
   }
 .footer__link-023:hover {
-    color: var(--color-navy-950);
+    color: var(--color-white);
   }
 .footer__div-022 {
     @media (width >= 40rem) {
@@ -317,5 +302,9 @@
 @media (max-width: 40rem) {
   .footer__div-002 {
     padding-block: calc(var(--spacing) * 5);
+  }
+
+  .footer__school-name-img {
+    height: calc(var(--spacing) * 7);
   }
 }

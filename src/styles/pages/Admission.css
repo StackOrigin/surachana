@@ -29,8 +29,8 @@
 
 .admission-visit__label {
   margin: 0 0 0.8rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 800;
   color: #67735d;
@@ -79,15 +79,15 @@
 }
 
 .admission-visit__text strong {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: #111918;
   letter-spacing: 0.08em;
 }
 
 .admission-visit__text strong:first-child {
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #5d695d;
   font-weight: 800;
@@ -129,8 +129,8 @@
 
 .admission-kicker {
   margin: 0 0 0.5rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 800;
   color: #67735d;
@@ -172,7 +172,7 @@
 }
 
 .admission-intro__stats span {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #46514d;
 }
 
@@ -233,7 +233,7 @@
 
 .admission-paper__title-wrap p {
   margin: 0.1rem 0 0;
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   letter-spacing: 0.05em;
   color: #1b2120;
 }
@@ -320,7 +320,7 @@
 .field {
   display: grid;
   gap: 0.2rem;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #171d1d;
   font-weight: 700;
 }
@@ -333,7 +333,7 @@
 }
 
 .field small {
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
@@ -404,7 +404,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -442,7 +442,7 @@
 }
 
 .notes {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   line-height: 1.5;
   color: #1a1d1d;
 }
@@ -455,7 +455,7 @@
   display: grid;
   justify-items: end;
   gap: 0.4rem;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #1a1d1d;
 }
 

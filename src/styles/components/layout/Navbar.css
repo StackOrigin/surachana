@@ -339,9 +339,6 @@
 .navbar__link-027 {
     text-transform: uppercase;
   }
-.navbar__span-013 {
-    font-style: italic;
-  }
 .navbar__header-002.navbar__header-002 {
     --site-shadow: 0 1px 0 var(--site-shadow-color, rgba(11,35,30,0.12));
     box-shadow: var(--site-inset-shadow), var(--site-inset-ring-shadow), var(--site-ring-offset-shadow), var(--site-ring-shadow), var(--site-shadow);

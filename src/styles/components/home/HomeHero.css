@@ -274,9 +274,6 @@
       color: color-mix(in oklab, var(--color-white) 45%, transparent);
     }
   }
-.home-hero__span-011 {
-    font-style: italic;
-  }
 .home-hero__div-003 {
     opacity: 25%;
   }

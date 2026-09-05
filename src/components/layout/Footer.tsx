@@ -3,6 +3,7 @@ import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { NAV_LINKS, SCHOOL } from '../../data/schoolData';
 import { useSchoolData } from '../../hooks/useSchoolData';
+import schoolNameImg from '../../assets/SchoolName.png';
 const nivakshaLogoSrc = import.meta.env.DEV
   ? '/schools/surachana/nivakshaLogo.jpeg'
   : './schools/surachana/nivakshaLogo.jpeg';
@@ -24,7 +25,12 @@ export default function Footer() {
                 <img src={schoolLogoSrc} alt="Surachana English School logo" className="footer__img-026" loading="lazy" />
               </span>
               <span>
-                <strong className="footer__strong-006"><span className="footer__school-name">SURACHANA</span> English School</strong>
+                <img
+                  src={schoolNameImg}
+                  alt={SCHOOL.name}
+                  className="footer__school-name-img"
+                  loading="lazy"
+                />
                 <small className="editorial-kicker footer__small-007">A bright, welcoming place to begin</small>
               </span>
             </Link>

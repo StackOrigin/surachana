@@ -49,9 +49,9 @@
     --container-4xl: 56rem;
     --container-6xl: 72rem;
     --container-7xl: 80rem;
-    --text-xs: 0.75rem;
+    --text-xs: 0.8125rem;
     --text-xs--line-height: calc(1 / 0.75);
-    --text-sm: 0.875rem;
+    --text-sm: 0.9375rem;
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-base: 1rem;
     --text-base--line-height: calc(1.5 / 1);
@@ -114,7 +114,8 @@
     --color-gold-800: #713e1a;
     --color-cream-50: #f7f4ec;
     --color-cream-100: #efeadf;
-    --font-heading: 'DM Serif Display', Georgia, serif;
+    --font-heading: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
   }
 }
 @layer base {
@@ -639,6 +640,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+}
 #root {
   width: 100%;
   overflow-x: clip;
@@ -649,9 +658,9 @@ body {
 }
 .editorial-kicker {
   font-family: var(--font-body);
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   line-height: 1.2;
   text-transform: uppercase;
 }

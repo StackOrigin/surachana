@@ -194,9 +194,6 @@
       color: color-mix(in oklab, var(--color-white) 20%, transparent);
     }
   }
-.campus-story__span-006 {
-    font-style: italic;
-  }
 .campus-story__img-023.campus-story__img-023 {
     opacity: 0%;
   }
