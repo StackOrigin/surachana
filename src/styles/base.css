@@ -796,3 +796,20 @@ a:active {
 .animate-pulse-soft {
   animation: pulse-soft 2s ease-in-out infinite;
 }
+
+/* Section anchors for header/footer dropdown links (wish-list IA). */
+.about__anchor {
+  display: block;
+  scroll-margin-top: 110px;
+}
+#story,
+#why,
+#curriculum,
+#day,
+#facilities,
+#apply,
+#fees,
+#faqs,
+#news {
+  scroll-margin-top: 110px;
+}

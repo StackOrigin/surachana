@@ -19,10 +19,13 @@ export default function Academics() {
         breadcrumb="Academics"
       />
 
+      <span id="curriculum" className="about__anchor" aria-hidden="true" />
       <AcademicJourney />
 
+      <span id="day" className="about__anchor" aria-hidden="true" />
+
       {/* Facilities */}
-      <section className="academics__section-001">
+      <section id="facilities" className="academics__section-001">
         <div className="academics__div-002">
           <SectionTitle
             badge="Facilities"

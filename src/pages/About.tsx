@@ -25,7 +25,7 @@ export default function About() {
       />
 
       {/* Introduction */}
-      <section className="about__section-001">
+      <section id="story" className="about__section-001">
         <div className="about__div-002">
           <div className="about__div-003">
             <Reveal variant="clip">
@@ -206,7 +206,8 @@ export default function About() {
       </section>
 
       {/* Why Parents Trust */}
-      <section className="about__section-059">
+      <section id="why" className="about__section-059">
+        <span id="stories" className="about__anchor" aria-hidden="true" />
         <div className="about__div-060">
           <div className="about__div-061" />
         </div>

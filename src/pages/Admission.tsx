@@ -960,7 +960,7 @@ export default function Admission() {
         breadcrumb="Admission"
       />
 
-      <section className="admission-intro">
+      <section className="admission-intro" id="fees">
         <div className="admission-intro__inner">
           <div className="admission-intro__content">
             <p className="admission-kicker">Admissions open</p>
@@ -988,7 +988,7 @@ export default function Admission() {
         </div>
       </section>
 
-      <section className="admission-application">
+      <section className="admission-application" id="apply">
         <div className="admission-paper">
           <header className="admission-paper__header">
             <div className="school-mark" aria-label="School emblem">
@@ -1029,7 +1029,7 @@ export default function Admission() {
         </div>
       </section>
 
-      <section className="admission-visit">
+      <section className="admission-visit" id="faqs">
         <div className="admission-visit__inner">
           <div className="admission-visit__copy">
             <p className="admission-visit__label">COME AND SEE FOR YOURSELF</p>
