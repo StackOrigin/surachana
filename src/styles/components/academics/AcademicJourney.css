@@ -204,9 +204,6 @@
 .academic-journey__button-011.academic-journey__button-011 {
     color: var(--color-white);
   }
-.academic-journey__span-006 {
-    font-style: italic;
-  }
 .academic-journey__span-009 {
     transition-property: all;
     transition-timing-function: var(--site-ease, var(--default-transition-timing-function));

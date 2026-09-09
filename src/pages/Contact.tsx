@@ -1,22 +1,30 @@
 import "../styles/pages/Contact.css";
+import "../styles/components/ui/SocialLinks.css";
 import { useEffect, useState } from 'react';
 import { MapPin, Phone, Mail, Clock, CheckCircle, Send } from 'lucide-react';
 import { SCHOOL, resolveMapUrl, submitInquiry } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
 import { useSchoolData } from '../hooks/useSchoolData';
+import { useLang } from '../i18n/lang';
 import PageHero from '../components/ui/PageHero';
 import SectionTitle from '../components/ui/SectionTitle';
 import Button from '../components/ui/Button';
 import Reveal from '../components/ui/Reveal';
+import SocialLinks from '../components/ui/SocialLinks';
 
 export default function Contact() {
   useScrollToTop();
   useSchoolData();
+  const { t } = useLang();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({ phone: '', email: '' });
-  const [mapEmbedUrl, setMapEmbedUrl] = useState(SCHOOL.mapUrl);
+  const [mapEmbedUrl, setMapEmbedUrl] = useState<string | null>(null);
+
+  const mapsSearchHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    SCHOOL.address || SCHOOL.locationLine || 'Thaiba, Lalitpur, Nepal',
+  )}`;
 
   useEffect(() => {
     let active = true;
@@ -220,39 +228,36 @@ export default function Contact() {
             <Reveal variant="slide-right" delay={200}>
               <div className="contact__div-033">
                 <div className="contact__div-034">
-                  <iframe
-                    src={mapEmbedUrl}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="School Location"
-                  />
+                  {mapEmbedUrl ? (
+                    <iframe
+                      src={mapEmbedUrl}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="School Location"
+                    />
+                  ) : (
+                    <a
+                      href={mapsSearchHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="contact__map-placeholder"
+                    >
+                      <MapPin className="contact__map-placeholder-icon" />
+                      <span className="contact__map-placeholder-title">Find us on the map</span>
+                      <span className="contact__map-placeholder-text">{SCHOOL.address || SCHOOL.locationLine}</span>
+                      <span className="contact__map-placeholder-link">Open in Google Maps</span>
+                    </a>
+                  )}
                 </div>
                 
                 {/* Social Links */}
                 <div className="contact__div-035">
-                  <h3 className="contact__h3-036">Follow Us</h3>
-                  <div className="contact__div-037">
-                    {[
-                      { name: "Facebook", href: SCHOOL.social.facebook },
-                      { name: "Instagram", href: SCHOOL.social.instagram },
-                      { name: "YouTube", href: SCHOOL.social.youtube },
-                      { name: "Twitter / X", href: SCHOOL.social.twitter },
-                    ].filter((social) => social.href).map((social) => (
-                      <a
-                        key={social.name}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="contact__a-038"
-                      >
-                        {social.name}
-                      </a>
-                    ))}
-                  </div>
+                  <h3 className="contact__h3-036">{t('Follow Us')}</h3>
+                  <SocialLinks variant="dark" />
                 </div>
               </div>
             </Reveal>

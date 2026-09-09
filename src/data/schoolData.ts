@@ -9,7 +9,7 @@ type SchoolDetails = {
   email: string;
   hours: string;
   mapUrl: string;
-  social: { facebook: string; instagram: string; youtube: string; twitter: string };
+  social: { facebook: string; instagram: string; youtube: string; twitter: string; tiktok: string };
   theme: { navy950: string; navy900: string; gold400: string; gold700: string; cream50: string; cream100: string };
   aboutTitle: string;
   aboutSubtitle: string;
@@ -107,6 +107,8 @@ const files = [
   'leadership.jpeg',
 ].map(asset);
 
+export const DEFAULT_MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3534.971299943971!2d85.3460562309989!3d27.62540551251034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb17323d019e41%3A0x2cd8e3c3126f497c!2sSuarchana%20English%20School%2C%20Thaiba!5e0!3m2!1sen!2snp!4v1785772276991!5m2!1sen!2snp';
+
 export const SCHOOL: SchoolDetails = {
   name: 'Surachana English School',
   shortName: 'Surachana',
@@ -118,12 +120,13 @@ export const SCHOOL: SchoolDetails = {
   phoneAlt: '01-5560537',
   email: 'surachana.eschool@gmail.com',
   hours: 'Sunday – Friday · School hours',
-  mapUrl: 'https://www.google.com/maps?q=Thaiba%2C%20Lalitpur%2C%20Nepal&output=embed',
+  mapUrl: DEFAULT_MAP_EMBED_URL,
   social: {
     facebook: 'https://www.facebook.com/people/Surachana-English-School/61556496530762/',
     instagram: '',
     youtube: '',
     twitter: '',
+    tiktok: 'https://www.tiktok.com/@surachana.eschool',
   },
   theme: {
     navy950: '#081e2c',
@@ -196,6 +199,80 @@ export const NAV_LINKS = [
   { label: 'Contact', path: '/contact' },
 ];
 
+export type NavChild = { label: string; path: string; hash?: string };
+export type NavGroup = { label: string; path: string; children?: NavChild[] };
+
+/**
+ * Dropdown IA for the header. Children point at section anchors on existing
+ * pages first so nothing 404s; they can graduate to dedicated routes later.
+ * e.g. About#why -> "Why Surachana" section.
+ */
+export const NAV_GROUPS: NavGroup[] = [
+  { label: 'Home', path: '/' },
+  {
+    label: 'About',
+    path: '/about',
+    children: [
+      { label: 'Why Surachana', path: '/about', hash: 'why' },
+      { label: 'Our Story', path: '/about', hash: 'story' },
+      { label: 'Faculty', path: '/faculty' },
+    ],
+  },
+  {
+    label: 'Academics',
+    path: '/academics',
+    children: [
+      { label: 'Curriculum Overview', path: '/academics', hash: 'curriculum' },
+      { label: 'A Day at Surachana', path: '/academics', hash: 'day' },
+    ],
+  },
+  {
+    label: 'Admissions',
+    path: '/admission',
+    children: [
+      { label: 'Apply Now', path: '/admission', hash: 'apply' },
+      { label: 'Fees & Scholarships', path: '/admission', hash: 'fees' },
+      { label: 'FAQs', path: '/admission', hash: 'faqs' },
+    ],
+  },
+  {
+    label: 'School Life',
+    path: '/gallery',
+    children: [
+      { label: 'Facilities', path: '/academics', hash: 'facilities' },
+      { label: 'Gallery', path: '/gallery' },
+      { label: 'News & Events', path: '/gallery', hash: 'news' },
+      { label: 'Success Stories', path: '/about', hash: 'stories' },
+    ],
+  },
+  { label: 'Contact', path: '/contact' },
+];
+
+export const FOOTER_GROUPS: { title: string; links: { label: string; path: string; hash?: string }[] }[] = [
+  {
+    title: 'Explore',
+    links: [
+      { label: 'Home', path: '/' },
+      { label: 'About', path: '/about' },
+      { label: 'Academics', path: '/academics' },
+      { label: 'Admissions', path: '/admission' },
+      { label: 'Gallery', path: '/gallery' },
+      { label: 'FAQs', path: '/admission', hash: 'faqs' },
+    ],
+  },
+  {
+    title: 'School',
+    links: [
+      { label: 'Why Surachana', path: '/about', hash: 'why' },
+      { label: 'Our Story', path: '/about', hash: 'story' },
+      { label: 'Facilities', path: '/academics', hash: 'facilities' },
+      { label: 'News & Events', path: '/gallery', hash: 'news' },
+      { label: 'Faculty', path: '/faculty' },
+      { label: 'Success Stories', path: '/about', hash: 'stories' },
+    ],
+  },
+];
+
 export const ACHIEVEMENTS: Achievement[] = [
   { number: 'Light', label: 'Guiding Belief', icon: 'trophy' },
   { number: 'English', label: 'Learning Environment', icon: 'target' },
@@ -228,9 +305,57 @@ export const WHY_CHOOSE: ValueItem[] = [
 ];
 
 export const GALLERY_CATEGORIES = ['All', 'Parents Day', 'Korean Activity', 'Sports', 'Educational Tour', 'Extra Curriculum', 'Health Checkup'];
-export const GALLERY_ITEMS: GalleryItem[] = [];
+const FALLBACK_GALLERY_CATEGORIES = ['School Life', 'Learning', 'Activities', 'Community'];
+const FALLBACK_GALLERY_ITEMS: GalleryItem[] = [...files, ...files.slice(0, 6)].map((src, index) => ({
+  src,
+  alt: `Surachana school moment ${index + 1}`,
+  category: FALLBACK_GALLERY_CATEGORIES[index % FALLBACK_GALLERY_CATEGORIES.length],
+}));
+export const GALLERY_ITEMS: GalleryItem[] = [...FALLBACK_GALLERY_ITEMS];
 
-export const FACULTY: FacultyMember[] = [];
+export const FACULTY: FacultyMember[] = [
+  {
+    name: 'School Leadership',
+    position: 'Principal',
+    department: 'Surachana English School',
+    image: files[1],
+    bio: 'Guiding the school community with shared purpose and care.',
+    level: 'principal',
+  },
+  {
+    name: 'Early Years Team',
+    position: 'Junior Level Teachers',
+    department: 'Early Years',
+    image: files[2],
+    bio: 'Helping young learners feel secure, curious, and ready to take part.',
+    level: 'junior',
+  },
+  {
+    name: 'Primary Team',
+    position: 'Class Teachers',
+    department: 'Primary Level',
+    image: IMAGES.primaryTeam,
+    bio: 'Building strong foundations through explanation, practice, and encouragement.',
+    level: 'other',
+  },
+  {
+    name: 'Activities Team',
+    position: 'Co-curricular Mentors',
+    department: 'Student Life',
+    image: IMAGES.activitiesTeam,
+    bio: 'Creating opportunities for expression, teamwork, movement, and confidence.',
+    level: 'other',
+  },
+  {
+    name: 'Student Support',
+    position: 'School Community',
+    department: 'Pastoral Care',
+    image: IMAGES.studentSupport,
+    bio: 'Helping students feel heard, connected, and ready to learn.',
+    level: 'other',
+  },
+];
+const FALLBACK_FACULTY: FacultyMember[] = FACULTY.map((member) => ({ ...member }));
 
 
 export const ADMISSION_STEPS: AdmissionStep[] = [
@@ -388,7 +513,14 @@ export async function submitInquiry(input: {
 }
 
 function applySiteData(data: SiteData) {
-  if (data.school) Object.assign(SCHOOL, data.school);
+  if (data.school) {
+    Object.assign(SCHOOL, data.school);
+    // Keep only Google Maps values in state — a free-text CMS field can
+    // otherwise point the contact-page iframe at the school's own website.
+    if (!isGoogleMapsUrl(extractIframeSource(SCHOOL.mapUrl))) {
+      SCHOOL.mapUrl = DEFAULT_MAP_EMBED_URL;
+    }
+  }
   replaceArray(ACHIEVEMENTS, data.achievements);
   replaceArray(PROGRAMS, data.programs);
   replaceArray(VALUES, data.values);
@@ -479,11 +611,20 @@ function applyAlbums(albums: BackendAlbum[]) {
 
   if (galleryItems.length) {
     replaceGalleryItems(galleryItems);
+  } else if (!GALLERY_ITEMS.length) {
+    replaceArray(GALLERY_ITEMS, FALLBACK_GALLERY_ITEMS.map((item) => ({ ...item })));
+    replaceArray(GALLERY_CATEGORIES, ['All', ...Array.from(new Set(FALLBACK_GALLERY_ITEMS.map((item) => item.category)))]);
   }
 }
 
 function replaceGalleryItems(items: GalleryItem[] | undefined) {
-  if (!items) return;
+  if (!items || !items.length) {
+    // Empty backend payload must not wipe the bundled gallery fallback.
+    if (!GALLERY_ITEMS.length) {
+      replaceArray(GALLERY_ITEMS, FALLBACK_GALLERY_ITEMS.map((item) => ({ ...item })));
+    }
+    return;
+  }
 
   const currentYear = new Date().getFullYear();
   const uniqueItems = Array.from(
@@ -526,7 +667,11 @@ function mapStaffMember(member: BackendStaffMember): FacultyMember {
 }
 
 function applyFacultyRecords(staff: BackendStaffMember[], source: 'site-data' | 'staff' = 'staff') {
-  if (!staff.length) return;
+  if (!staff.length) {
+    // Empty backend payload must not wipe the bundled faculty fallback.
+    if (!FACULTY.length) replaceArray(FACULTY, FALLBACK_FACULTY.map((member) => ({ ...member })));
+    return;
+  }
   if (facultySource === 'site-data' && source !== 'site-data') return;
   replaceArray(FACULTY, staff.map(mapStaffMember));
   facultySource = source;
@@ -552,8 +697,12 @@ const GOOGLE_MAPS_SHORT_DOMAIN = 'maps.app.goo.gl';
 
 function isGoogleMapsUrl(url: string) {
   try {
-    const host = new URL(url).hostname;
-    return host === GOOGLE_MAPS_SHORT_DOMAIN || host.endsWith(GOOGLE_MAPS_DOMAIN);
+    const host = new URL(url).hostname.toLowerCase();
+    return (
+      host === GOOGLE_MAPS_SHORT_DOMAIN ||
+      host === GOOGLE_MAPS_DOMAIN ||
+      host.endsWith(`.${GOOGLE_MAPS_DOMAIN}`)
+    );
   } catch {
     return false;
   }
@@ -594,7 +743,10 @@ function toEmbedUrl(rawUrl: string) {
  */
 export async function resolveMapUrl(mapUrl: string, timeoutMs = 6000): Promise<string> {
   const source = extractIframeSource(mapUrl);
-  if (!source) return source;
+  // The CMS map field is free text — anything that is not a Google Maps
+  // link (e.g. the school's own website address) must never reach the
+  // iframe; fall back to the bundled embed instead.
+  if (!source || !isGoogleMapsUrl(source)) return DEFAULT_MAP_EMBED_URL;
 
   // Google Maps' generated iframe links already include the required embed
   // parameters (notably the long `pb` value), so use them without rewriting.
@@ -637,7 +789,8 @@ function normalizeAssetPath(src: string) {
 }
 
 function replaceArray<T>(target: T[], source: T[] | undefined) {
-  if (source) target.splice(0, target.length, ...source);
+  if (!source || !source.length) return;
+  target.splice(0, target.length, ...source);
 }
 
 async function fetchWithTimeout(input: RequestInfo | URL, init?: RequestInit, timeoutMs = 10000) {

@@ -1,4 +1,5 @@
 import "../styles/pages/Gallery.css";
+import "../styles/components/ui/ShareButton.css";
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
@@ -7,6 +8,7 @@ import { useScrollToTop } from '../hooks/useScrollAnimation';
 import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import Reveal from '../components/ui/Reveal';
+import ShareButton from '../components/ui/ShareButton';
 import { cn } from '../utils/cn';
 
 const ITEMS_PER_PAGE = 12;
@@ -113,6 +115,7 @@ export default function Gallery() {
         breadcrumb="Gallery"
       />
 
+      <span id="news" className="about__anchor" aria-hidden="true" />
       <section className="gallery__section-018">
         <div className="gallery__div-019">
           <div className="gallery__div-020">
@@ -245,6 +248,7 @@ export default function Gallery() {
               <div>
                 <span className="editorial-kicker gallery__span-051">{selected.category}</span>
                 <p className="gallery__p-052">{captions[selectedIndex! % captions.length] || selected.alt}</p>
+                <ShareButton title={selected.alt} text={`${selected.alt} — ${SCHOOL.name}`} className="gallery__share" />
               </div>
               <span className="editorial-kicker gallery__span-053">
                 {String(selectedIndex! + 1).padStart(2, '0')} / {String(GALLERY_ITEMS.length).padStart(2, '0')}
