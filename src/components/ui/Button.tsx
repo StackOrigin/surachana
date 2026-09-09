@@ -2,7 +2,7 @@ import "../../styles/components/ui/Button.css";
 import { cn } from '../../utils/cn';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | "button__variant-001" | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
   href?: string;
@@ -11,7 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export default function Button({ variant = 'primary', size = 'md', children, className, href, ...props }: ButtonProps) {
   const base = "button__variant-002";
   
-  const variants = {
+  const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
     primary: "button__variant-003",
     secondary: "button__variant-004",
     outline: "button__variant-005",

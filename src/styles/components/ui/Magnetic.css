@@ -1,10 +1,6 @@
-.magnetic__variant-001.magnetic__variant-001.magnetic__variant-001,
-.magnetic__variant-002.magnetic__variant-002.magnetic__variant-002 {
-    transform: var(--site-rotate-x,) var(--site-rotate-y,) var(--site-rotate-z,) var(--site-skew-x,) var(--site-skew-y,);
-  }
-
 .magnetic {
   display: inline-flex;
+  transform: var(--magnetic-transform, translate3d(0, 0, 0));
   transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }

@@ -3,16 +3,19 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowDownRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { IMAGES, SCHOOL } from '../../data/schoolData';
+import { useSchoolData } from '../../hooks/useSchoolData';
 import Magnetic from '../ui/Magnetic';
 import { cn } from '../../utils/cn';
 
 const scenes = [
-  { image: IMAGES.hero1, label: 'School life', note: 'Questions become conversations.' },
-  { image: IMAGES.cultural1, label: 'The stage', note: 'Confidence finds its own voice.' },
-  { image: IMAGES.sports1, label: 'The field', note: 'Belonging is built together.' },
+  { image: IMAGES.heroPhoto1, label: 'School life', note: 'Questions become conversations.' },
+  { image: IMAGES.heroPhoto2, label: 'The stage', note: 'Confidence finds its own voice.' },
+  { image: IMAGES.heroPhoto3, label: 'The field', note: 'Belonging is built together.' },
+  { image: IMAGES.heroPhoto4, label: 'The classroom', note: 'Learning comes to life.' },
 ];
 
 export default function HomeHero() {
+  useSchoolData();
   const sectionRef = useRef<HTMLElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
   const [activeScene, setActiveScene] = useState(0);
@@ -41,29 +44,21 @@ export default function HomeHero() {
 
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener("home-hero__variant-001", onScroll);
+    window.addEventListener('resize', onScroll, { passive: true });
     return () => {
       if (frame) cancelAnimationFrame(frame);
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener("home-hero__variant-002", onScroll);
+      window.removeEventListener('resize', onScroll);
     };
   }, []);
 
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const normalizedX = Math.min(0.999, Math.max(0, (event.clientX - rect.left) / rect.width));
-    const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
-    const nextScene = Math.floor(normalizedX * scenes.length);
-    if (nextScene !== activeScene) setActiveScene(nextScene);
-    visualRef.current?.style.setProperty('--scene-x', `${(normalizedX - 0.5) * 18}px`);
-    visualRef.current?.style.setProperty('--scene-y', `${normalizedY * 12}px`);
-  };
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveScene((current) => (current + 1) % scenes.length);
+    }, 2500);
 
-  const resetPointer = () => {
-    visualRef.current?.style.setProperty('--scene-x', '0px');
-    visualRef.current?.style.setProperty('--scene-y', '0px');
-  };
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
     <section
@@ -82,10 +77,8 @@ export default function HomeHero() {
         <div className="editorial-grid home-hero__div-003" />
 
         <div
-          ref={visualRef}
           className="book-visual"
-          onPointerMove={handlePointerMove}
-          onPointerLeave={resetPointer}
+          ref={visualRef}
         >
           {scenes.map((scene, index) => (
             <img
@@ -121,6 +114,7 @@ export default function HomeHero() {
 
         <div className="book-details home-hero__div-013">
           <div>
+            <span className="editorial-kicker home-hero__span-023">{SCHOOL.shortName} · School life</span>
             <p className="editorial-kicker home-hero__p-014">{scenes[activeScene].label}</p>
             <p className="home-hero__p-015">{scenes[activeScene].note}</p>
           </div>

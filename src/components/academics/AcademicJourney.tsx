@@ -2,15 +2,21 @@ import "../../styles/components/academics/AcademicJourney.css";
 import { useState } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { IMAGES, PROGRAMS } from '../../data/schoolData';
+import { useSchoolData } from '../../hooks/useSchoolData';
 import Reveal from '../ui/Reveal';
-import PointerDepth from '../ui/PointerDepth';
 import { cn } from '../../utils/cn';
 
-const images = [IMAGES.drawing, IMAGES.hero2, IMAGES.students2, IMAGES.students1];
+const images = [IMAGES.earlyYears, IMAGES.primaryYears, IMAGES.lowerSecondaryAcademics];
 
 export default function AcademicJourney() {
+  useSchoolData();
   const [active, setActive] = useState(0);
-  const program = PROGRAMS[active];
+  const programs = PROGRAMS.filter((program) => {
+    const title = program.title.trim().toLowerCase();
+    return title !== 'secondary' && title !== 'secondary level';
+  });
+  const selectedIndex = Math.min(active, Math.max(programs.length - 1, 0));
+  const program = programs[selectedIndex];
 
   return (
     <section className="academic-journey__section-001">
@@ -27,9 +33,9 @@ export default function AcademicJourney() {
           <div className="academic-journey__div-008">
             <span
               className="academic-journey__span-009"
-              style={{ height: '25%', transform: `translateY(${active * 100}%)` }}
+              style={{ height: `${100 / programs.length}%`, transform: `translateY(${selectedIndex * 100}%)` }}
             />
-            {PROGRAMS.map((item, index) => (
+            {programs.map((item, index) => (
               <button
                 key={item.title}
                 type="button"
@@ -37,9 +43,9 @@ export default function AcademicJourney() {
                 onPointerEnter={() => setActive(index)}
                 className={cn(
                   "academic-journey__button-010",
-                  active === index ? "academic-journey__button-011" : "academic-journey__button-012",
+                  selectedIndex === index ? "academic-journey__button-011" : "academic-journey__button-012",
                 )}
-                aria-pressed={active === index}
+                aria-pressed={selectedIndex === index}
               >
                 <span className="editorial-kicker academic-journey__span-013">{String(index + 1).padStart(2, '0')} · {item.ages}</span>
                 <strong className="academic-journey__strong-014">{item.title}</strong>
@@ -47,12 +53,12 @@ export default function AcademicJourney() {
             ))}
           </div>
 
-          <div key={active} className="journey-panel academic-journey__div-015">
-            <PointerDepth className="academic-journey__pointer-depth-016">
+          <div key={selectedIndex} className="journey-panel academic-journey__div-015">
+            <div className="academic-journey__pointer-depth-016">
               <div className="academic-journey__div-017">
-                <img src={images[active]} alt={program.title} className="cinematic-image academic-journey__img-018" />
+                <img src={images[selectedIndex]} alt={`${program.title} at ${program.ages.toLowerCase()}`} className="cinematic-image academic-journey__img-018" loading="lazy" />
               </div>
-            </PointerDepth>
+            </div>
             <div className="academic-journey__div-019">
               <div>
                 <span className="editorial-kicker academic-journey__span-020">{program.ages}</span>

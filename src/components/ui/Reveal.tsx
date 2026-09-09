@@ -31,7 +31,7 @@ export default function Reveal({
   if (variant === 'clip') {
     return (
       <div ref={ref} className={className} style={style}>
-        <div className="clip-reveal-auto">
+        <div className={cn('clip-reveal', isVisible && 'is-visible')}>
           {children}
         </div>
       </div>

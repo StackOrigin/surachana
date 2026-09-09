@@ -1,16 +1,20 @@
 import "../styles/pages/About.css";
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight, Eye, Target } from 'lucide-react';
+import { CheckCircle, ArrowRight, Eye, Target, Quote } from 'lucide-react';
 import { SCHOOL, IMAGES, VALUES, TIMELINE } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import SectionTitle from '../components/ui/SectionTitle';
 import Button from '../components/ui/Button';
 import Reveal from '../components/ui/Reveal';
 import { cn } from '../utils/cn';
+import directorPhoto from '../assets/director.png';
+import principalPhoto from '../assets/director.png';
 
 export default function About() {
   useScrollToTop();
+  useSchoolData();
 
   return (
     <main>
@@ -21,16 +25,16 @@ export default function About() {
       />
 
       {/* Introduction */}
-      <section className="about__section-001">
+      <section id="story" className="about__section-001">
         <div className="about__div-002">
           <div className="about__div-003">
             <Reveal variant="clip">
               <div className="about__div-004">
                 <div className="about__div-005">
-                  <img src={IMAGES.building} alt="School building" className="about__img-006" loading="lazy" />
+                  <img src={IMAGES.about1} alt="School building" className="about__img-006" loading="lazy" />
                 </div>
                 <div className="about__div-007">
-                  <img src={IMAGES.building2} alt="Campus" className="about__img-008" />
+                  <img src={IMAGES.about2} alt={`${SCHOOL.name} campus`} className="about__img-008" loading="lazy" />
                 </div>
               </div>
             </Reveal>
@@ -67,7 +71,7 @@ export default function About() {
                 </div>
                 <h3 className="about__h3-017">Our Mission</h3>
                 <p className="about__p-018">
-                  To provide a nurturing and stimulating learning environment that empowers every student to achieve academic excellence, develop strong character, and become a responsible global citizen equipped with the skills and values needed for the 21st century.
+                  To provide a nurturing and stimulating learning environment that empowers every student to achieve academic excellence, develop strong character, and become a responsible global citizen.
                 </p>
               </div>
             </Reveal>
@@ -79,7 +83,7 @@ export default function About() {
                 </div>
                 <h3 className="about__h3-022">Our Vision</h3>
                 <p className="about__p-023">
-                  To be recognized as a leading institution of academic and personal excellence in Nepal — a school where innovation meets tradition, where every student is inspired to dream big, and where the foundation for lifelong learning and leadership is firmly established.
+                  To be recognized as a leading institution of academic and personal excellence in Nepal — a school where innovation meets tradition.
                 </p>
               </div>
             </Reveal>
@@ -87,31 +91,56 @@ export default function About() {
         </div>
       </section>
 
-      {/* Principal Message */}
-      <section className="about__section-024">
-        <div className="about__div-025">
-          <div className="about__div-026">
-            <Reveal variant="clip" className="about__reveal-027">
-              <div className="about__div-028">
-                <div className="about__div-029">
-                  <img src={IMAGES.principal} alt="Principal" className="about__img-030" loading="lazy" />
+      {/* Leadership notes */}
+      <section className="about-voices">
+        <div className="about-voices__inner">
+          <SectionTitle
+            badge="Leadership"
+            title="Notes from the Desk"
+            subtitle="Two voices, one purpose — a word from those who guide the school each day."
+          />
+
+          <div className="about-voices__grid">
+            <Reveal variant="slide-left">
+              <article className="about-voices__card about-voices__card--light">
+                <div className="about-voices__photo">
+                  <img src={directorPhoto} alt={SCHOOL.leadershipName} loading="lazy" />
+                  <div className="about-voices__person">
+                    <p className="about-voices__name">{SCHOOL.leadershipName}</p>
+                    <p className="about-voices__title">{SCHOOL.leadershipTitle}</p>
+                  </div>
                 </div>
-                <div className="about__div-031">
-                  <p className="about__p-032">{SCHOOL.leadershipName}</p>
-                  <p className="about__p-033">{SCHOOL.leadershipTitle}</p>
+                <div className="about-voices__body">
+                  <Quote className="about-voices__mark" aria-hidden />
+                  <p className="about-voices__role">From the Director</p>
+                  <blockquote className="about-voices__quote">
+                    {SCHOOL.leadershipMessage.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </blockquote>
                 </div>
-              </div>
+              </article>
             </Reveal>
 
-            <Reveal variant="slide-right" className="about__reveal-034" delay={200}>
-              <SectionTitle badge="From the Principal" title="A Message of Welcome" align="left" />
-              <div className="about__div-035">
-                <p>Dear Parents and Students,</p>
-                {SCHOOL.leadershipMessage.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                <p className="about__p-036">
-                  Together, let us build a brighter future for our children.
-                </p>
-              </div>
+            <Reveal variant="slide-right" delay={160}>
+              <article className="about-voices__card about-voices__card--dark">
+                <div className="about-voices__photo about-voices__photo--principal">
+                  <img src={principalPhoto} alt={SCHOOL.principalName} loading="lazy" />
+                  <div className="about-voices__person">
+                    <p className="about-voices__name">{SCHOOL.principalName}</p>
+                    <p className="about-voices__title">{SCHOOL.principalTitle}</p>
+                  </div>
+                </div>
+                <div className="about-voices__body">
+                  <Quote className="about-voices__mark" aria-hidden />
+                  <p className="about-voices__role">From the Principal</p>
+                  <blockquote className="about-voices__quote">
+                    {SCHOOL.principalMessage.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </blockquote>
+                </div>
+              </article>
             </Reveal>
           </div>
         </div>
@@ -158,10 +187,8 @@ export default function About() {
                     "about__div-049",
                     i % 2 === 0 ? "about__div-050" : "about__div-051"
                   )}>
-                    {/* Dot */}
                     <div className="about__div-052" />
                     
-                    {/* Content */}
                     <div className={cn(
                       "about__div-053",
                       i % 2 === 0 ? "about__div-054" : "about__div-055"
@@ -179,7 +206,8 @@ export default function About() {
       </section>
 
       {/* Why Parents Trust */}
-      <section className="about__section-059">
+      <section id="why" className="about__section-059">
+        <span id="stories" className="about__anchor" aria-hidden="true" />
         <div className="about__div-060">
           <div className="about__div-061" />
         </div>
@@ -192,8 +220,8 @@ export default function About() {
           <Reveal variant="scale">
             <div className="about__div-063">
               {[
-                "A learning journey from early years to secondary level",
-                "Steady preparation for the SEE pathway",
+                "A learning journey from early years through lower secondary",
+                "Steady preparation for the next academic step",
                 "Teachers who value progress and participation",
                 "Direct communication with families",
                 "A school community rooted in its local area",

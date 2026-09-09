@@ -1,8 +1,10 @@
 import "../styles/pages/Faculty.css";
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { FACULTY, SCHOOL } from '../data/schoolData';
+import { FACULTY, SCHOOL, loadFaculty } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import SectionTitle from '../components/ui/SectionTitle';
 import Button from '../components/ui/Button';
@@ -10,6 +12,12 @@ import Reveal from '../components/ui/Reveal';
 
 export default function Faculty() {
   useScrollToTop();
+  useSchoolData();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadFaculty().finally(() => setLoading(false));
+  }, []);
 
   return (
     <main>
@@ -21,37 +29,76 @@ export default function Faculty() {
 
       <section className="faculty__section-001">
         <div className="faculty__div-002">
-          <SectionTitle
-            badge="Our Team"
-            title="Experienced & Passionate Educators"
-            subtitle="Meet the teaching teams who shape learning, participation, and student wellbeing across the school."
-          />
+          
 
-          <div className="faculty__div-003">
-            {FACULTY.map((member, i) => (
-              <Reveal key={i} variant={i % 2 === 0 ? 'slide-left' : 'slide-right'} delay={i * 70} className={i % 3 === 0 ? "faculty__reveal-004" : "faculty__reveal-005"}>
-                <div className="tactile faculty__div-006">
-                  <div className="faculty__div-007">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="faculty__img-008"
-                      loading="lazy"
-                    />
-                    <div className="faculty__div-009" />
-                  </div>
-                  <div className="faculty__div-010">
-                    <div className="faculty__div-011">
-                      <h3 className="faculty__h3-012">{member.name}</h3>
-                      <p className="faculty__p-013">{member.position}</p>
-                      <p className="faculty__p-014">{member.department}</p>
-                      <p className="faculty__p-015">{member.bio}</p>
+          {loading && FACULTY.length === 0 && (
+            <p style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-navy-900, #123e55)' }}>
+              Loading faculty…
+            </p>
+          )}
+
+          {(() => {
+            const leaders = FACULTY.filter((member) => member.level === 'principal' || member.level === 'director');
+            const staff = FACULTY.filter((member) => member.level !== 'principal' && member.level !== 'director');
+
+            const renderGrid = (members: typeof FACULTY, centered = false) => (
+              <div className={centered ? 'faculty__div-003 faculty__div-003--center' : 'faculty__div-003'}>
+                {members.map((member, i) => (
+                  <Reveal
+                    key={`${member.name}-${i}`}
+                    variant={i % 2 === 0 ? 'slide-left' : 'slide-right'}
+                    delay={i * 70}
+                    className={i % 3 === 0 ? 'faculty__reveal-004' : 'faculty__reveal-005'}
+                  >
+                    <div className="tactile faculty__div-006">
+                      {member.image && (
+                        <div className="faculty__div-007">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="faculty__img-008"
+                            loading="lazy"
+                          />
+                          <div className="faculty__div-009" />
+                        </div>
+                      )}
+                      <div className="faculty__div-010">
+                        <div className="faculty__div-011">
+                          <h3 className="faculty__h3-012">{member.name}</h3>
+                          <p className="faculty__p-013">{member.position}</p>
+                          <p className="faculty__p-014">{member.department}</p>
+                          <p className="faculty__p-015">{member.bio}</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+                  </Reveal>
+                ))}
+              </div>
+            );
+
+            return (
+              <>
+                <section>
+                  <SectionTitle
+                    badge="Principal"
+                    title="School Leader"
+                    subtitle="Guidance, direction, and care at the heart of Surachana."
+                  />
+                  {leaders.length ? renderGrid(leaders, true) : null}
+                </section>
+
+                <section>
+                  <SectionTitle
+                    badge="Our Team"
+                    title="Faculty & Staff"
+                    subtitle="Meet the teachers and staff who shape learning, participation, and student wellbeing across the school."
+                  />
+                  {staff.length ? renderGrid(staff) : null}
+                </section>
+              </>
+            );
+          })()}
+
         </div>
       </section>
 

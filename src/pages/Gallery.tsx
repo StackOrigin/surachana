@@ -1,30 +1,17 @@
 import "../styles/pages/Gallery.css";
-import { useEffect, useState } from 'react';
-import { ArrowUpRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { GALLERY_CATEGORIES, GALLERY_ITEMS, SCHOOL } from '../data/schoolData';
+import "../styles/components/ui/ShareButton.css";
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { GALLERY_CATEGORIES, GALLERY_ITEMS, SCHOOL, loadGallery } from '../data/schoolData';
 import { useScrollToTop } from '../hooks/useScrollAnimation';
+import { useSchoolData } from '../hooks/useSchoolData';
 import PageHero from '../components/ui/PageHero';
 import Reveal from '../components/ui/Reveal';
+import ShareButton from '../components/ui/ShareButton';
 import { cn } from '../utils/cn';
 
-const compositions = [
-  "gallery__variant-001",
-  "gallery__variant-002",
-  "gallery__variant-003",
-  "gallery__variant-004",
-  "gallery__variant-005",
-  "gallery__variant-006",
-  "gallery__variant-007",
-  "gallery__variant-008",
-  "gallery__variant-009",
-  "gallery__variant-010",
-  "gallery__variant-011",
-  "gallery__variant-012",
-  "gallery__variant-013",
-  "gallery__variant-014",
-  "gallery__variant-015",
-  "gallery__variant-016",
-];
+const ITEMS_PER_PAGE = 12;
 
 const captions = [
   'A question becomes a conversation.',
@@ -47,12 +34,24 @@ const captions = [
 
 export default function Gallery() {
   useScrollToTop();
+  useSchoolData();
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [page, setPage] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    loadGallery().finally(() => setLoading(false));
+  }, []);
 
   const filtered = GALLERY_ITEMS
     .map((item, originalIndex) => ({ ...item, originalIndex }))
     .filter((item) => activeCategory === 'All' || item.category === activeCategory);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+  const currentPage = Math.min(page, totalPages);
+  const pagedItems = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
   const visibleIndexes = filtered.map((item) => item.originalIndex);
 
   const moveSelection = (direction: number) => {
@@ -69,15 +68,42 @@ export default function Gallery() {
       if (event.key === 'Escape') setSelectedIndex(null);
       if (event.key === 'ArrowLeft') moveSelection(-1);
       if (event.key === 'ArrowRight') moveSelection(1);
+      if (event.key === 'Tab') {
+        const controls = dialogRef.current?.querySelectorAll<HTMLElement>('button, [href], [tabindex]:not([tabindex="-1"])');
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
 
-    document.body.style.overflow = "gallery__variant-017";
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [selectedIndex, activeCategory]);
+
+  useEffect(() => {
+    if (selectedIndex === null) lastTriggerRef.current?.focus();
+  }, [selectedIndex]);
+
+  useEffect(() => {
+    setPage(1);
+    setSelectedIndex(null);
+  }, [activeCategory]);
+
+  useEffect(() => {
+    setPage((current) => Math.min(current, totalPages));
+  }, [totalPages]);
 
   const selected = selectedIndex === null ? null : GALLERY_ITEMS[selectedIndex];
 
@@ -89,6 +115,7 @@ export default function Gallery() {
         breadcrumb="Gallery"
       />
 
+      <span id="news" className="about__anchor" aria-hidden="true" />
       <section className="gallery__section-018">
         <div className="gallery__div-019">
           <div className="gallery__div-020">
@@ -126,15 +153,15 @@ export default function Gallery() {
           </div>
 
           <div key={activeCategory} className="gallery-enter gallery__div-030">
-            {filtered.map((item, index) => (
+            {pagedItems.map((item) => (
               <button
                 key={`${item.src}-${item.originalIndex}`}
                 type="button"
-                onClick={() => setSelectedIndex(item.originalIndex)}
-                className={cn(
-                  "gallery__button-031",
-                  activeCategory === 'All' ? compositions[index] : "gallery__button-032",
-                )}
+                onClick={(event) => {
+                  lastTriggerRef.current = event.currentTarget;
+                  setSelectedIndex(item.originalIndex);
+                }}
+                className="gallery__button-031"
                 aria-label={`Open photo: ${item.alt}`}
               >
                 <img
@@ -143,30 +170,45 @@ export default function Gallery() {
                   className="gallery__img-033"
                   loading="lazy"
                 />
-                <div className="gallery__div-034" />
-                <div className="gallery__div-035">
-                  <span className="editorial-kicker gallery__span-036">{item.category}</span>
-                  <p className="gallery__p-037">
-                    {captions[item.originalIndex]}
-                  </p>
-                </div>
-                <span className="gallery__span-038">
-                  <ArrowUpRight className="gallery__arrow-up-right-039" />
-                </span>
               </button>
             ))}
           </div>
 
           {filtered.length === 0 && (
             <p className="gallery__p-040">
-              No photographs in this chapter yet.
+              {loading ? 'Loading gallery…' : 'No photographs in this chapter yet.'}
             </p>
+          )}
+
+          {filtered.length > ITEMS_PER_PAGE && (
+            <nav className="gallery__pagination" aria-label="Gallery pagination">
+              <button
+                type="button"
+                onClick={() => setPage((current) => Math.max(1, current - 1))}
+                disabled={currentPage === 1}
+                className="gallery__page-button"
+              >
+                Previous
+              </button>
+              <span className="editorial-kicker gallery__page-status">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                type="button"
+                onClick={() => setPage((current) => Math.min(totalPages, current + 1))}
+                disabled={currentPage === totalPages}
+                className="gallery__page-button"
+              >
+                Next
+              </button>
+            </nav>
           )}
         </div>
       </section>
 
-      {selected && (
+      {selected && createPortal(
         <div
+          ref={dialogRef}
           className="lightbox-enter gallery__div-041"
           role="dialog"
           aria-modal="true"
@@ -205,14 +247,16 @@ export default function Gallery() {
             <figcaption className="gallery__figcaption-050">
               <div>
                 <span className="editorial-kicker gallery__span-051">{selected.category}</span>
-                <p className="gallery__p-052">{captions[selectedIndex!]}</p>
+                <p className="gallery__p-052">{captions[selectedIndex! % captions.length] || selected.alt}</p>
+                <ShareButton title={selected.alt} text={`${selected.alt} — ${SCHOOL.name}`} className="gallery__share" />
               </div>
               <span className="editorial-kicker gallery__span-053">
                 {String(selectedIndex! + 1).padStart(2, '0')} / {String(GALLERY_ITEMS.length).padStart(2, '0')}
               </span>
             </figcaption>
           </figure>
-        </div>
+        </div>,
+        document.body,
       )}
     </main>
   );

@@ -12,7 +12,6 @@ import {
   GraduationCap,
   Image,
   LayoutDashboard,
-  Lock,
   Mail,
   Megaphone,
   MessageSquare,
@@ -22,13 +21,13 @@ import {
   Send,
   Settings,
   ShieldCheck,
-  Star,
   UserCheck,
   Users,
   Wallet,
   XCircle,
 } from 'lucide-react';
 import { IMAGES, SCHOOL } from '../data/schoolData';
+import { useSchoolData } from '../hooks/useSchoolData';
 import { cn } from '../utils/cn';
 
 type SectionId = 'overview' | 'admissions' | 'messages' | 'notices' | 'calendar' | 'gallery' | 'staff' | 'settings';
@@ -137,7 +136,7 @@ const statusStyles: Record<string, string> = {
   Planning: "admin__variant-021",
 };
 
-const schoolLogoSrc = import.meta.env.DEV ? '/schools/surachana/logo.jpg' : './schools/surachana/logo.jpg';
+const schoolLogoSrc = import.meta.env.DEV ? '/schools/surachana/school_logo.jpg' : './schools/surachana/school_logo.jpg';
 
 function Badge({ value }: { value: string }) {
   return (
@@ -197,6 +196,7 @@ function IconButton({
 }
 
 export default function Admin() {
+  useSchoolData();
   const [activeSection, setActiveSection] = useState<SectionId>('overview');
   const [admissions, setAdmissions] = useState(admissionSeed);
   const [notices, setNotices] = useState(noticeSeed);
